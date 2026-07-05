@@ -4,123 +4,291 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Boston Area Stuff to Do</title>
-<meta name="description" content="A locals-first resource library for the Greater Boston area: outdoor recreation, beaches, day trips, restaurants, events & markets, and rainy-day ideas. Free-to-moderate, hidden gems over tourist traps.">
-<link rel="stylesheet" href="guide.css">
+<meta name="description" content="Boston Area Stuff to Do — an interactive locals-first resource: pick a guide (outdoors & free pickleball, beaches, day trips, restaurants, events, indoors) and filter by price or trip type.">
+<style>
+/* ===========================================================
+   Greater Boston Local's Guide — shared design system
+   Coastal New England palette · editorial travel-guide look
+   Light + dark aware · print friendly · fully responsive
+   =========================================================== */
+
+:root {
+  --navy:      #0f2c3f;
+  --navy-2:    #16405a;
+  --teal:      #1f7a70;
+  --teal-soft: #d7ede9;
+  --sand:      #f6efe4;
+  --sand-2:    #efe4d2;
+  --coral:     #e2603f;
+  --coral-2:   #f2a58c;
+  --gold:      #d99b2b;
+  --ink:       #1d2a30;
+  --ink-soft:  #4a5a62;
+  --line:      #e2d9c8;
+  --card:      #ffffff;
+  --bg:        #fbf7ef;
+  --shadow:    0 1px 2px rgba(15,44,63,.06), 0 8px 24px rgba(15,44,63,.08);
+  --radius:    16px;
+  --maxw:      1140px;
+  --sans: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+  --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --navy: #cfe6ea; --navy-2:#9fc6cf;
+    --sand:#16232a; --sand-2:#1b2c33;
+    --ink:#e8eef0; --ink-soft:#a9bcc2;
+    --line:#2a3d45; --card:#152329; --bg:#0e1a1f;
+    --teal:#4fb3a6; --teal-soft:#173b39;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
+  }
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--sans); line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { max-width: 100%; }
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+/* ---------- Top nav ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar .wrap { display: flex; align-items: center; gap: 18px; height: 60px; }
+.brand { font-family: var(--serif); font-weight: 700; color: var(--navy);
+  font-size: 1.05rem; white-space: nowrap; display:flex; align-items:center; gap:8px; }
+.brand:hover { text-decoration: none; }
+.brand .dot { color: var(--coral); }
+.navlinks { margin-left: auto; display: flex; gap: 4px; flex-wrap: wrap; }
+.navlinks a {
+  color: var(--ink-soft); font-size: .82rem; font-weight: 600;
+  padding: 6px 10px; border-radius: 999px; letter-spacing: .01em;
+}
+.navlinks a:hover { background: var(--teal-soft); color: var(--navy); text-decoration: none; }
+.navlinks a.active { background: var(--navy); color: #fff; }
+
+/* ---------- Hero ---------- */
+.hero {
+  background:
+    radial-gradient(1200px 400px at 80% -10%, color-mix(in srgb, var(--teal) 30%, transparent), transparent),
+    linear-gradient(135deg, var(--navy), var(--navy-2));
+  color: #f4efe4; padding: 62px 0 66px; position: relative; overflow: hidden;
+}
+.hero .wrap { position: relative; z-index: 2; }
+.hero .eyebrow { text-transform: uppercase; letter-spacing: .22em; font-size: .72rem;
+  color: var(--coral-2); font-weight: 700; margin: 0 0 14px; }
+.hero h1 { font-family: var(--serif); font-size: clamp(2rem, 5vw, 3.3rem);
+  line-height: 1.05; margin: 0 0 16px; color: #fff; }
+.hero p { font-size: 1.08rem; max-width: 640px; color: #dfe8ea; margin: 0; }
+.hero .wave { position:absolute; left:0; right:0; bottom:-1px; height:40px; z-index:1;
+  background: var(--bg);
+  -webkit-mask: radial-gradient(24px at 24px 40px, transparent 98%, #000) repeat-x;
+  mask: radial-gradient(24px at 24px 40px, transparent 98%, #000) repeat-x;
+  -webkit-mask-size: 48px 40px; mask-size: 48px 40px; }
+
+/* ---------- Section headings ---------- */
+main { padding: 40px 0 80px; }
+.section { margin: 46px 0; scroll-margin-top: 76px; }
+.section > h2 {
+  font-family: var(--serif); font-size: 1.7rem; color: var(--navy);
+  margin: 0 0 6px; display: flex; align-items: center; gap: 12px;
+}
+.section > h2 .ic { font-size: 1.5rem; }
+.section > .lede { color: var(--ink-soft); margin: 0 0 22px; max-width: 720px; }
+h3 { font-family: var(--serif); color: var(--navy); font-size: 1.25rem; margin: 30px 0 12px; }
+.kicker { text-transform: uppercase; letter-spacing: .16em; font-size: .72rem;
+  color: var(--teal); font-weight: 700; margin: 0 0 6px; }
+
+/* ---------- Cards ---------- */
+.grid { display: grid; gap: 18px; }
+.grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 860px){ .grid.cols-2, .grid.cols-3 { grid-template-columns: 1fr; } }
+
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px 18px 16px; box-shadow: var(--shadow); position: relative;
+}
+.card h4 { margin: 0 0 4px; font-size: 1.06rem; color: var(--navy);
+  font-family: var(--sans); font-weight: 700; }
+.card .where { font-size: .8rem; color: var(--teal); font-weight: 600; margin: 0 0 8px;
+  display:flex; align-items:center; gap:5px; }
+.card p { margin: 8px 0; font-size: .93rem; }
+.card .meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+
+/* ---------- Tags / pills ---------- */
+.tag { display: inline-flex; align-items:center; gap:4px;
+  font-size: .72rem; font-weight: 600; padding: 3px 9px; border-radius: 999px;
+  background: var(--sand-2); color: var(--ink-soft); border: 1px solid var(--line); }
+.tag.free   { background: #e5f3e8; color: #1f7a4d; border-color:#bfe3ca; }
+.tag.cheap  { background: #eaf1fb; color: #2b5fa8; border-color:#c7d9f2; }
+.tag.mod    { background: #fbf0e2; color: #b9741a; border-color:#f0d9b6; }
+.tag.season { background: var(--teal-soft); color: var(--teal); border-color: transparent; }
+.tag.transit{ background:#efe7f7; color:#7a4fb0; border-color:#ddccf0; }
+.tag.weekday{ background:#eef6f2; color:#2c7a63; border-color:#cbe6db; }
+@media (prefers-color-scheme: dark){
+  .tag.free{background:#14331f;color:#7fd6a0;border-color:#1f5236}
+  .tag.cheap{background:#132a44;color:#8fb8ec;border-color:#244163}
+  .tag.mod{background:#3a2a12;color:#e2b06a;border-color:#5a411c}
+  .tag.transit{background:#2a1f3d;color:#c3a6ea;border-color:#41335e}
+  .tag.weekday{background:#12312a;color:#78cbb2;border-color:#1f4a40}
+}
+
+/* ---------- Callout ---------- */
+.callout { border-left: 4px solid var(--coral); background: var(--sand);
+  border-radius: 10px; padding: 14px 16px; margin: 18px 0; font-size: .92rem; }
+.callout.tip { border-color: var(--teal); }
+.callout strong { color: var(--navy); }
+
+/* ---------- Tables (calendars, quick lists) ---------- */
+.tablewrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--line);
+  box-shadow: var(--shadow); }
+table { border-collapse: collapse; width: 100%; min-width: 560px; background: var(--card); }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line);
+  font-size: .9rem; vertical-align: top; }
+thead th { background: var(--navy); color: #fff; font-size: .78rem;
+  text-transform: uppercase; letter-spacing: .06em; position: sticky; top: 0; }
+tbody tr:hover { background: color-mix(in srgb, var(--teal-soft) 50%, transparent); }
+td .mo { font-weight: 700; color: var(--coral); }
+
+/* ---------- Calendar chips ---------- */
+.calgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media (max-width: 860px){ .calgrid { grid-template-columns: repeat(2,1fr);} }
+@media (max-width: 520px){ .calgrid { grid-template-columns: 1fr;} }
+.mcard { background: var(--card); border:1px solid var(--line); border-radius: 14px;
+  padding: 14px; box-shadow: var(--shadow); }
+.mcard h4 { margin:0 0 8px; color: var(--coral); font-family: var(--serif);
+  font-size: 1.05rem; border-bottom: 1px dashed var(--line); padding-bottom: 6px; }
+.mcard ul { margin: 0; padding-left: 16px; font-size: .84rem; }
+.mcard li { margin: 4px 0; }
+
+/* ---------- Anchor list / TOC ---------- */
+.toc { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 26px 0; }
+@media (max-width: 860px){ .toc { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px){ .toc { grid-template-columns: 1fr; } }
+.toc a { display: flex; gap: 10px; align-items: center; background: var(--card);
+  border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px;
+  color: var(--navy); font-weight: 600; font-size: .92rem; box-shadow: var(--shadow); }
+.toc a:hover { text-decoration: none; border-color: var(--teal); transform: translateY(-1px); }
+.toc a .ic { font-size: 1.3rem; }
+
+/* ---------- Library hub cards (index) ---------- */
+.hub { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 28px; }
+@media (max-width: 900px){ .hub { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px){ .hub { grid-template-columns: 1fr; } }
+.hubcard { display: block; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow);
+  color: var(--ink); transition: transform .15s ease, border-color .15s ease; }
+.hubcard:hover { text-decoration: none; transform: translateY(-3px); border-color: var(--teal); }
+.hubcard .ic { font-size: 2rem; display:block; margin-bottom: 10px; }
+.hubcard h3 { margin: 0 0 6px; color: var(--navy); }
+.hubcard p { margin: 0; color: var(--ink-soft); font-size: .9rem; }
+.hubcard .arrow { color: var(--coral); font-weight: 700; margin-top: 12px; display:inline-block; }
+
+/* ---------- Legend ---------- */
+.legend { display:flex; flex-wrap:wrap; gap:8px; margin: 16px 0 4px; }
+
+/* ---------- Footer ---------- */
+footer { border-top: 1px solid var(--line); background: var(--sand);
+  padding: 30px 0; margin-top: 60px; color: var(--ink-soft); font-size: .85rem; }
+footer .wrap { display:flex; flex-wrap:wrap; gap: 14px; justify-content: space-between; }
+footer a { color: var(--teal); }
+
+/* ---------- Misc ---------- */
+.small { font-size: .8rem; color: var(--ink-soft); }
+.divider { height:1px; background: var(--line); border:0; margin: 34px 0; }
+ul.clean { list-style: none; padding-left: 0; }
+ul.clean li { padding: 8px 0; border-bottom: 1px dashed var(--line); }
+.updated { font-size:.78rem; color: var(--ink-soft); }
+
+@media print {
+  .topbar, footer .backlink { display:none; }
+  body { background:#fff; }
+  .card, .mcard, .tablewrap { box-shadow:none; }
+  a { color: inherit; text-decoration: none; }
+}
+
+/* ===== all-in-one app additions ===== */
+html{scroll-padding-top:118px;}
+[hidden]{display:none !important;}
+.navlinks a{cursor:pointer;}
+.navlinks a.active{background:var(--navy);color:#fff;}
+
+.filterbar{position:sticky;top:60px;z-index:40;background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.filterbar .wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px;}
+.filterbar .flabel{font-size:.78rem;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;margin-right:2px;}
+.chip{font-size:.82rem;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--ink);
+  padding:7px 14px;border-radius:999px;cursor:pointer;transition:all .12s ease;font-family:var(--sans);}
+.chip:hover{border-color:var(--teal);}
+.chip.on{background:var(--teal);color:#fff;border-color:var(--teal);}
+.fcount{margin-left:auto;font-size:.8rem;color:var(--ink-soft);}
+
+/* home picker */
+.pickgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:6px 0 8px;}
+@media(max-width:820px){.pickgrid{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.pickgrid{grid-template-columns:1fr;}}
+.pick{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius);padding:22px 20px;box-shadow:var(--shadow);color:var(--ink);
+  transition:transform .14s ease,border-color .14s ease;}
+.pick:hover{text-decoration:none;transform:translateY(-3px);border-color:var(--teal);}
+.pick .pic{font-size:2rem;}
+.pick .plabel{font-family:var(--serif);font-weight:700;color:var(--navy);font-size:1.35rem;}
+.pick .parrow{color:var(--coral);font-weight:700;font-size:.85rem;}
+
+.guidehead{margin:6px 0 8px;padding-top:8px;}
+.guidehead .guidetitle{font-size:1.9rem;margin:4px 0 0;}
+.backtop{margin:26px 0 0;}
+.backtop a{display:inline-block;font-size:.85rem;color:var(--teal);font-weight:700;}
+.homeintro{font-size:1.05rem;color:var(--ink-soft);max-width:64ch;margin:2px 0 18px;}
+
+</style>
 </head>
 <body>
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="index.html">🧭 Boston Area <span class="dot">·</span> Stuff to Do</a>
-    <nav class="navlinks">
-      <a href="index.html" class="active">Home</a>
-      <a href="outdoor.html">Outdoors</a>
-      <a href="beaches.html">Beaches</a>
-      <a href="daytrips.html">Day Trips</a>
-      <a href="restaurants.html">Eat</a>
-      <a href="events.html">Events &amp; Markets</a>
-      <a href="indoor.html">Indoors</a>
-    </nav>
+    <a class="brand" href="#home">🧭 Boston Area <span class="dot">·</span> Stuff to Do</a>
+    <nav class="navlinks"><a href="#home">Home</a><a href="#out">Outdoors</a><a href="#bea">Beaches</a><a href="#day">Day Trips</a><a href="#eat">Eat</a><a href="#evt">Events</a><a href="#ind">Indoors</a></nav>
   </div>
 </header>
-
-<section class="hero">
+<div class="filterbar" id="filterbar" hidden>
   <div class="wrap">
-    <p class="eyebrow">A resource library for people who already live here</p>
+    <span class="flabel">Filter:</span>
+    <button class="chip on" data-f="all">All</button><button class="chip" data-f="free">Free</button><button class="chip" data-f="cheap">$ Cheap</button><button class="chip" data-f="mod">$$ Moderate</button><button class="chip" data-f="weekday">Weekday-friendly</button><button class="chip" data-f="transit">Car-free</button>
+    <span class="fcount" id="fcount"></span>
+  </div>
+</div>
+<main>
+<div class="wrap">
+<section class="guidesec" id="home" data-guide>
+  <section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">A locals-first resource for people who already live here</p>
     <h1>Boston Area Stuff to Do</h1>
-    <p>Six field guides to the Greater Boston area, built for locals and day-trippers. Free-to-moderate picks, hidden gems and neighborhood favorites, sorted by season and by weekday-vs-weekend so you can actually plan a real outing.</p>
+    <p>Free-to-moderate, hidden gems over tourist traps. Pick a guide, then filter by price or trip type &mdash; everything's on this one page.</p>
   </div>
   <div class="wave"></div>
 </section>
-
-<main>
-<div class="wrap">
-
-  <section class="section" id="library">
-    <p class="kicker">The Library</p>
-    <h2>Six guides, one shared brain</h2>
-    <p class="lede">Each guide stands on its own, but they cross-reference each other. Start wherever your mood (or the weather) points you.</p>
-
-    <div class="hub">
-      <a class="hubcard" href="outdoor.html">
-        <span class="ic">🌲</span>
-        <h3>Outdoors &amp; Pickleball</h3>
-        <p>Trails, rail-trails, paddling, swimming holes, and a running list of <strong>free pickleball courts</strong> across the metro.</p>
-        <span class="arrow">Explore →</span>
-      </a>
-      <a class="hubcard" href="beaches.html">
-        <span class="ic">🏖️</span>
-        <h3>Beaches</h3>
-        <p>North Shore to the South Shore with the real intel: parking, resident stickers, transit, restrooms, and which fill by 9am.</p>
-        <span class="arrow">Explore →</span>
-      </a>
-      <a class="hubcard" href="daytrips.html">
-        <span class="ic">🚗</span>
-        <h3>Day Trips &amp; Towns</h3>
-        <p>Towns worth the drive and <em>why</em> &mdash; from North Shore harbors to the Pioneer Valley, sorted by theme and distance.</p>
-        <span class="arrow">Explore →</span>
-      </a>
-      <a class="hubcard" href="restaurants.html">
-        <span class="ic">🍽️</span>
-        <h3>The Restaurant Guide</h3>
-        <p>One big, verified-open eating list &mdash; cheap eats, neighborhood institutions, clam shacks, and international gems.</p>
-        <span class="arrow">Explore →</span>
-      </a>
-      <a class="hubcard" href="events.html">
-        <span class="ic">🎪</span>
-        <h3>Events &amp; Markets</h3>
-        <p>State fairs, farmers markets, festivals, flea &amp; craft markets, and thrifting &mdash; with a month-by-month calendar.</p>
-        <span class="arrow">Explore →</span>
-      </a>
-      <a class="hubcard" href="indoor.html">
-        <span class="ic">☔</span>
-        <h3>Indoors &amp; Rainy Day</h3>
-        <p>Quirky museums, candlepin, indie cinemas, barcades, free-culture hacks, and what to do when the weather turns.</p>
-        <span class="arrow">Explore →</span>
-      </a>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <section class="section" id="how">
-    <p class="kicker">How to use this</p>
-    <h2>Read the tags &amp; the timing</h2>
-    <p class="lede">Every entry across the guides is labeled the same way so you can scan fast.</p>
-
-    <div class="grid cols-2">
-      <div class="card">
-        <h4>Price at a glance</h4>
-        <div class="legend">
-          <span class="tag free">Free</span>
-          <span class="tag cheap">$ &middot; Cheap</span>
-          <span class="tag mod">$$ &middot; Moderate</span>
-        </div>
-        <p class="small">The whole library skews free-to-moderate. Anything labeled <span class="tag mod">$$</span> is a splurge-but-worth-it, not fine dining.</p>
-      </div>
-      <div class="card">
-        <h4>Timing &amp; access</h4>
-        <div class="legend">
-          <span class="tag season">Best season</span>
-          <span class="tag weekday">Weekday tip</span>
-          <span class="tag transit">Car-free ✓</span>
-        </div>
-        <p class="small">A <span class="tag transit">Car-free ✓</span> tag means you can realistically get there on the T, commuter rail, bus, or ferry.</p>
-      </div>
-    </div>
-
-    <div class="callout tip">
-      <strong>The golden rule of doing this like a local:</strong> the same spot can be a joy on a Tuesday and a nightmare on a Saturday. Where crowds matter (beaches, popular trailheads, brunch, apple picking), we call out the <em>weekday</em> or <em>early-morning</em> move. When you can, go off-peak.
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- CALENDAR PLACEHOLDER: populated from events research -->
-  <section class="section" id="calendar">
+  <p class="kicker">Start here</p>
+  <h2 class="guidetitle" style="font-size:1.7rem;margin:2px 0 4px;">Choose a guide</h2>
+  <p class="homeintro">Tap any guide to open it. Inside, use the filter buttons up top to show only what's <b>free</b>, <b>cheap</b>, <b>moderate</b>, <b>weekday-friendly</b>, or <b>car-free</b>.</p>
+  <div class="pickgrid"><a class="pick" href="#out"><span class="pic">🌲</span><span class="plabel">Outdoors</span><span class="parrow">Open →</span></a><a class="pick" href="#bea"><span class="pic">🏖️</span><span class="plabel">Beaches</span><span class="parrow">Open →</span></a><a class="pick" href="#day"><span class="pic">🚗</span><span class="plabel">Day Trips</span><span class="parrow">Open →</span></a><a class="pick" href="#eat"><span class="pic">🍽️</span><span class="plabel">Eat</span><span class="parrow">Open →</span></a><a class="pick" href="#evt"><span class="pic">🎪</span><span class="plabel">Events</span><span class="parrow">Open →</span></a><a class="pick" href="#ind"><span class="pic">☔</span><span class="plabel">Indoors</span><span class="parrow">Open →</span></a></div>
+  <section class="section" id="home-calendar">
     <p class="kicker">The year at a glance</p>
     <h2>🗓️ What&rsquo;s on, month by month</h2>
-    <p class="lede">A quick-scan calendar of the signature seasonal moves. Full details &mdash; dates, costs, and sources &mdash; live in the <a href="events.html">Events &amp; Markets</a> guide.</p>
-    <div class="calgrid" id="year-calendar">
+    <p class="lede">A quick-scan calendar of the signature seasonal moves. Full details &mdash; dates, costs, and sources &mdash; live in the <a href="#evt">Events &amp; Markets</a> guide.</p>
+    <div class="calgrid" id="home-year-calendar">
       <div class="mcard"><h4>January</h4><ul><li>Free/cheap ice skating (Frog Pond, free DCR rinks)</li><li>Lunar New Year, Chinatown</li><li>Warm greenhouse escapes</li></ul></div>
       <div class="mcard"><h4>February</h4><ul><li>Camellias at Lyman Estate greenhouses</li><li>Tower Hill orchid show opens</li><li>Maple sugaring begins</li></ul></div>
       <div class="mcard"><h4>March</h4><ul><li>South Boston St. Patrick's Parade</li><li>Free DCR maple sugarin' days</li><li>Late-season skiing</li></ul></div>
@@ -135,25 +303,1854 @@
       <div class="mcard"><h4>December</h4><ul><li>Common Tree Lighting; Blink!</li><li>Holiday markets &amp; light displays</li><li>First Night (Dec 31)</li></ul></div>
     </div>
   </section>
+</section>
+<section class="guidesec" id="out" data-guide hidden>
+  <div class="guidehead">
+    <p class="kicker">🌲 &nbsp;Guide 01 · Trails, paddles, ponds &amp; pickleball</p>
+    <h2 class="guidetitle">Outdoor recreation &mdash; including where to play free pickleball.</h2>
+  </div>
+<div class="toc">
+    <a href="#out-pickleball"><span class="ic">🥒</span> Free Pickleball</a>
+    <a href="#out-hiking"><span class="ic">🥾</span> Hiking &amp; Walking</a>
+    <a href="#out-biking"><span class="ic">🚲</span> Rail-Trails</a>
+    <a href="#out-water"><span class="ic">🛶</span> Paddling &amp; Ponds</a>
+    <a href="#out-other"><span class="ic">🥏</span> Climbing, Disc Golf &amp; Birding</a>
+    <a href="#out-hidden"><span class="ic">🌇</span> Hidden Spaces &amp; Views</a>
+    <a href="#out-seasons"><span class="ic">🍂</span> Season &amp; Day Guide</a>
+  </div>
 
+  <!-- ============ PICKLEBALL ============ -->
+  <section class="section" id="out-pickleball">
+    <p class="kicker">The priority list</p>
+    <h2><span class="ic">🥒</span> Free pickleball courts</h2>
+    <p class="lede">"Free" means no per-play fee. The key distinction: <b>dedicated courts have permanent nets</b>; most others are tennis courts <b>striped with pickleball lines where you bring your own portable net</b>. All first-come unless noted &mdash; and court projects are booming, so confirm the day before.</p>
+
+    <div class="callout tip">
+      <strong>Best genuinely-free, no-reservation picks:</strong> <b>Victory Field (Watertown)</b> &mdash; 10 lined courts, <b>Natick East School</b> &mdash; 6 dedicated + lights to 9pm, and <b>Cambridge's neighborhood courts</b> (~17 citywide). For evening play under lights: Cambridge Public Library, Natick East School, and Framingham's lighted courts.
+    </div>
+
+    <h3>Boston &amp; inner neighborhoods</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Location</th><th>Where</th><th>Courts</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Jamaica Pond courts</strong></td><td>Jamaica Plain, nr 507 Jamaicaway</td><td>~2</td><td>Free, first-come; short walk from Orange Line Stony Brook. Emerald Necklace setting.</td></tr>
+          <tr><td><strong>Dorchester Park</strong></td><td>Dorchester Ave &amp; Adams St</td><td>2 (lined)</td><td>Free hard courts; Red Line Ashmont nearby.</td></tr>
+          <tr><td><strong>Billings Field</strong></td><td>West Roxbury, 369 LaGrange St</td><td>multi</td><td>Free public courts; residential, street parking.</td></tr>
+          <tr><td><strong>Joe Moakley Park</strong></td><td>South Boston, Day Blvd</td><td>multi</td><td>Free; large waterfront park, ample parking.</td></tr>
+          <tr><td><strong>Peters Park</strong></td><td>South End, 1277 Washington St</td><td>lined</td><td>Lighted, restrooms, water; free. <em>Confirm lines are still striped.</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Cambridge &amp; Somerville</h3>
+    <div class="grid cols-2">
+      <div class="card">
+        <h4>Cambridge — citywide</h4>
+        <p>~17 pickleball-lined courts across neighborhoods; free, first-come, no reservations. Use the city's <a href="https://www.cambridgema.gov/iwantto/findanathleticcourt">Find-an-Athletic-Court</a> finder.</p>
+        <p class="small"><b>Cambridge Public Library</b> (449 Broadway) — 3 hard courts, <b>lighted for night play</b>, free (BYO net). <b>Kendall Square Rooftop Garden</b> — free, permanent lines &amp; net.</p>
+        <div class="meta"><span class="tag free">Free</span><span class="tag season">Lights at CPL</span></div>
+      </div>
+      <div class="card">
+        <h4>Somerville — free public</h4>
+        <p>Tennis courts with lines (bring a net) at <b>13 Florence St</b>, <b>8 Bonair St</b>, and <b>101 Highland Ave</b>.</p>
+        <p class="small"><b>Conway Playground</b> (8 Bleachery Ct) — free; hosts Parks &amp; Rec's free teen learn-to-play program.</p>
+        <div class="meta"><span class="tag free">Free</span><span class="tag weekday">Teen program</span></div>
+      </div>
+    </div>
+
+    <h3>Suburbs — confirmed free / public</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Location</th><th>Town</th><th>Address</th><th>Courts</th><th>Lights</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Victory Field ★</strong></td><td>Watertown</td><td>40 Orchard St</td><td>10 lined</td><td>Yes</td><td>Permanent lines, BYO net; restrooms, water. One of the best free spots in the region.</td></tr>
+          <tr><td><strong>Carr Park</strong></td><td>Medford</td><td>505 Fulton St</td><td>4</td><td>—</td><td>Dedicated, <b>permanent nets</b>.</td></tr>
+          <tr><td><strong>East School / Connor Heffler ★</strong></td><td>Natick</td><td>90 Oak St</td><td>6</td><td>Yes (to 9pm)</td><td>Dedicated pickleball; no reservations; flips to daily play in winter.</td></tr>
+          <tr><td><strong>Spy Pond courts</strong></td><td>Arlington</td><td>69 Wellington St</td><td>2 (+1)</td><td>—</td><td>Free, popular — arrive early weekends. On-site lot. (Town eyeing expansion.)</td></tr>
+          <tr><td><strong>Warren Field</strong></td><td>Brookline</td><td>Warren St, Fisher Hill</td><td>6</td><td>—</td><td>Free public park courts.</td></tr>
+          <tr><td><strong>Longwood Playground</strong></td><td>Quincy</td><td>Longwood Ave</td><td>6</td><td>—</td><td>Free public courts.</td></tr>
+          <tr><td><strong>Bishop Field</strong></td><td>Quincy</td><td>110 Holbrook Rd</td><td>2</td><td>—</td><td>Free, non-permanent nets.</td></tr>
+          <tr><td><strong>Lowell Playground</strong></td><td>Waltham</td><td>Lowell St</td><td>3</td><td>—</td><td>Free.</td></tr>
+          <tr><td><strong>Graverson Playground</strong></td><td>Waltham</td><td>1236 Trapelo Rd</td><td>2</td><td>—</td><td>Free.</td></tr>
+          <tr><td><strong>Melrose Rec courts</strong></td><td>Melrose</td><td>26 Malvern St</td><td>2</td><td>—</td><td>Open to public; check posted schedule.</td></tr>
+          <tr><td><strong>Waldstein Playground</strong></td><td>Brookline</td><td>near Amory St</td><td>lined</td><td>—</td><td>Free public courts.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Worth knowing — reservation / lighted / paid</h3>
+    <div class="grid cols-3">
+      <div class="card">
+        <h4>Lexington</h4>
+        <p class="small">Clarke Middle School (6) &amp; Adams Park (4) — reservable 7 days/wk, 8am&ndash;8pm, Apr 1&ndash;Nov 22 via PlayLocal. Gallagher Courts: 10 <b>lighted</b> courts for paid evening play.</p>
+        <div class="meta"><span class="tag cheap">Reserve</span></div>
+      </div>
+      <div class="card">
+        <h4>Framingham</h4>
+        <p class="small">Public tennis/pickleball first-come; <b>lighted until 10pm</b> mid-May&ndash;Sept. Call Parks &amp; Rec for exact court locations.</p>
+        <div class="meta"><span class="tag season">Lights</span></div>
+      </div>
+      <div class="card">
+        <h4>Newton (paid)</h4>
+        <p class="small">McGrath (6), The Cove/Auburndale (4), Pellegrini (2); new courts at Albemarle Rd open late 2026. Requires quarterly registration ($20&ndash;25) + $5/entry.</p>
+        <div class="meta"><span class="tag mod">$$ fee</span></div>
+      </div>
+    </div>
+    <p class="small">Sources: <a href="https://www.cambridgema.gov/iwantto/findanathleticcourt">Cambridge</a> · <a href="https://recreation.watertown-ma.gov/404/Victory-Open-Field-Play">Watertown Victory Field</a> · <a href="https://www.natickma.gov/2101/Pickleball">Natick</a> · <a href="https://www.lexingtonma.gov/590/Tennis-Pickleball">Lexington</a> · <a href="https://www.newtonma.gov/government/pickleball">Newton</a> · <a href="https://www.pickleheads.com/courts/us/massachusetts">Pickleheads MA</a></p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ============ HIKING ============ -->
+  <section class="section" id="out-hiking">
+    <p class="kicker">Beyond the crowded summits</p>
+    <h2><span class="ic">🥾</span> Hiking &amp; walking trails locals love</h2>
+    <p class="lede">Skip the conga line up Great Blue Hill. These are the reservations, ledges, and quiet woodlands regulars go back to. Most are free DCR or Trustees land &mdash; leashed dogs generally welcome.</p>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="where">📍 Medford / Stoneham / Winchester · Free</div>
+        <h4>Middlesex Fells Reservation</h4>
+        <p>100+ miles of trails. The <b>Rock Circuit Trail</b> (~4 mi loop) and rugged white-blazed <b>Skyline Trail</b> (~7 mi) are the classics; <b>Wright's Tower</b> gives a skyline view for minimal effort. <b>Sheepfold Lot</b> is the easy parking + dog-walking hub.</p>
+        <div class="meta"><span class="tag free">Free</span><span class="tag weekday">Weekday AM</span><span class="tag season">Great in fall</span></div>
+        <p class="small"><a href="https://www.mass.gov/locations/middlesex-fells-reservation">mass.gov</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Dover · Free (small lot)</div>
+        <h4>Noanet Woodlands</h4>
+        <p>A genuine local secret. The <b>Noanet Peak loop</b> (~3.5 mi, moderate) delivers a skyline view and a historic mill pond. Small lot fills on weekends &mdash; go early or midweek.</p>
+        <div class="meta"><span class="tag free">Free · Trustees</span><span class="tag weekday">Go early</span></div>
+        <p class="small"><a href="https://thetrustees.org/">The Trustees</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Lynn · Free</div>
+        <h4>Lynn Woods Reservation</h4>
+        <p>30+ miles of trails and rarely crowded. Hike to <b>Dungeon Rock</b> (man-made cave lore) and the <b>Stone Tower</b> overlook, past ponds. Underrated.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+        <p class="small"><a href="https://bluedotliving.com/five-great-hikes-in-greater-boston/">Bluedot Living</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Saugus · Free</div>
+        <h4>Breakheart Reservation</h4>
+        <p>700 acres, 7 rocky hills with views, two ponds &mdash; <b>swimming at Pearce Lake</b> in summer. Family-friendly, with a paved Ridge Route option. Overflow parking at Northeast Voc HS.</p>
+        <div class="meta"><span class="tag free">Free</span><span class="tag season">Summer swim</span></div>
+        <p class="small"><a href="https://www.mass.gov/locations/breakheart-reservation">mass.gov</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Hingham · $6&ndash;8 (members free)</div>
+        <h4>World's End</h4>
+        <p>Trustees gem &mdash; 4.5 mi of Olmsted-designed carriage paths over drumlins to a rocky shore with Boston skyline views. Stunning. Weekend parking pass required online.</p>
+        <div class="meta"><span class="tag cheap">$6&ndash;8</span><span class="tag weekday">Spring/fall weekday</span></div>
+        <p class="small"><a href="https://thetrustees.org/place/worlds-end-hingham/">The Trustees</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 North Andover / Andover · Free</div>
+        <h4>Harold Parker State Forest</h4>
+        <p>10+ miles of trails around seven ponds; feels remote with few crowds. Good for a quiet half-day in the woods.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+        <p class="small"><a href="https://www.rei.com/blog/hike/best-hikes-near-boston">REI guide</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Milton / Quincy / Canton · Free</div>
+        <h4>Blue Hills — the quiet corners</h4>
+        <p>Beyond the packed Great Blue summit: the <b>Quincy Quarries</b> ledges, <b>Little Blue Hill</b>, and easy loops around <b>Houghton's Pond</b>. 125 miles of trails total.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+        <p class="small"><a href="https://friendsofthebluehills.org/hiking-near-boston/">Friends of the Blue Hills</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Medfield · Free</div>
+        <h4>Rocky Woods</h4>
+        <p>Trustees property, 640 acres, four ponds, a well-marked easy-to-moderate network. Dog-friendly and mellow &mdash; good for a casual walk.</p>
+        <div class="meta"><span class="tag free">Free · Trustees</span></div>
+        <p class="small"><a href="https://thetrustees.org/">The Trustees</a></p>
+      </div>
+    </div>
+    <div class="callout">
+      <strong>Also worth a mention:</strong> <b>Estabrook Woods</b> (Concord/Carlisle) — large, quiet, historic, lightly trafficked (bring a map, it's unmarked in places). And see the <a href="#out-other">birding &amp; overlooks</a> section for Mount Auburn, the Arnold Arboretum, and Fresh Pond.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ============ BIKING ============ -->
+  <section class="section" id="out-biking">
+    <p class="kicker">Flat, paved &amp; car-free</p>
+    <h2><span class="ic">🚲</span> Rail-trails &amp; greenways</h2>
+    <p class="lede">All paved unless noted. Ride weekday mornings to dodge the weekend crowds on the popular stretches.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Trail</th><th>Length</th><th>Route</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Minuteman Bikeway</strong></td><td>9.7 mi</td><td>Alewife → Arlington → Lexington → Bedford</td><td>The flagship. Car-free via Red Line Alewife. Busy weekends — ride early.</td></tr>
+          <tr><td><strong>Somerville Community Path</strong></td><td>3.2 mi</td><td>Alewife → Davis Sq → East Cambridge</td><td>Connects directly to the Minuteman; extended with the Green Line.</td></tr>
+          <tr><td><strong>Charles River Paths</strong></td><td>~14 mi loop</td><td>Museum of Science → Watertown (both banks)</td><td>Flat, scenic, car-free access everywhere. Weekend mornings pleasant.</td></tr>
+          <tr><td><strong>Bruce Freeman Rail Trail</strong></td><td>~25 mi (building)</td><td>Lowell → Framingham</td><td>Best completed stretches through Chelmsford, Westford, Acton, Concord.</td></tr>
+          <tr><td><strong>Assabet River Rail Trail</strong></td><td>~5.6 mi</td><td>Marlborough → Maynard (via Hudson/Stow)</td><td>Follows the Assabet River.</td></tr>
+          <tr><td><strong>Battle Road Trail</strong></td><td>~5 mi</td><td>Lexington → Concord (Minute Man NHP)</td><td><b>Packed sand/gravel</b> (not road-bike surface), wheelchair-accessible, historic markers. Best fall foliage.</td></tr>
+          <tr><td><strong>Neponset River Greenway</strong></td><td>5.2 mi</td><td>Mattapan Sq → Tenean Beach, Dorchester</td><td>Paved; links to the Mattapan trolley.</td></tr>
+          <tr><td><strong>Northern Strand (Bike to the Sea)</strong></td><td>~10&ndash;11 mi</td><td>Everett → Malden → Revere → Saugus → Lynn</td><td>Mostly paved; great car-free ride to the north-shore seashore.</td></tr>
+          <tr><td><strong>Mystic River Greenway</strong></td><td>varies</td><td>Assembly (T) → Arlington</td><td>Connects to Malden River Greenway &amp; Spot Pond.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small">Sources: <a href="http://minutemanbikeway.org/">Minuteman</a> · <a href="https://brucefreemanrailtrail.org/">Bruce Freeman</a> · <a href="https://www.nps.gov/thingstodo/bike-the-battle-road-trail.htm">NPS Battle Road</a> · <a href="https://biketothesea.org/">Bike to the Sea</a></p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ============ WATER ============ -->
+  <section class="section" id="out-water">
+    <p class="kicker">Get on (or in) the water</p>
+    <h2><span class="ic">🛶</span> Paddling &amp; swimming ponds</h2>
+    <p class="lede">Beaches have their <a href="#bea">own guide</a> &mdash; this is freshwater: kettle ponds, rentals, and DIY launches.</p>
+
+    <h3>Swimming ponds</h3>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="where">📍 Concord · $8 res / $30 non-res</div>
+        <h4>Walden Pond</h4>
+        <p>The iconic kettle pond, lifeguarded beach in season. <b>No cash</b> — pay via DCR's YODEL portal or card. Lots fill early and close at capacity: <b>arrive before 9am summer weekends, or go weekday.</b></p>
+        <div class="meta"><span class="tag cheap">$8 residents</span><span class="tag weekday">Before 9am</span></div>
+        <p class="small"><a href="https://www.mass.gov/locations/walden-pond-state-reservation">mass.gov</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Milton (Blue Hills) · FREE parking</div>
+        <h4>Houghton's Pond ★</h4>
+        <p>The best <b>free</b> swim close to the city &mdash; lifeguarded 10am&ndash;6pm daily (mid-June&ndash;Labor Day), free parking, 840 Hillside St. A weekend/holiday shuttle runs every ~45 min May&ndash;Oct.</p>
+        <div class="meta"><span class="tag free">Free</span><span class="tag season">Summer swim</span></div>
+        <p class="small"><a href="https://www.mass.gov/locations/houghtons-pond-recreation-area">mass.gov</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Hopkinton · $8 residents</div>
+        <h4>Hopkinton State Park</h4>
+        <p>Two lifeguarded swimming beaches, plus on-site <b>kayak rentals</b>. A good combined swim-and-paddle day.</p>
+        <div class="meta"><span class="tag cheap">$8 residents</span><span class="tag season">Summer</span></div>
+        <p class="small"><a href="https://www.mass.gov/locations/hopkinton-state-park">mass.gov</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Saugus · Free</div>
+        <h4>Pearce Lake (Breakheart)</h4>
+        <p>Freshwater swimming inside Breakheart Reservation with free parking &mdash; pair it with a hike over the reservation's rocky hills.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+        <p class="small"><a href="https://www.mass.gov/locations/breakheart-reservation">mass.gov</a></p>
+      </div>
+    </div>
+    <p class="small">DCR parking is charged May 23&ndash;Sept 7 ($8 MA / $30 non-MA per vehicle); a <a href="https://www.mass.gov/guides/parking-at-massachusetts-state-parks">DCR Annual Pass</a> is $60 for residents and pays off after ~7 visits.</p>
+
+    <h3>Paddling &amp; rentals</h3>
+    <div class="grid cols-2">
+      <div class="card">
+        <h4>Paddle Boston / Charles River Canoe &amp; Kayak</h4>
+        <p>Canoe/kayak/SUP rentals at Kendall Sq (Cambridge), Newton (Nahanton St), Waltham (Moody St Dam / Lakes District), and Mystic River / Medford Square.</p>
+        <p class="small"><a href="https://paddleboston.com/rentals/">paddleboston.com</a></p>
+      </div>
+      <div class="card">
+        <h4>Community Boating (Esplanade)</h4>
+        <p>Kayak/SUP rentals ~$40/2 hrs on the Charles &mdash; and famously cheap sailing memberships.</p>
+        <p class="small"><a href="https://www.community-boating.org/rentals/kayak-paddling-rentals/">community-boating.org</a></p>
+      </div>
+      <div class="card">
+        <h4>Boating in Boston</h4>
+        <p>Rentals at <b>Spot Pond</b> (Fells, Stoneham), Hopkinton State Park, and Natick; ~$18/hr single, $25/hr double.</p>
+        <p class="small">Great for a quick after-work paddle.</p>
+      </div>
+      <div class="card">
+        <h4>Free / DIY launches</h4>
+        <p>Bring your own boat to the Charles (Lakes District, Waltham), <b>Spot Pond</b>, <b>Jamaica Pond</b>, and the <b>Mystic Lakes</b>.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ============ OTHER ============ -->
+  <section class="section" id="out-other">
+    <p class="kicker">Everything else outside</p>
+    <h2><span class="ic">🥏</span> Climbing, disc golf, birding &amp; overlooks</h2>
+    <div class="grid cols-3">
+      <div class="card">
+        <h4>🧗 Outdoor climbing</h4>
+        <p class="small"><b>Quincy Quarries</b> (DCR, ~20 min south) — walls to 80 ft, routes 5.3&ndash;5.11, free top-rope/bouldering classic. <b>Hammond Pond</b> (Newton) — small crag, good for learning, walkable from Green Line D.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+      </div>
+      <div class="card">
+        <h4>🥏 Disc golf</h4>
+        <p class="small"><b>Borderland State Park</b> (Easton) — technical wooded course. <b>Maple Hill</b> (Leicester) — the state's famous complex, ~1 hr west. <b>Devens</b> — three parks on old military land. Check UDisc for free town courses.</p>
+      </div>
+      <div class="card">
+        <h4>🐦 Birding &amp; overlooks</h4>
+        <p class="small"><b>Mount Auburn Cemetery</b> (free) — a premier spring migration spot; peak May mornings. <b>Arnold Arboretum</b> (JP, free, daily) — walkable year-round. <b>Fresh Pond</b> (Cambridge) — 2.25-mi loop. <b>Great Meadows NWR</b> (Concord) — top freshwater birding.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ============ HIDDEN SPACES ============ -->
+  <section class="section" id="out-hidden">
+    <p class="kicker">The city's best-kept free spots</p>
+    <h2><span class="ic">🌇</span> Hidden public spaces, rooftop gardens &amp; free skyline views</h2>
+    <p class="lede">Rooftop gardens, secret courtyards, and free vantage points that locals know and tourists walk right past &mdash; all free, most steps from the T.</p>
+
+    <div class="callout tip">
+      <strong>The move:</strong> the <b>Kendall Square Roof Garden</b> → walk the <b>Longfellow Bridge</b> at sunset → Charles/MGH. Two under-the-radar free spots, back to back, with the best skyline light of the day.
+    </div>
+
+    <h3>Rooftop &amp; hidden gardens</h3>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="where">📍 Kendall Square, Cambridge · Red Line · FREE</div>
+        <h4>Kendall Square Roof Garden ★</h4>
+        <p>A genuine hidden gem &mdash; a public park <b>on top of a parking garage</b> with a lawn, plantings, seating, an amphitheater, a fire pit, a grill area, and skyline views. There's even a pickleball court with <b>free loaner paddles</b>.</p>
+        <p class="small"><b>How to find it (it's hidden):</b> atop the <b>Kendall Center Green Garage</b> &mdash; take the garage elevator at <b>90 Broadway</b> and press <b>"R"</b>, or the Main St stairwell (325 Main St). <br>
+        <b>Hours:</b> ~6am&ndash;11pm (Apr 15&ndash;Sep 30), 7am&ndash;7pm off-season. Kendall/MIT Red Line, 2&ndash;3 min walk.</p>
+        <div class="meta"><span class="tag free">Free</span><span class="tag transit">🚆 Red Line</span><span class="tag season">Best warm months</span></div>
+        <p class="small"><a href="https://www.kendallcenter.com/events-public-programs/roof-garden/">kendallcenter.com</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Financial District · FREE · 6am&ndash;9pm</div>
+        <h4>Post Office Square (Leventhal Park)</h4>
+        <p>An "urban living room" hidden downtown &mdash; a great lawn, a 143-ft vine-covered pergola, 125+ plant species, and a walk-through fountain that forms a water dome. Built over an underground garage.</p>
+        <p class="small">Free outdoor fitness classes July&ndash;Aug. State or Downtown Crossing.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+        <p class="small"><a href="https://www.normanbleventhalpark.org/hours-information/">normanbleventhalpark.org</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Back Bay · FREE · 24/7 plaza</div>
+        <h4>Christian Science Plaza</h4>
+        <p>The largest privately-owned public open space in Boston &mdash; a serene 686-ft reflecting pool and a <b>splash fountain</b> kids play in (9am&ndash;9pm, seasonal). Symphony or Prudential.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+        <p class="small"><a href="https://en.wikipedia.org/wiki/Christian_Science_Plaza">details</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Copley · FREE · library hours</div>
+        <h4>BPL McKim Courtyard</h4>
+        <p>An open-air Italian Renaissance cloister hidden <em>inside</em> the Central Library &mdash; arcaded gallery, a central fountain, and lawn panels. A quiet reading/sitting spot most tourists miss. No card needed (seasonal). Copley Green Line.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+        <p class="small"><a href="https://www.bpl.org/locations/central/">bpl.org</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Back Bay Fens · FREE · May&ndash;Oct</div>
+        <h4>Kelleher Rose Garden</h4>
+        <p>Boston's "secret garden" &mdash; a sunken formal rose garden hidden behind tall hedges, ~1,500 roses in 200 varieties. Peak bloom mid-to-late June. 73 Park Drive; Fenway/Kenmore.</p>
+        <div class="meta"><span class="tag free">Free</span><span class="tag season">June bloom</span></div>
+        <p class="small"><a href="https://thefenway.com/locations/kelleher-rose-garden/">thefenway.com</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 The Fens · FREE · seasonal</div>
+        <h4>Fenway Victory Gardens</h4>
+        <p>The oldest continuously operating WWII victory gardens in the US (est. 1942) &mdash; 7 acres of ~500 quirky, individually-themed plots you can wander among. 1200 Boylston St; Fenway/Kenmore.</p>
+        <div class="meta"><span class="tag free">Free to stroll</span></div>
+        <p class="small"><a href="https://fenwayvictorygardens.org/">fenwayvictorygardens.org</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 North End · FREE · 24/7</div>
+        <h4>Paul Revere Mall ("The Prado")</h4>
+        <p>A 480-ft brick-walled, tree-lined courtyard hidden behind the Old North Church &mdash; granite benches under lindens, an equestrian statue, and a fountain. Recently reopened. Haymarket.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+        <p class="small"><a href="https://www.boston.gov/news/paul-revere-mall-north-end-reopened">boston.gov</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Back Bay · FREE</div>
+        <h4>Prudential South Garden</h4>
+        <p>A 1.3-acre open-air garden tucked into the Prudential complex &mdash; waterfalls, fountains, a sit-on lawn, and a stage (free summer family film festival). An easily-missed oasis. Prudential/Copley.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+        <p class="small"><a href="https://www.prudentialcenter.com/about/">prudentialcenter.com</a></p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>On the Rose Kennedy Greenway</strong> (free, daily 7am&ndash;11pm): walk the granite <b>labyrinth at Armenian Heritage Park</b> (Aquarium T), the bamboo-lined <b>Chinatown Park</b> with its waterfall gate, and cool off at the seven free <b>water features</b> (Rings Fountain near the North End). The hand-carved <b>Greenway Carousel</b> is a few dollars a ride.
+    </div>
+
+    <h3>Free skyline viewpoints (no paid observation deck)</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Piers Park &amp; LoPresti Park</h4><div class="where">📍 East Boston · Blue Line</div><p class="small">Arguably the best free skyline view in the city &mdash; straight across the harbor at downtown. 600-ft promenade, view pavilions, plus the new Piers Park II. Maverick T.</p><div class="meta"><span class="tag free">Free</span><span class="tag transit">🚆 Blue</span></div></div>
+      <div class="card"><h4>Longfellow Bridge</h4><div class="where">📍 Beacon Hill ↔ Kendall · FREE 24/7</div><p class="small">The "Salt-and-Pepper Bridge" pedestrian lane gives an unobstructed river + skyline panorama, best at sunrise/sunset. Charles/MGH ↔ Kendall/MIT &mdash; pairs with the roof garden.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Bunker Hill Monument</h4><div class="where">📍 Charlestown · FREE climb</div><p class="small">Climb 294 steps to harbor + skyline views. Free but <b>seasonal hours</b> and a 20-person cap &mdash; check the NPS site same-day. Community College / North Station.</p><div class="meta"><span class="tag free">Free</span><span class="tag season">Seasonal hrs</span></div></div>
+      <div class="card"><h4>Corey Hill Outlook Park</h4><div class="where">📍 Brookline · Green C</div><p class="small">A hilltop lawn with a striking open view over Boston and Cambridge &mdash; sundial, hammocks, Adirondack chairs. A locals' sunset spot. Summit Ave stop, uphill walk.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Peters Hill, Arnold Arboretum</h4><div class="where">📍 JP/Roslindale · Orange Line</div><p class="small">At 240 ft, the highest point in the Emerald Necklace &mdash; a wide, uncrowded view of downtown and Back Bay. Free, daily dawn&ndash;dusk. Forest Hills.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Wright's Tower (the Fells)</h4><div class="where">📍 Medford · drive/bike</div><p class="small">A 1937 stone tower atop Pine Hill with a skyline panorama &mdash; an easy ~1-mi hike from the South Border Rd lot. Free, no fee. (Also in the <a href="#out-hiking">hiking</a> list.)</p><div class="meta"><span class="tag free">Free</span></div></div>
+    </div>
+    <p class="small"><b>Grounds free, tower climbs event-only:</b> <b>Dorchester Heights Monument</b> (South Boston &mdash; hilltop views free dawn&ndash;dusk; interior climb only on special NPS event days) and <b>Fort Hill Tower / Highland Park</b> (Roxbury &mdash; free hilltop views; tower opens only for occasional city tours). And in the Seaport, <b>Martin's Park</b> (an inclusive waterfront playground/garden) is free &mdash; note the Lawn on D's glowing swings were retired in 2023.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ============ SEASONS ============ -->
+  <section class="section" id="out-seasons">
+    <p class="kicker">When to go</p>
+    <h2><span class="ic">🍂</span> Season &amp; day guide</h2>
+    <div class="calgrid">
+      <div class="mcard">
+        <h4>🌱 Spring</h4>
+        <ul>
+          <li>Peak birding at Mount Auburn &amp; the Arboretum</li>
+          <li>Trails muddy but uncrowded</li>
+          <li>Pickleball reservations reopen (Apr 1)</li>
+        </ul>
+      </div>
+      <div class="mcard">
+        <h4>☀️ Summer</h4>
+        <ul>
+          <li>Swimming season (Houghton's, Walden, Hopkinton, Pearce Lake), lifeguards mid-June&ndash;Labor Day</li>
+          <li>Go early for pond parking</li>
+          <li>Lighted courts extend evening pickleball</li>
+        </ul>
+      </div>
+      <div class="mcard">
+        <h4>🍁 Fall</h4>
+        <ul>
+          <li>Best all-around: foliage on Battle Road, the Fells, Bruce Freeman</li>
+          <li>Cool, dry pickleball weather</li>
+          <li>Fewer crowds after Labor Day</li>
+        </ul>
+      </div>
+      <div class="mcard">
+        <h4>❄️ Winter</h4>
+        <ul>
+          <li>Frog Pond skating (Nov&ndash;Mar)</li>
+          <li>XC skiing / snowshoeing in the Fells &amp; Blue Hills after snow</li>
+          <li>Sledding: Larz Anderson, Flagstaff Hill</li>
+          <li>Arboretum roads stay walkable</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout tip">
+      <strong>The one rule that never fails:</strong> weekday mornings are the local move for everything popular &mdash; the Minuteman, Walden, Blue Hills, the Fells, Spy Pond pickleball, the Charles River path. You skip both the crowds and (at Walden) the capacity closures.
+    </div>
+    <p class="small">Full source list lives in the research notes; primary sources are DCR / mass.gov, The Trustees, and town Parks &amp; Rec pages linked throughout. Court counts and reservation rules shift &mdash; verify the day before you go.</p>
+  </section>
+  <p class="backtop"><a href="#home">↑ All guides</a></p>
+</section>
+<section class="guidesec" id="bea" data-guide hidden>
+  <div class="guidehead">
+    <p class="kicker">🏖️ &nbsp;Guide 02 · Sand &amp; surf within day-trip range</p>
+    <h2 class="guidetitle">Beaches &mdash; with the parking intel that actually matters.</h2>
+  </div>
+<div class="callout tip">
+    <strong>The local's cheat sheet:</strong> <b>DCR (state) beaches</b> are the cheapest and most transit-friendly &mdash; many free or $10&ndash;$15 for MA residents. <b>North Shore town beaches</b> (Gloucester, Manchester, Marblehead) have gone aggressive with non-resident fees and reservation apps. When in doubt, <b>go by train/ferry and skip the parking war entirely</b>.
+  </div>
+
+  <div class="legend">
+    <span class="tag transit">🚆 Car-free ✓ = reachable without driving</span>
+    <span class="tag free">Free / cheap parking</span>
+    <span class="tag mod">Reserve ahead</span>
+  </div>
+
+  <div class="toc" style="margin-top:22px">
+    <a href="#bea-carfree"><span class="ic">🚆</span> Car-Free Beaches</a>
+    <a href="#bea-northshore"><span class="ic">🦞</span> North Shore</a>
+    <a href="#bea-southshore"><span class="ic">🎡</span> South Shore</a>
+    <a href="#bea-cape"><span class="ic">🏝️</span> Cape Gateway</a>
+    <a href="#bea-nh"><span class="ic">🌊</span> Coastal NH</a>
+    <a href="#bea-ri"><span class="ic">🏄</span> Rhode Island</a>
+  </div>
+
+  <!-- ============ CAR-FREE ============ -->
+  <section class="section" id="bea-carfree">
+    <p class="kicker">No car? No problem</p>
+    <h2><span class="ic">🚆</span> Car-free &amp; transit-first beaches</h2>
+    <p class="lede">The best beach days that need nothing but a CharlieCard or a ferry ticket. These are the ones to reach for when you don't want to drive or fight for a spot.</p>
+
+    <div class="grid cols-2">
+
+      <div class="card">
+        <div class="where">📍 Revere · ~15 min · Blue Line</div>
+        <h4>Revere Beach</h4>
+        <p>America's first public beach (1896) and a genuine local institution &mdash; a 3-mile crescent right off the T. Lively, urban, all-ages, great people-watching, calm protected water.</p>
+        <p class="small"><strong>Getting there:</strong> Blue Line to <b>Revere Beach</b> or <b>Wonderland</b> &mdash; sand is a block away. Free time-limited street parking on the Blvd fills fast on hot weekends.<br>
+        <strong>Amenities:</strong> Bathhouses, restrooms, lifeguards in season, playgrounds. <b>Kelly's Roast Beef</b> &amp; <b>Bianchi's Pizza</b> across the street.<br>
+        <strong>Go:</strong> Weekday mornings. Avoid the July International Sand Sculpting Festival weekend unless that's the point.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag free">Free</span><span class="tag weekday">Weekday AM</span></div>
+        <p class="small"><a href="https://www.revere.org/revere-beach">City of Revere</a> · <a href="https://www.mbta.com/stops/place-rbmnl">MBTA</a></p>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 East Boston · ~15 min · Blue Line</div>
+        <h4>Constitution Beach</h4>
+        <p>A hidden in-city gem locals from other neighborhoods forget exists. Lifeguarded swim area, calm water, and jets taking off from Logan overhead. <b>Free.</b></p>
+        <p class="small"><strong>Getting there:</strong> Blue Line to <b>Orient Heights</b>, ~10-min walk. <b>Free</b> parking at the beach lot &amp; adjacent plaza.<br>
+        <strong>Amenities:</strong> Bathhouse, outdoor showers, snack shack, big newish playground, tennis courts, seasonal kayaking.<br>
+        <strong>Go:</strong> Weekday afternoons; weekends fill with local families.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag free">Free</span></div>
+        <p class="small"><a href="https://www.mass.gov/locations/constitution-beach-park">Mass.gov</a></p>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Manchester-by-the-Sea · ~45 min · Commuter rail</div>
+        <h4>Singing Beach ★</h4>
+        <p>The famous "squeaky sand" beach and the <b>marquee car-free North Shore trip</b>. Beautiful, upscale-quiet, light surf. Parking is hostile to outsiders, so the train is the move.</p>
+        <p class="small"><strong>Getting there:</strong> <b>Rockport Line from North Station → Manchester</b>, then a scenic ½-mile walk. The lot is <b>residents-only on weekends</b>; non-residents only midweek ($35 cash, sells out). Take the train.<br>
+        <strong>Note:</strong> Walk-on beach pass required for ages 12&ndash;65, Memorial Day&ndash;Labor Day.<br>
+        <strong>Amenities:</strong> Bathhouse, snack bar, lifeguards.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag mod">$$ walk-on pass</span><span class="tag weekday">Train any day</span></div>
+        <p class="small"><a href="https://www.manchester.ma.us/facilities/facility/details/singing-beach-11">Town of Manchester</a></p>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Ipswich · ~50 min · Train + CATA shuttle</div>
+        <h4>Crane Beach ★</h4>
+        <p>Four miles of barrier beach on the Trustees' Crane Estate &mdash; arguably the best big beach in range. Big, clean, scenic, with Castle Hill trails above.</p>
+        <p class="small"><strong>Car-free win:</strong> Newburyport/Rockport Line → <b>Ipswich</b>, then the <b>CATA Ipswich-Essex Explorer shuttle</b> (weekends/holidays, ~June 20&ndash;Labor Day). Shuttle admission $5 / free for Trustees members.<br>
+        <strong>Driving:</strong> Non-members $35 weekday / $40 weekend per carload, <b>advance reservation required</b> in peak season. Cheaper after 4pm.<br>
+        <strong>⚠️ Greenhead flies</strong> roughly mid-July&ndash;early Aug can be brutal on hot, windless days.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag mod">Reserve ahead</span><span class="tag weekday">Weekday AM / after 4pm</span></div>
+        <p class="small"><a href="https://thetrustees.org/place/crane-beach-on-the-crane-estate/">The Trustees</a> · <a href="https://www.ipswichessexexplorer.com/crane-beach">Explorer shuttle</a></p>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Quincy · ~20 min · Red Line + bus</div>
+        <h4>Wollaston Beach</h4>
+        <p>The largest beach in Boston Harbor &mdash; local, low-key, good for walkers and joggers, with classic seafood shacks across the road.</p>
+        <p class="small"><strong>Getting there:</strong> Red Line to <b>Wollaston</b>, then Bus #217 or walk down Beach St. <b>Free</b> parking along the seawall.<br>
+        <strong>Amenities:</strong> Brett Bathhouse, outdoor showers, lifeguards mid-June&ndash;late Aug. <b>Tony's Clam Shop</b> across the road.<br>
+        <strong>Note:</strong> Water quality can dip after heavy rain &mdash; check the flags.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag free">Free</span></div>
+        <p class="small"><a href="https://www.mbta.com/stops/place-wlsta">MBTA</a></p>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Nahant / Lynn · ~25 min · Bus from Wonderland</div>
+        <h4>Nahant Beach / Lynn Shore</h4>
+        <p>A broad, breezy DCR crescent &mdash; more open and less carnival than Revere, with full facilities.</p>
+        <p class="small"><strong>Parking:</strong> DCR lot $10 residents / $40 non-residents (May 23&ndash;Oct 12, pay via YODEL app). <b>Money-saver: free street parking along Lynn Shore Drive.</b><br>
+        <strong>Amenities:</strong> Ward Bathhouse (showers, restrooms, first aid), playground, picnic areas, lifeguards July&ndash;Aug.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag cheap">$ / free street</span></div>
+        <p class="small"><a href="https://www.mass.gov/locations/lynn-shore-nahant-beach-reservation">Mass.gov</a></p>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Boston Harbor · Ferry from Long Wharf</div>
+        <h4>Spectacle Island</h4>
+        <p>A car-free island beach day out of downtown &mdash; lifeguarded swimming, 5 miles of trails, hilltop skyline views. A "beach + hike + skyline" novelty.</p>
+        <p class="small"><strong>Getting there:</strong> Boston Harbor City Cruises from <b>Long Wharf North</b>, ~20&ndash;30 min. Direct service daily ~July 15&ndash;Sept 1 (plus Sept 4&ndash;21). Round-trip ≈$25.<br>
+        <strong>Money-saver:</strong> Many library <b>museum-pass programs offer 50%-off ferry passes</b>.<br>
+        <strong>Amenities:</strong> Visitor center, café, restrooms. Bring water &amp; food; carry-in/carry-out.</p>
+        <div class="meta"><span class="tag transit">⛴️ Ferry ✓</span><span class="tag mod">$$ ferry</span><span class="tag weekday">Weekday sailings</span></div>
+        <p class="small"><a href="https://www.bostonharborislands.org/ferryschedule/">Harbor Islands ferry</a></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ NORTH SHORE ============ -->
+  <section class="section" id="bea-northshore">
+    <p class="kicker">Drive-worthy · car recommended</p>
+    <h2><span class="ic">🦞</span> North Shore</h2>
+    <p class="lede">The prettiest sand in range &mdash; and the most aggressive parking rules. Reserve ahead on the app, or come midweek / after 3pm for value.</p>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="where">📍 Gloucester · ~50 min</div>
+        <h4>Wingaersheek Beach</h4>
+        <p>White sand, dunes, a lighthouse view, and famously calm shallow water over a huge tidal flat. Best for families &mdash; at low tide it's a vast wadeable sandbar.</p>
+        <p class="small"><strong>Parking:</strong> Non-resident <b>reservation required via the Blinkay app</b> (book up to 10 days out), up to ~$45 weekend/holiday; discount after 3pm. Lot fills early.<br>
+        <strong>Tip:</strong> Come at <b>low tide</b> for the sandbars &mdash; high tide shrinks the beach a lot.</p>
+        <div class="meta"><span class="tag mod">Reserve · $$</span><span class="tag weekday">Low tide / after 3pm</span></div>
+        <p class="small"><a href="https://gloucester-ma.gov/299/Beach-Information">Gloucester Beach Info</a></p>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Gloucester · ~50 min</div>
+        <h4>Good Harbor Beach</h4>
+        <p>Bigger surf and a classic ocean-beach feel, with a tidal island (Salt Island) you can walk to at low tide. Livelier &mdash; popular with teens and adults.</p>
+        <p class="small"><strong>Parking:</strong> Non-resident reservation via Blinkay, $40 weekday / $45 weekend. Fills earliest of the Gloucester beaches on nice days.<br>
+        <strong>Amenities:</strong> Bathhouse, showers, snack bar, lifeguards.</p>
+        <div class="meta"><span class="tag mod">Reserve · $$</span><span class="tag weekday">Reserve early</span></div>
+        <p class="small"><a href="https://gloucester-ma.gov/1215/Gloucester-Beaches---Detailed-Informatio">Gloucester Beaches</a></p>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Newburyport / Ipswich · ~1 hr</div>
+        <h4>Plum Island / Sandy Point</h4>
+        <p>A wild, quiet barrier island split between the Parker River wildlife refuge and Sandy Point State Reservation. For naturalists and solitude-seekers &mdash; a bargain, too.</p>
+        <p class="small"><strong>Fees (cheap):</strong> Refuge entry <b>$5/vehicle/day</b> ($2 per walker/biker), <b>cash/check only</b>. Sandy Point uses one-in/one-out once full &mdash; arrive early.<br>
+        <strong>Amenities:</strong> Minimal &mdash; limited restrooms, no snack bar, <b>no lifeguards</b>, boardwalks &amp; birding.<br>
+        <strong>⚠️</strong> Refuge beach <b>closes seasonally for piping plover nesting</b> &mdash; check open lots before you go.</p>
+        <div class="meta"><span class="tag cheap">$5 / car</span><span class="tag season">Naturalist spot</span></div>
+        <p class="small"><a href="https://www.fws.gov/refuge/parker-river/frequently-asked-questions">Parker River NWR</a></p>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Salisbury · ~1 hr</div>
+        <h4>Salisbury Beach State Reservation</h4>
+        <p>A big DCR beach + 484-site campground near the NH line, with an old-school boardwalk/arcade strip nearby. Family + camper crowd.</p>
+        <p class="small"><strong>Parking:</strong> Pay-by-plate kiosks, May 25&ndash;Oct 14. Annual pass $60 (MA residents). Daily kiosk fee otherwise.<br>
+        <strong>Amenities:</strong> Restrooms, outdoor showers, picnic pavilion, playground, kayak ramps on the Merrimack. Fried food &amp; arcades on the "Broadway" strip.</p>
+        <div class="meta"><span class="tag mod">$$ kiosk</span><span class="tag season">Boardwalk vibe</span></div>
+        <p class="small"><a href="https://www.mass.gov/locations/salisbury-beach-state-reservation">Mass.gov</a></p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Two North Shore hidden gems:</strong>
+      <b>Devereux Beach (Marblehead, ~35 min)</b> &mdash; small, pretty causeway beach, cheap non-resident parking ($5 Mon&ndash;Thu / $10 Fri&ndash;Sun), snack bar &amp; playground.
+      <b>Dane Street Beach (Beverly, ~40 min)</b> &mdash; <b>free</b> parking (tiny lot, fills fast), rocky sand great for sea-glass hunting, walkable to downtown Beverly.
+    </div>
+  </section>
+
+  <!-- ============ SOUTH SHORE ============ -->
+  <section class="section" id="bea-southshore">
+    <p class="kicker">South of the city</p>
+    <h2><span class="ic">🎡</span> South Shore</h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="where">📍 Hull · ~45 min · Ferry option</div>
+        <h4>Nantasket Beach</h4>
+        <p>The South Shore's Revere Beach &mdash; a big DCR ocean beach with the historic Paragon Carousel, an arcade, mini-golf, and real Atlantic surf. Great for teens; lively and all-ages.</p>
+        <p class="small"><strong>Fun car-free option:</strong> MBTA ferry from <b>Long Wharf/Hingham to Hull</b>, then a short shuttle/bike to the beach &mdash; the scenic winner.<br>
+        <strong>Parking:</strong> DCR charges May 25&ndash;Sept 7, $15/day residents / $40 non-residents (YODEL app). <b>Free off-season.</b><br>
+        <strong>Amenities:</strong> Bathhouse, showers, lifeguards, snack bars, arcade, carousel.</p>
+        <div class="meta"><span class="tag transit">⛴️ Ferry ✓</span><span class="tag mod">$$ / free off-season</span></div>
+        <p class="small"><a href="https://www.mass.gov/locations/nantasket-beach-reservation">Mass.gov</a></p>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Duxbury · ~50 min</div>
+        <h4>Duxbury Beach</h4>
+        <p>A long barrier beach known for clean water and a wild over-sand (4x4) stretch. Cleaner and calmer &mdash; family-oriented, scenic dunes and crossover bridge.</p>
+        <p class="small"><strong>Parking:</strong> Non-resident daily <b>$25, cash only</b> (Memorial Day&ndash;Labor Day, 9am&ndash;8pm). Non-residents can only buy an oversand sticker.<br>
+        <strong>Amenities:</strong> Bathhouse, rinse showers, lifeguards late June&ndash;Labor Day, beach wheelchair &amp; mobility mats on request.</p>
+        <div class="meta"><span class="tag mod">$25 cash</span><span class="tag season">Calm / family</span></div>
+        <p class="small"><a href="https://www.town.duxbury.ma.us/beach-operations/pages/visiting-duxbury-beach">Town of Duxbury</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CAPE ============ -->
+  <section class="section" id="bea-cape">
+    <p class="kicker">Cape Cod without the deep-Cape traffic</p>
+    <h2><span class="ic">🏝️</span> Cape gateway</h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="where">📍 Barnstable · ~1 hr 15 min</div>
+        <h4>Sandy Neck Beach</h4>
+        <p>The best "day-trip Cape" beach that doesn't require crossing deep into Cape traffic &mdash; a 6-mile barrier beach on Cape Cod Bay with big dunes and calmer Bay-side water.</p>
+        <p class="small"><strong>Parking:</strong> Daily non-resident fee ~$15&ndash;20 at the gatehouse (roughly 9am&ndash;3:45pm in season). Lot fills by late morning on hot weekends.<br>
+        <strong>Amenities:</strong> Gatehouse, restrooms, snack bar, lifeguards, trails, ORV program.</p>
+        <div class="meta"><span class="tag mod">$$ gatehouse</span><span class="tag weekday">Arrive early</span></div>
+        <p class="small"><a href="https://sandyneck.town.barnstable.ma.us/">Sandy Neck (official)</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NH ============ -->
+  <section class="section" id="bea-nh">
+    <p class="kicker">Just over the line</p>
+    <h2><span class="ic">🌊</span> Coastal New Hampshire</h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="where">📍 Hampton, NH · ~1 hr</div>
+        <h4>Hampton Beach</h4>
+        <p>The big, brash NH boardwalk beach &mdash; arcades, fried dough, nightly free summer concerts and fireworks. Loud, fun, a teen/young-adult magnet, with wide clean sand and real surf.</p>
+        <p class="small"><strong>Parking:</strong> Metered pay-by-plate, ~$2/hr May&ndash;Oct, 8am&ndash;midnight. State-park lot at the south end.<br>
+        <strong>Amenities:</strong> Year-round bathhouse, Seashell stage complex, lifeguards, endless food, free summer events (movies, yoga, sand-sculpting, fireworks).</p>
+        <div class="meta"><span class="tag cheap">$ metered</span><span class="tag season">Free summer events</span></div>
+        <p class="small"><a href="https://www.nhstateparks.org/find-parks-trails/hampton-beach-state-park">NH State Parks</a></p>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Rye, NH · ~1 hr 5 min</div>
+        <h4>Wallis Sands State Beach</h4>
+        <p>The quieter, cleaner alternative to Hampton &mdash; locals' pick on the NH seacoast. Bright white sand, a view to the Isles of Shoals, calmer and more family/adult-friendly.</p>
+        <p class="small"><strong>Parking:</strong> <b>$15/vehicle</b> (covers everyone in the car), 500-space lot. <b>Advance reservations recommended</b> on nice weekends (ReserveAmerica). Gates 8am&ndash;8pm.<br>
+        <strong>Amenities:</strong> Large bathhouse, outdoor rinse stations, camp store, lifeguards.</p>
+        <div class="meta"><span class="tag cheap">$15 / car</span><span class="tag weekday">Reserve weekends</span></div>
+        <p class="small"><a href="https://www.nhstateparks.org/find-parks-trails/wallis-sands-state-park">NH State Parks</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RI ============ -->
+  <section class="section" id="bea-ri">
+    <p class="kicker">Worth it for surf &amp; big sand</p>
+    <h2><span class="ic">🏄</span> Rhode Island</h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="where">📍 Narragansett, RI · ~1 hr 25 min</div>
+        <h4>Narragansett Town Beach</h4>
+        <p>The most easily reachable RI beach from Boston and a top New England <b>surf</b> beach &mdash; surf schools, a seawall promenade, and a walkable town center. Teens/young adults, lively but not a carnival.</p>
+        <p class="small"><strong>Fees:</strong> $10/vehicle weekdays, $15 weekends, plus a per-person walk-on beach fee in season. Non-residents use the West Lot. <b>Free to all after Labor Day.</b><br>
+        <strong>Go:</strong> Weekday for easier parking; after Labor Day for free entry and clean surf.</p>
+        <div class="meta"><span class="tag cheap">$ / free after Labor Day</span><span class="tag season">Best surf</span></div>
+        <p class="small"><a href="https://narragansettri.gov/323/Narragansett-Town-Beach">Town of Narragansett</a></p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="section" id="bea-cheatsheet">
+    <p class="kicker">Print this</p>
+    <h2>🧾 Planning cheat-sheet</h2>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>If you want…</th><th>Go here</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>No car</strong></td><td>Revere &amp; Constitution (Blue Line), Wollaston (Red Line+bus), Singing Beach (train+walk), Crane (train+shuttle), Nahant, Nantasket (ferry), Spectacle Island (ferry)</td></tr>
+          <tr><td><strong>Cheapest parking</strong></td><td>Plum Island / Sandy Point ($5/car), free DCR lots (Constitution, Wollaston), free street parking at Nahant &amp; Revere</td></tr>
+          <tr><td><strong>Must reserve ahead</strong></td><td>Crane (non-member), Wingaersheek &amp; Good Harbor (Blinkay app), Wallis Sands on hot weekends</td></tr>
+          <tr><td><strong>Real surf</strong></td><td>Narragansett (RI), Good Harbor, Hampton (NH), Nantasket</td></tr>
+          <tr><td><strong>Calm / kids</strong></td><td>Wingaersheek (low tide), Constitution, Duxbury, Sandy Neck, Wallis Sands</td></tr>
+          <tr><td><strong>Free after Labor Day</strong></td><td>Narragansett (free), Nantasket &amp; most DCR (charging ends early Sept)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <strong>Value timing, universally:</strong> weekday mornings everywhere; <b>after 3&ndash;4pm</b> brings discounts at Crane, Good Harbor &amp; Wingaersheek; after Labor Day many fees drop or vanish. Always confirm current 2026 rates, reservation rules, and plover/water-quality closures on the linked official page before you drive out.
+    </div>
+  </section>
+  <p class="backtop"><a href="#home">↑ All guides</a></p>
+</section>
+<section class="guidesec" id="day" data-guide hidden>
+  <div class="guidehead">
+    <p class="kicker">🚗 &nbsp;Guide 03 · Towns worth the drive, and why</p>
+    <h2 class="guidetitle">Day trips from Boston.</h2>
+  </div>
+<div class="toc">
+    <a href="#day-northshore"><span class="ic">🦞</span> North Shore</a>
+    <a href="#day-cape"><span class="ic">🏝️</span> Cape Gateway</a>
+    <a href="#day-valley"><span class="ic">🎨</span> Pioneer Valley</a>
+    <a href="#day-berkshires"><span class="ic">🏔️</span> Berkshires</a>
+    <a href="#day-metrowest"><span class="ic">🧱</span> MetroWest</a>
+    <a href="#day-southshore"><span class="ic">⚓</span> South Shore</a>
+    <a href="#day-nhri"><span class="ic">🌊</span> New Hampshire &amp; RI</a>
+    <a href="#day-theme"><span class="ic">⭐</span> Best Towns by Theme</a>
+  </div>
+
+  <!-- NORTH SHORE -->
+  <section class="section" id="day-northshore">
+    <p class="kicker">~35&ndash;60 min · commuter rail friendly</p>
+    <h2><span class="ic">🦞</span> North Shore / Cape Ann</h2>
+    <p class="lede">The classic Boston day trip: harbors, antiques, First Period houses, and fried clams. Much of it is reachable on the <b>Newburyport/Rockport commuter line</b>.</p>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="where">📍 Essex · ~45&ndash;55 min · drive</div>
+        <h4>Essex</h4>
+        <p>A tiny shipbuilding village on the tidal Essex River, famous for two things: <b>antiques</b> (~30 shops in a mile along Rte 133) and <b>fried clams</b> — invented here at Woodman's in 1916. Add the Great Marsh, river cruises, and kayaking for a quintessential North Shore day most tourists skip.</p>
+        <p class="small"><b>Do:</b> Antique-hunt Main St (Howard's Flying Dragon, Main Street Antiques); Essex Shipbuilding Museum (May&ndash;Oct, ~$15); walk the free <b>Allyn Cox Reservation</b> (~1 mi of trails, marsh views); Essex River cruise; kayak the estuary.<br>
+        <b>Eat:</b> J.T. Farnham's (locals' clam pick) or Woodman's; C.K. Pearl for a riverside sit-down.<br>
+        <b>Note:</b> No commuter rail; seasonal CATA bus only. Antiques best on weekends; clam-shack lines shortest on weekdays.</p>
+        <div class="meta"><span class="tag free">Free to browse</span><span class="tag season">May&ndash;Oct best</span></div>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Ipswich · ~40&ndash;50 min · <span style="color:var(--teal)">commuter rail ✓</span></div>
+        <h4>Ipswich</h4>
+        <p>A quietly authentic colonial town with <b>more First Period (pre-1725) houses than anywhere in America</b> (~59 of them), plus the Crane Estate, Crane Beach, and clam heritage. Downtown is walkable straight from the train.</p>
+        <p class="small"><b>Do:</b> Free self-guided <b>First Period houses walk</b> from the station; Castle Hill / the Crane Estate Grand Allée; <b>Appleton Farms</b> (one of America's oldest, ~$7&ndash;10 parking, dairy store); Ipswich Ale Brewery; kayak the Ipswich River (Foote Brothers, ~$45); Willowdale &amp; Bradley Palmer state forests (free).<br>
+        <b>Eat:</b> Clam Box or the locals' pick Ipswich Clambake; Little Wolf Coffee.<br>
+        <b>Beach:</b> Crane Beach needs a <b>Timed Entry Pass</b> in 2026 — see the <a href="#bea">Beaches guide</a>.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag cheap">$ / free walks</span></div>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Gloucester &amp; Rockport · ~50 min · <span style="color:var(--teal)">commuter rail ✓</span></div>
+        <h4>Gloucester &amp; Rockport (Cape Ann)</h4>
+        <p>America's oldest seaport and its pretty artist-colony neighbor. Working harbor, granite coastline, galleries, and the beaches (Good Harbor, Wingaersheek) covered in the <a href="#bea">Beaches guide</a>. Rockport's <b>Bearskin Neck</b> is a walkable spit of tiny shops and the famous red "Motif No. 1" fishing shack.</p>
+        <p class="small"><b>Do:</b> Rockport is <b>dry-town-charming</b> and reachable car-free (Rockport line terminus); walk Bearskin Neck, browse galleries, then a harbor-front lunch. In Gloucester, the working waterfront and Stage Fort Park.<br>
+        <b>Go:</b> Weekdays or shoulder season to avoid summer parking crunches.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag season">Spring&ndash;fall</span></div>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Newburyport · ~55 min · <span style="color:var(--teal)">commuter rail ✓</span></div>
+        <h4>Newburyport</h4>
+        <p>A beautifully restored Federalist seaport at the mouth of the Merrimack &mdash; brick downtown, independent shops, a boardwalk, and Plum Island's wild beaches and birding just across the water.</p>
+        <p class="small"><b>Do:</b> Stroll the waterfront boardwalk &amp; Market Square; browse indie shops; drive out to <b>Plum Island / Parker River refuge</b> ($5/car) for beach &amp; birding.<br>
+        <b>Eat:</b> Brown Sugar by the Sea (Thai), The Black Cow (waterfront sunsets).</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag cheap">$&ndash;$$</span></div>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Salem · ~30 min · <span style="color:var(--teal)">commuter rail ✓</span></div>
+        <h4>Salem (beyond the witch stuff)</h4>
+        <p>Skip the tourist-trap witch attractions and Salem is a genuinely handsome maritime city &mdash; the world-class <b>Peabody Essex Museum</b>, historic waterfront, and gorgeous Federal architecture. October gets overwhelmed; go any other month.</p>
+        <p class="small"><b>Do:</b> Peabody Essex Museum, the Ropes Mansion garden, Salem Maritime NHS waterfront, Pickering Wharf.<br>
+        <b>Eat:</b> Ledger (farm-to-table in an old bank), Red's Sandwich Shop for breakfast.<br>
+        <b>Go:</b> Avoid all of October unless you love crowds; weekdays year-round are calm.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag weekday">Avoid October</span></div>
+      </div>
+
+      <div class="card">
+        <div class="where">📍 Marblehead · ~35 min · drive/bus</div>
+        <h4>Marblehead</h4>
+        <p>A sailing town with a jewel-box historic Old Town of crooked colonial streets above a yacht-filled harbor. Quiet, moneyed, and lovely for an aimless wander with harbor views and a beach.</p>
+        <p class="small"><b>Do:</b> Wander Old Town's lanes; Crocker Park &amp; Fort Sewall harbor overlooks; Devereux Beach (cheap parking, see <a href="#bea">Beaches</a>).<br>
+        <b>Go:</b> Spring&ndash;fall; weekday parking is far easier.</p>
+        <div class="meta"><span class="tag free">Free wandering</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CAPE -->
+  <section class="section" id="day-cape">
+    <p class="kicker">~60&ndash;90 min · beat the bridge traffic midweek</p>
+    <h2><span class="ic">🏝️</span> Cape Cod gateway (Upper Cape)</h2>
+    <p class="lede">The three closest, most accessible Cape day trips &mdash; do them <b>midweek or with an early start</b> to dodge 45&ndash;90 min of summer bridge traffic at the Sagamore/Bourne. The seasonal <b>CapeFLYER</b> train (South Station&ndash;Hyannis, Fri&ndash;Sun) gets you car-free onto the Cape.</p>
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="where">📍 Sandwich · ~1 hr</div>
+        <h4>Sandwich</h4>
+        <p>The oldest town on the Cape (1637) &mdash; a walkable, genuinely historic village that skips the honky-tonk.</p>
+        <p class="small"><b>Do:</b> the free <b>Sandwich Boardwalk</b> over the salt marsh; <b>Sandwich Glass Museum</b> (~$15, hourly glassblowing demos); <b>Heritage Museums &amp; Gardens</b> (100 acres, 1908 carousel, antique autos; daily through Oct 18); Cape Cod Canal path.<br>
+        <b>Coffee:</b> Snowy Owl Coffee Roasters; Marshland Bakery.</p>
+        <div class="meta"><span class="tag cheap">Free&ndash;$$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Falmouth · ~1 hr 25 min · <span style="color:var(--teal)">bus ✓</span></div>
+        <h4>Falmouth</h4>
+        <p>A real working town with the <b>Shining Sea Bikeway</b> &mdash; the only Cape bike path that runs right along the ocean.</p>
+        <p class="small"><b>Do:</b> bike the <b>10.7-mi Shining Sea Bikeway</b> (Falmouth → Woods Hole, past marshes &amp; beaches); Nobska Light; walkable Main Street; ferry to Martha's Vineyard (Island Queen). Peter Pan / P&amp;B buses make it car-free.<br>
+        <b>Eat:</b> Maison Villatte (French bakery), Pickle Jar Kitchen.</p>
+        <div class="meta"><span class="tag transit">🚌 Car-free ✓</span><span class="tag cheap">Free&ndash;$$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Woods Hole · ~1 hr 30 min · <span style="color:var(--teal)">bus/bike ✓</span></div>
+        <h4>Woods Hole</h4>
+        <p>A tiny, salty, intellectual science village (WHOI, NOAA, MBL) &mdash; refreshingly non-touristy. Parking is tight, so bike in or take the bus.</p>
+        <p class="small"><b>Do:</b> <b>Woods Hole Science Aquarium</b> (FREE, oldest US marine aquarium, touch tanks, seal feedings — Tue&ndash;Sat, call to confirm); WHOI Discovery Center (donation); the drawbridge &amp; harbor; ferry to the Vineyard.<br>
+        <b>Eat:</b> Pie in the Sky Bakery, Quicks Hole Taqueria.</p>
+        <div class="meta"><span class="tag free">Aquarium free</span><span class="tag transit">🚌 Car-free ✓</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- PIONEER VALLEY -->
+  <section class="section" id="day-valley">
+    <p class="kicker">~2 hrs west · pair two towns in a day</p>
+    <h2><span class="ic">🎨</span> Pioneer Valley (Connecticut River Valley)</h2>
+    <p class="lede">Three arts-and-college towns within ~20 min of each other. From Boston it's ~2 hrs by car; <b>Peter Pan</b> buses and the <b>Amtrak Valley Flyer</b> (to Northampton, <em>not</em> Amherst) make Northampton a feasible car-free trip.</p>
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="where">📍 Northampton · ~2 hrs · <span style="color:var(--teal)">bus/rail ✓</span></div>
+        <h4>Northampton</h4>
+        <p>Dense, fiercely independent small city anchored by Smith College &mdash; near-zero chains, deep arts/music scene, CNN "best towns" pick.</p>
+        <p class="small"><b>Do:</b> free <b>Smith College Museum of Art</b>; indie shops (Thornes Marketplace); live music (Iron Horse, The Drake, Academy of Music); Norwottuck Rail Trail; free summer "Bands on Brewster."<br>
+        <b>Coffee:</b> Woodstar Cafe, Haymarket Cafe.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag free">Museum free</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Amherst · ~1 hr 55 min · <span style="color:var(--teal)">bus ✓</span></div>
+        <h4>Amherst</h4>
+        <p>A literary Five College town &mdash; Emily Dickinson's home plus several <b>free</b> campus museums.</p>
+        <p class="small"><b>Do:</b> <b>Emily Dickinson Museum</b> (guided timed tours, ~$21); the <b>Yiddish Book Center</b>; free <b>Beneski</b> natural history &amp; UMCA contemporary art museums; Norwottuck Rail Trail; Puffer's Pond swimming.<br>
+        <b>Eat:</b> Black Sheep Deli, Atkins Farms.</p>
+        <div class="meta"><span class="tag transit">🚌 Car-free ✓</span><span class="tag free">Free museums</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Historic Deerfield · ~2 hrs · drive</div>
+        <h4>Historic Deerfield</h4>
+        <p>A remarkably intact colonial village &mdash; a mile-long Old Main Street of original 18th-century houses in a farming valley. A living-history village, not a re-creation.</p>
+        <p class="small"><b>Do:</b> the museum houses (Apr 18&ndash;Nov 29, Wed&ndash;Sun, <b>$20 adult / free under 13</b>, 2-day pass); walk the free historic street; Memorial Hall Museum.<br>
+        <b>Eat:</b> Champney's at the Deerfield Inn.<br>
+        <b>Go:</b> Fall foliage is spectacular; weekdays are contemplative (closed Mon&ndash;Tue).</p>
+        <div class="meta"><span class="tag cheap">$20 / kids free</span><span class="tag season">Apr&ndash;Nov</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- BERKSHIRES -->
+  <section class="section" id="day-berkshires">
+    <p class="kicker">~2.5&ndash;3 hrs · a stretch day trip or overnight</p>
+    <h2><span class="ic">🏔️</span> Berkshires gateway (far western MA)</h2>
+    <p class="lede"><b>Honest drive-time warning:</b> these are 2.5&ndash;3 hrs each way and transit from Boston is genuinely poor (a car is strongly recommended). Best as an early-start single-anchor day or an overnight &mdash; especially for a Tanglewood evening.</p>
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="where">📍 Great Barrington · ~2.5 hrs</div>
+        <h4>Great Barrington</h4>
+        <p>One of the most walkable, un-touristy downtowns in the Berkshires &mdash; independent, largely woman-owned shops and an outsized food scene.</p>
+        <p class="small"><b>Do:</b> browse Railroad/Main St; summer <b>Berkshire Busk!</b> street festival (Thu&ndash;Sat eves); hike <b>Monument Mountain</b> or <b>Bash Bish Falls</b> (MA's tallest waterfall) — both top foliage spots.<br>
+        <b>Eat:</b> Baba Louie's sourdough pizza.</p>
+        <div class="meta"><span class="tag free">Free&ndash;$$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Lenox · ~2.5 hrs</div>
+        <h4>Lenox (Tanglewood)</h4>
+        <p>A polished Gilded-Age village, the cultural heart of the Berkshires.</p>
+        <p class="small"><b>Do:</b> <b>Tanglewood</b> (BSO summer home, Jun 20&ndash;Sep 6; the <b>$25&ndash;40 lawn ticket + picnic</b> is the affordable move); <b>The Mount</b> (Edith Wharton's estate, free trails); Norman Rockwell Museum nearby (Stockbridge, under-18 free); Pleasant Valley wildlife sanctuary.<br>
+        <b>Eat:</b> Haven Café &amp; Bakery.</p>
+        <div class="meta"><span class="tag mod">Lawn ~$25&ndash;40</span><span class="tag season">Summer/fall</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 North Adams · ~3 hrs</div>
+        <h4>North Adams (MASS MoCA)</h4>
+        <p>A former mill city reinvented around <b>MASS MoCA</b>, one of the largest contemporary-art museums in the US. Gritty-cool and all-weather &mdash; a great rainy-day/winter anchor.</p>
+        <p class="small"><b>Do:</b> MASS MoCA ($25 adult, closed Tue — vast galleries, the Sol LeWitt building); Bright Ideas Brewing on campus; Natural Bridge State Park; drive up Mount Greylock; <b>The Clark</b> in Williamstown (under-18 free; <b>free for all Jan&ndash;Mar 2026</b>).<br>
+        <b>Eat:</b> PUBLIC eat+drink, Tunnel City Coffee.</p>
+        <div class="meta"><span class="tag mod">$$ museums</span><span class="tag season">Year-round</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- METROWEST -->
+  <section class="section" id="day-metrowest">
+    <p class="kicker">~15&ndash;40 min west · history, trails &amp; a walkable downtown</p>
+    <h2><span class="ic">🧱</span> MetroWest / historic west</h2>
+    <p class="lede">The literary-Revolutionary core of America, plus New England's best sculpture park and a genuinely walkable "Watch City." Several are reachable on the <b>Fitchburg commuter line</b>.</p>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="where">📍 Concord · ~35&ndash;45 min · <span style="color:var(--teal)">commuter rail ✓</span></div>
+        <h4>Concord</h4>
+        <p>The Transcendentalist-Revolutionary heart of America &mdash; house-museums, the "shot heard round the world," and genuinely good indie bookstores in a walkable town center locals still use.</p>
+        <p class="small"><b>Do:</b> <b>North Bridge</b> (Minute Man NHP, free; visitor center reopens May 1); <b>Walden Pond</b> (swim/walk, $8 MA parking &mdash; go before 10am on hot days, lot closes at capacity); <b>Concord Museum</b> (~$16, Thoreau's Walden desk &amp; a "two if by sea" lantern); <b>Orchard House</b> (the real <em>Little Women</em> house, guided tours); <b>Sleepy Hollow / Authors Ridge</b> (free &mdash; Emerson, Thoreau, Hawthorne, the Alcotts); <b>The Concord Bookshop</b> &amp; <b>Barrow Bookstore</b>; canoe the rivers from <b>South Bridge Boat House</b>.<br>
+        <b>Eat:</b> Verrill Farm deli &amp; bakery. <b>Go:</b> weekday, late spring or fall.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag cheap">Free&ndash;$$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Lexington · ~30 min · <span style="color:var(--teal)">bus/bike ✓</span></div>
+        <h4>Lexington</h4>
+        <p>Where the Revolution started (Battle Green), plus one of the country's best rail-trails. Car-free via Red Line to Alewife + bus, or bike in on the Minuteman.</p>
+        <p class="small"><b>Do:</b> the <b>Battle Green</b> (free); Lexington Historical Society taverns &mdash; <b>Buckman, Hancock-Clarke, Munroe</b> (combo $30, under-18 free); the <b>Minuteman Bikeway</b>; <b>Wilson Farm</b> (huge farm market since 1884); the <b>Lexington Venue</b> cinema; the free <b>Scottish Rite Masonic Museum</b> of American history.<br>
+        <b>Go:</b> April for reenactments; fall foliage on the bikeway.</p>
+        <div class="meta"><span class="tag transit">🚌 Car-free ✓</span><span class="tag cheap">Free&ndash;$$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Lincoln · ~30&ndash;40 min · drive</div>
+        <h4>Lincoln</h4>
+        <p>A rural conservation town packed with outsized culture: the largest sculpture park in New England, a working farm sanctuary, and a Bauhaus landmark, all within a few miles. A car is best here.</p>
+        <p class="small"><b>Do:</b> <b>deCordova Sculpture Park</b> (30 acres, ~60 outdoor works; <b>note the indoor galleries are closed for renovation in 2026 &mdash; the park, café &amp; store stay open</b>; free for Lincoln residents/Trustees/EBT); <b>Drumlin Farm</b> (Mass Audubon &mdash; owls, foxes, trails); <b>Gropius House</b> (Bauhaus icon, $15, tours on the hour); <b>Codman Estate</b> gardens (free to walk).<br>
+        <b>Go:</b> late spring&ndash;fall, weekdays.</p>
+        <div class="meta"><span class="tag cheap">Free&ndash;$$</span><span class="tag season">Spring&ndash;fall</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Sudbury · ~40 min · drive</div>
+        <h4>Sudbury</h4>
+        <p>Home to the <b>oldest operating inn in the United States</b>, plus a hidden hilltop viewpoint. Low-key and deeply historic.</p>
+        <p class="small"><b>Do:</b> <b>Longfellow's Wayside Inn</b> (since 1716 &mdash; dine in the historic tavern rooms; the working <b>Grist Mill</b> runs mid-Apr&ndash;mid-Nov, plus the Martha-Mary Chapel; grounds free); hike <b>Nobscot / Tippling Rock</b> to a 410-ft ledge with Boston skyline views on a clear day (free).<br>
+        <b>Eat:</b> the Wayside Inn tavern (book weekends ahead).</p>
+        <div class="meta"><span class="tag cheap">Free&ndash;$$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Waltham · ~20&ndash;30 min · <span style="color:var(--teal)">commuter rail ✓</span></div>
+        <h4>Waltham</h4>
+        <p>"Watch City" &mdash; the most everyday-local pick here: a dense, diverse, walkable dining-and-nightlife downtown (Moody Street) with real industrial history, a brewery, Federal-era estates, and Charles River paddling. The station sits at the top of Moody Street.</p>
+        <p class="small"><b>Do:</b> stroll <b>Moody Street</b> (international restaurants, cafés, dessert, bars); the <b>Charles River Museum of Industry &amp; Innovation</b> (birthplace of the American factory system) &amp; the historic <b>Watch Factory</b> walk; <b>Mighty Squirrel</b> brewing (new 2026 beer garden at Gore Place); <b>Gore Place</b> (1806 mansion + farm, free grounds); the free <b>Lyman Estate Greenhouses</b> (a winter-warmth gem); paddle the Charles "Lakes District."<br>
+        <b>Go:</b> Moody Street shines on weekend evenings; estates are weekday/Saturday tours.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag cheap">Free&ndash;$$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Nearby · add-ons</div>
+        <h4>Worth-it neighbors</h4>
+        <p class="small"><b>Wayland &amp; Weston</b> — trailheads, conservation land, and quiet estate roads; pleasant add-ons to a Sudbury/Lincoln day but thinner on marquee sites. Also see the <a href="#out">Battle Road Trail</a> and <a href="#bea">Walden Pond</a> in the other guides.</p>
+        <div class="meta"><span class="tag free">Free walks</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SOUTH SHORE -->
+  <section class="section" id="day-southshore">
+    <p class="kicker">~35&ndash;60 min south · harbors, lighthouses &amp; coast</p>
+    <h2><span class="ic">⚓</span> South Shore coast</h2>
+    <p class="lede">The <b>Greenbush commuter line</b> (West Hingham, Cohasset, North Scituate) and the <b>Boston&ndash;Hingham ferry</b> make several of these genuinely car-free. Hingham, Cohasset &amp; Scituate are ~15 min apart, so they loop together.</p>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="where">📍 Hingham · ~35 min · <span style="color:var(--teal)">rail/ferry ✓</span></div>
+        <h4>Hingham</h4>
+        <p>Polished, historic, walkable &mdash; its Main Street was called "the most beautiful in America" by Eleanor Roosevelt. Reachable by Greenbush rail or the <b>Boston ferry</b> to the Shipyard.</p>
+        <p class="small"><b>Do:</b> the self-guided <b>Main Street walk</b> past Old Ship Church (1681, oldest in continuous US use); <b>World's End</b> (Trustees &mdash; 251-acre Olmsted peninsula, skyline views; $10&ndash;15/car, <b>reserve weekend parking online</b>); <b>Wompatuck State Park</b> (12+ mi of bike trails, old WWII bunkers, free day use); the <b>Hingham Shipyard</b> (waterfront dining + Patriot Cinemas at the ferry dock).<br>
+        <b>Eat:</b> Alma Nove (waterfront) or downtown cafés.</p>
+        <div class="meta"><span class="tag transit">⛴️ Car-free ✓</span><span class="tag cheap">Free&ndash;$$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Cohasset · ~40&ndash;45 min · <span style="color:var(--teal)">Greenbush ✓</span></div>
+        <h4>Cohasset</h4>
+        <p>A postcard "ultimate New England town" &mdash; white-steepled common, working harbor, and a dramatic rocky "Gold Coast" shoreline (it stood in for the town in <em>The Witches of Eastwick</em>).</p>
+        <p class="small"><b>Do:</b> the <b>Village Green &amp; St. Stephen's</b> (oldest continuous carillon series in North America, summer Sundays); <b>Cohasset Harbor</b> (waterfront dining, lighthouse views); <b>Whitney &amp; Thayer Woods</b> (Trustees, ~10 mi of trails, glacial boulders, free); the <b>Jerusalem Road</b> coastal drive/bike past Minot's Ledge Light; <b>Holly Hill Farm</b> stand (Apr&ndash;Nov).<br>
+        <b>Go:</b> summer for the carillon/beach, fall for the woods.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free-ish</span><span class="tag cheap">Free&ndash;$$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Scituate · ~45&ndash;50 min · <span style="color:var(--teal)">Greenbush ✓</span></div>
+        <h4>Scituate</h4>
+        <p>The heart of the "Irish Riviera" &mdash; a lived-in coastal town (not a tourist trap) with a picturesque working harbor, a beloved lighthouse, and deep Irish-American character.</p>
+        <p class="small"><b>Do:</b> <b>Scituate Lighthouse</b> (c.1811, free grounds &amp; harbor-mouth views); <b>Scituate Harbor</b> (indie shops, seafood, waterfront strolls); <b>Lawson Tower</b> (a 153-ft disguised water tower with a carillon &mdash; exterior anytime, interior climb only ~4 days/yr); the scenic <b>Driftway</b> to the historic grist mill; <b>Widow's Walk</b> (a pioneering "green" municipal golf course).<br>
+        <b>Eat:</b> Lucky Finn Café (harbor), Hibernian Tavern.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag cheap">Free&ndash;$$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Plymouth · ~50&ndash;60 min · Kingston/Plymouth rail</div>
+        <h4>Plymouth (beyond the Rock)</h4>
+        <p>A real small city with a walkable waterfront, living-history museums, a legit craft-beverage scene, whale watching, and big pine-barrens wilderness inland &mdash; far more than the Rock. A car helps here.</p>
+        <p class="small"><b>Do:</b> <b>Plimoth Patuxet Museums</b> (living history + Mayflower II + grist mill; ~$46 combo &mdash; <b>note Mayflower II is away in Boston Jul 7&ndash;17, 2026</b>); the walkable <b>waterfront &amp; Town Wharf</b>; <b>Pilgrim Memorial State Park</b> &amp; <b>Brewster Gardens</b> (free); <b>Burial Hill</b> (Mayflower graves, harbor overlook); the <b>brewery/distillery trail</b> (Second Wind, IndieFerm, Dirty Water Distillery); whale watching (Captain John Boats, Apr&ndash;Oct); <b>Myles Standish State Forest</b> (kettle-pond swimming, trails).<br>
+        <b>Go:</b> May&ndash;Oct, weekdays for Plimoth &amp; parking.</p>
+        <div class="meta"><span class="tag cheap">Free&ndash;$$</span><span class="tag season">May&ndash;Oct</span></div>
+      </div>
+    </div>
+    <div class="callout"><strong>Also on this coast:</strong> <b>Hull / Nantasket</b> (Paragon Carousel, arcades, ~23-min ferry from Boston) and refined <b>Duxbury</b> (Snug Harbor village, French Memories bakery, Island Creek Oysters). Their beaches are detailed in the <a href="#bea">Beaches guide</a>.</div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- NH & RI -->
+  <section class="section" id="day-nhri">
+    <p class="kicker">~1&ndash;1.5 hrs · over the state line</p>
+    <h2><span class="ic">🌊</span> New Hampshire &amp; Rhode Island</h2>
+    <p class="lede">Two of the best small-city day trips in New England &mdash; and both <b>Portsmouth and Providence are genuinely car-free</b> (bus and train). Newport is worth it too, but best <em>off-season</em> and realistically needs a car.</p>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="where">📍 Portsmouth, NH · ~1 hr · <span style="color:var(--teal)">C&amp;J bus ✓</span></div>
+        <h4>Portsmouth, NH</h4>
+        <p>Arguably the best "small city" day trip in New England &mdash; a compact, walkable brick seaport with colonial streets, a working waterfront, and an outsized independent food/brewery/bakery scene. The <b>C&amp;J bus</b> from South Station/Logan makes it fully car-free.</p>
+        <p class="small"><b>Do:</b> <b>Strawbery Banke Museum</b> (10-acre living-history village, ~$25, 2-day ticket; Apr&ndash;Nov); <b>Market Square</b> &amp; indie shops (Gibson's Bookstore); <b>Prescott Park</b> (free waterfront gardens + a pay-what-you-can summer arts festival); <b>Albacore Park</b> (climb inside a 1953 research submarine, ~$10&ndash;15, great for teens); the free <b>historic South End</b> walk; <b>Liar's Bench</b> brewery on the Islington St. local strip.<br>
+        <b>Eat:</b> <b>Ceres Bakery</b> (the Portsmouth institution since 1980).<br>
+        <b>Note:</b> Redhook is now Cisco Brewers; Great Rhythm moved out of downtown.</p>
+        <div class="meta"><span class="tag transit">🚌 Car-free ✓</span><span class="tag cheap">Free&ndash;$$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Providence, RI · ~1 hr · <span style="color:var(--teal)">MBTA train ✓</span></div>
+        <h4>Providence, RI</h4>
+        <p>A genuinely underrated small city &mdash; walkable, arts-and-college-driven (Brown + RISD), full of independent food and gorgeous colonial architecture. The <b>MBTA Providence line</b> ($10 weekend pass) drops you steps from downtown.</p>
+        <p class="small"><b>Do:</b> <b>WaterFire</b> (free riverfront bonfire spectacle &mdash; time a full-lighting Saturday; big 2026 dates May 30 "500th," Jul 4, Aug 1, Aug 29, Nov 7); <b>RISD Museum</b> (one of the best college art museums; <b>free all day Sunday &amp; Thu 5&ndash;8pm</b>); the <b>Benefit Street "Mile of History"</b> walk &amp; the Providence Athenaeum; <b>Federal Hill</b> dining (DePasquale Square); <b>Roger Williams Park &amp; Zoo</b>; <b>India Point Park</b> &amp; the AS220 arts complex.<br>
+        <b>Go:</b> May&ndash;Oct; a WaterFire Saturday for the spectacle, a weekday for calmer museums.</p>
+        <div class="meta"><span class="tag transit">🚆 Car-free ✓</span><span class="tag free">WaterFire free</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Newport, RI · ~1.5 hrs · car advised</div>
+        <h4>Newport, RI (off-season)</h4>
+        <p>The mansions and the Cliff Walk without the summer crush. <b>September&ndash;October is the sweet spot</b> &mdash; thin crowds, great light, lower rates. Transit is multi-transfer and slow, so a car is realistically best here.</p>
+        <p class="small"><b>Do:</b> the free <b>Cliff Walk</b> (3.5 mi between surf and mansion lawns &mdash; note a mid-section detour is in effect for 2026; start at Narragansett Ave toward Easton's Beach); the <b>Gilded-Age mansions</b> (The Breakers ~$32, or a "Plus One" combo ~$45; new 2026 third-floor Vanderbilt tour); <b>Bowen's &amp; Bannister's Wharves</b>; <b>Fort Adams State Park</b> (free harbor-view grounds); the <b>Ocean Drive</b> loop &amp; <b>Brenton Point</b> (free kite-flying and sunsets); <b>Thames Street</b> shops.<br>
+        <b>Go:</b> off-season weekday; avoid July&ndash;Aug weekends.</p>
+        <div class="meta"><span class="tag cheap">Free&ndash;$$</span><span class="tag season">Sept&ndash;Oct best</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Exeter &amp; Newmarket, NH · ~1 hr</div>
+        <h4>Exeter &amp; Newmarket, NH</h4>
+        <p>Quieter add-ons near Portsmouth (~20&ndash;30 min west) &mdash; classic walkable downtowns without the tourist volume.</p>
+        <p class="small"><b>Exeter:</b> the <b>American Independence Museum</b> (holds a 1776 Dunlap broadside of the Declaration), riverside <b>Swasey Parkway</b>, and an indie-shop downtown with a couple of breweries. <b>Newmarket:</b> restored brick mills on the Lamprey River with a strong small-town food/arts scene &mdash; best as a meal/drink stop.</p>
+        <div class="meta"><span class="tag cheap">Free&ndash;$</span></div>
+      </div>
+    </div>
+    <div class="callout tip"><strong>Car-free scorecard:</strong> <b>Portsmouth</b> (C&amp;J bus) and <b>Providence</b> (MBTA train, $10 weekend pass) are easy car-free days. <b>Newport</b> is a multi-transfer slog &mdash; drive it. Coastal NH/RI beaches (Wallis Sands, Hampton, Narragansett) are in the <a href="#bea">Beaches guide</a>.</div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- THEME -->
+  <section class="section" id="day-theme">
+    <p class="kicker">Pick by mood</p>
+    <h2><span class="ic">⭐</span> Best towns by theme</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>If you want…</th><th>Go to</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Antiquing</strong></td><td>Essex (30 shops) · Brimfield (3 weeks/yr) · Sheffield/Great Barrington area</td></tr>
+          <tr><td><strong>A car-free rail day</strong></td><td>Rockport · Salem · Ipswich · Newburyport · Concord · Waltham · Providence &amp; Portsmouth (train/bus)</td></tr>
+          <tr><td><strong>Waterfront &amp; harbors</strong></td><td>Rockport · Marblehead · Cohasset · Scituate · Hingham · Portsmouth NH · Newport RI</td></tr>
+          <tr><td><strong>Fall foliage</strong></td><td>Historic Deerfield · Great Barrington (Monument Mtn) · North Adams (Greylock) · Concord</td></tr>
+          <tr><td><strong>Rainy-day / all-weather</strong></td><td>North Adams (MASS MoCA) · Salem (PEM) · Providence (RISD Museum) · Waltham (industry museum)</td></tr>
+          <tr><td><strong>Best food town</strong></td><td>Great Barrington · Portsmouth NH · Providence RI · Waltham (Moody St) · Essex (clams)</td></tr>
+          <tr><td><strong>History without the crowds</strong></td><td>Concord &amp; Lexington · Historic Deerfield · Ipswich (First Period) · Plymouth (beyond the Rock)</td></tr>
+          <tr><td><strong>Free / cheap day</strong></td><td>Woods Hole (free aquarium) · Amherst (free museums) · Providence WaterFire · Newport Cliff Walk · Sandwich boardwalk</td></tr>
+          <tr><td><strong>Biking</strong></td><td>Falmouth (Shining Sea) · Lexington/Concord (Minuteman &amp; Battle Road) · Hingham (Wompatuck)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <strong>Universal timing tip:</strong> weekdays and shoulder seasons transform these towns &mdash; parking opens up, lines vanish, and the Cape bridges stop being a two-hour penalty. Where a town is reachable by commuter rail or bus, taking it removes the single biggest headache (parking) entirely.
+    </div>
+  </section>
+  <p class="backtop"><a href="#home">↑ All guides</a></p>
+</section>
+<section class="guidesec" id="eat" data-guide hidden>
+  <div class="guidehead">
+    <p class="kicker">🍽️ &nbsp;Guide 04 · ~85 places, all verified open</p>
+    <h2 class="guidetitle">The Restaurant Guide.</h2>
+  </div>
+<div class="callout tip">
+    <strong>The weekend rule:</strong> the brunch spots and clam shacks here get punishing lines Sat/Sun 10am&ndash;1pm and on the first warm weekends of summer. Go on a <b>weekday</b> or right at open and you skip almost all of it. <b>Cash-only</b> and <b>no-reservations</b> spots are flagged inline.
+  </div>
+
+  <div class="toc">
+    <a href="#eat-cheap"><span class="ic">💸</span> Cheap Eats</a>
+    <a href="#eat-asian"><span class="ic">🥟</span> Asian &amp; Dim Sum</a>
+    <a href="#eat-global"><span class="ic">🌍</span> Global Gems</a>
+    <a href="#eat-seafood"><span class="ic">🦞</span> Seafood &amp; Clams</a>
+    <a href="#eat-pizza"><span class="ic">🍕</span> Pizza &amp; Bar Pizza</a>
+    <a href="#eat-brunch"><span class="ic">🥞</span> Brunch &amp; Diners</a>
+    <a href="#eat-sweets"><span class="ic">🍦</span> Bakeries &amp; Ice Cream</a>
+    <a href="#eat-latenight"><span class="ic">🌙</span> Late Night</a>
+    <a href="#eat-halls"><span class="ic">🏛️</span> Food Halls</a>
+    <a href="#eat-bythet"><span class="ic">🚇</span> Best by the T</a>
+  </div>
+
+  <!-- CHEAP -->
+  <section class="section" id="eat-cheap">
+    <p class="kicker">Under ~$15 a person</p>
+    <h2><span class="ic">💸</span> Cheap eats &amp; hole-in-the-wall gems</h2>
+    <div class="grid cols-3">
+      <div class="card"><h4>Gene's Chinese Flatbread Cafe</h4><div class="where">📍 Downtown Crossing</div><p class="small">Xi'an hand-pulled "big tray chicken" noodles, cumin lamb flatbread. Tiny counter. <b>Cash-only, lunch lines.</b></p><div class="meta"><span class="tag cheap">$</span><span class="tag">Teens</span></div></div>
+      <div class="card"><h4>163 Vietnamese Sandwich</h4><div class="where">📍 Chinatown</div><p class="small">Classic combo banh mi under $7, bubble tea. Grab-and-go.</p><div class="meta"><span class="tag cheap">$</span><span class="tag">Quick bite</span></div></div>
+      <div class="card"><h4>Dumpling House</h4><div class="where">📍 Central Sq, Cambridge</div><p class="small">Steamed soup dumplings, braised eggplant, dry-fried crispy chicken. <b>Long weekend waits.</b></p><div class="meta"><span class="tag cheap">$</span><span class="tag">Groups</span></div></div>
+      <div class="card"><h4>Sullivan's Castle Island</h4><div class="where">📍 South Boston</div><p class="small">Hot dogs, onion rings, fried clams, soft serve with a harbor view. James Beard America's Classic. <b>Seasonal, cash preferred.</b></p><div class="meta"><span class="tag cheap">$</span><span class="tag">Families</span></div></div>
+      <div class="card"><h4>Saloniki Greek</h4><div class="where">📍 Fenway / Cambridge</div><p class="small">Braised pork or lemon-chicken pita (~$12), Greek fries. Bright, quick (James Beard chef Jody Adams).</p><div class="meta"><span class="tag cheap">$</span><span class="tag">Teens</span></div></div>
+      <div class="card"><h4>Saus</h4><div class="where">📍 Downtown + Bow Market</div><p class="small">Belgian frites with house dips, waffles. Fun and casual.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Evergreen</h4><div class="where">📍 Jamaica Plain</div><p class="small">$5-ish egg &amp; cheese, avocado toast. Cozy neighborhood café.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Colombian empanada spots</h4><div class="where">📍 East Boston / Revere</div><p class="small">$1.50 beef empanadas, stewed-chicken turnovers, bandeja paisa. "Almost nothing over $20."</p><div class="meta"><span class="tag cheap">$</span></div></div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ASIAN -->
+  <section class="section" id="eat-asian">
+    <p class="kicker">The city does this exceptionally well</p>
+    <h2><span class="ic">🥟</span> Vietnamese, Chinese, dim sum, Korean</h2>
+
+    <h3>Vietnamese — Dorchester's Fields Corner</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Pho Le</h4><div class="where">📍 Fields Corner</div><p class="small">Pho dac biet with the full works. Unpretentious community favorite.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Ba Le</h4><div class="where">📍 Fields Corner</div><p class="small">Banh mi dac biet on housemade baguette; 30+ years.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Huong Que</h4><div class="where">📍 Fields Corner</div><p class="small">Bun bo hue. Casual.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+    </div>
+
+    <h3>Chinese &amp; dim sum — Chinatown, Quincy, Malden</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Ming's Seafood ★</h4><div class="where">📍 Malden</div><p class="small">Menu-order dim sum; the current area favorite (Globe's best-in-area). <b>Weekend late-morning waits.</b></p><div class="meta"><span class="tag cheap">$&ndash;$$</span><span class="tag">Groups</span></div></div>
+      <div class="card"><h4>Hei La Moon</h4><div class="where">📍 Chinatown</div><p class="small">Cavernous cart-style dim sum — shrimp dumplings, turnip cake, egg tarts.</p><div class="meta"><span class="tag cheap">$&ndash;$$</span></div></div>
+      <div class="card"><h4>Winsor Dim Sum Cafe</h4><div class="where">📍 Chinatown (Tyler St)</div><p class="small">Made-to-order (no carts) — soup dumplings, fresh har gow. Small &amp; fast.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>China Pearl</h4><div class="where">📍 Quincy</div><p class="small">Classic cart dim sum in a banquet hall. <em>Chinatown flagship under renovation — Quincy is the operating one.</em></p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Mala Restaurant</h4><div class="where">📍 Allston</div><p class="small">Called Boston's best Szechuan — mala dry pot, water-boiled fish, cumin lamb.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Chili Square</h4><div class="where">📍 Quincy</div><p class="small">Xi'an biang biang hand-pulled noodles, spicy cumin lamb.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+    </div>
+
+    <h3>Korean — Allston (unofficial K-town)</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Seoul Soulongtang</h4><p class="small">Seolleongtang ox-bone soup. Cozy, authentic.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Coreanos</h4><p class="small">Korean-Mexican — kimchi quesadilla, bulgogi tacos. Teen-friendly.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Bonchon</h4><p class="small">Soy-garlic &amp; spicy Korean fried chicken; open till 11pm.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Seoul Topokki</h4><p class="small">Rose tteokbokki, rabokki, Korean corn dogs.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Naksan Korean BBQ</h4><p class="small">Tabletop grill, premium beef sets, banchan.</p><div class="meta"><span class="tag mod">$$</span><span class="tag">Groups</span></div></div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- GLOBAL -->
+  <section class="section" id="eat-global">
+    <p class="kicker">Neighborhoods worth the trip</p>
+    <h2><span class="ic">🌍</span> Global gems — Indian/Nepali, Middle Eastern, Ethiopian, Portuguese, Salvadoran, Mexican</h2>
+    <div class="grid cols-3">
+      <div class="card"><h4>Himalayan Bistro</h4><div class="where">📍 West Roxbury · Nepali</div><p class="small">Plump momos, dosa, pakora. Neighborhood institution.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Kantipur Cafe</h4><div class="where">📍 Cambridge · Nepali</div><p class="small">Momos, thali. Small, 4.8-rated.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>CHULO Cuisine &amp; Bar</h4><div class="where">📍 Watertown · Nepali</div><p class="small">Chatpate, momos, sekuwa; bar + dining.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Sevan's Bakery</h4><div class="where">📍 Watertown · Armenian</div><p class="small">Lahmajun, stuffed grape leaves, pastries; market goods too.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Jana Grill</h4><div class="where">📍 Watertown · Armenian/Georgian</div><p class="small">Kebabs, mezze, khachapuri. Family-run, sharing-friendly.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Sofra Bakery &amp; Café</h4><div class="where">📍 Cambridge/Belmont · E. Med</div><p class="small">Spiced flatbreads, morning buns, mezze (chef Maura Kilpatrick). <b>Weekend lines.</b></p><div class="meta"><span class="tag cheap">$&ndash;$$</span></div></div>
+      <div class="card"><h4>Blue Nile</h4><div class="where">📍 Jamaica Plain · Ethiopian</div><p class="small">Shiro &amp; doro wat, veggie combo on injera. Communal.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Asmara</h4><div class="where">📍 Central Sq · Eritrean</div><p class="small">Kitfo, tsebhi derho, combo platter. Long-running.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>The Neighborhood Restaurant</h4><div class="where">📍 Union Sq · Portuguese</div><p class="small">Huge Portuguese-American breakfasts, cream of wheat, sweet bread. Big patio. <b>Weekend waits.</b></p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Oliveira's Steakhouse</h4><div class="where">📍 Somerville · Brazilian</div><p class="small">Rodizio meats, weekend feijoada, pão de queijo. Lively.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Topacio</h4><div class="where">📍 East Boston · Salvadoran</div><p class="small">Bean-and-cheese &amp; loroco pupusas, curtido. Hole-in-the-wall.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Pueblo Viejo</h4><div class="where">📍 East Boston + Chelsea · Salvadoran</div><p class="small">Pupusas revueltas, yuca frita, plantains. Grew from a pupusa cart.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Angela's Café</h4><div class="where">📍 East Boston · Mexican (Puebla)</div><p class="small">Cemitas, mole, chiles rellenos. Tiny, homey.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Taqueria Jalisco</h4><div class="where">📍 East Boston · Mexican</div><p class="small">Birria tacos, al pastor, lengua. EB institution since 2007.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>El Pelón Taqueria</h4><div class="where">📍 Fenway + Brighton · Mexican</div><p class="small">Cornmeal-crusted fish tacos, al pastor, plantains. Packed pre-Sox.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SEAFOOD -->
+  <section class="section" id="eat-seafood">
+    <p class="kicker">New England, done right — not touristy</p>
+    <h2><span class="ic">🦞</span> Seafood &amp; clam shacks</h2>
+    <div class="callout">Locals skip the pricey, touristy raw bars downtown and go to <b>Belle Isle</b>, <b>Yankee Lobster</b>, and <b>Alive &amp; Kicking</b> instead.</div>
+    <h3>In the city / near-in</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Belle Isle Seafood</h4><div class="where">📍 East Boston / Winthrop line</div><p class="small">Overstuffed lobster roll, fried clams, marsh views. Market + counter.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Yankee Lobster Co.</h4><div class="where">📍 Seaport</div><p class="small">Split-top lobster roll, chowder, steamers. Family-owned counter, 75 yrs.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Alive &amp; Kicking Lobsters</h4><div class="where">📍 Cambridgeport</div><p class="small">The lobster sandwich — lightly dressed meat on grilled white bread. Hidden shack.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+    </div>
+    <h3>North Shore clam shacks (day trip, worth it)</h3>
+    <div class="grid cols-2">
+      <div class="card"><h4>J.T. Farnham's ★</h4><div class="where">📍 Essex</div><p class="small">Whole-belly fried clams, buttered lobster roll, marshside. The locals' insider pick. <b>Cash-friendly, seasonal, lines.</b></p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Woodman's of Essex</h4><div class="where">📍 Essex</div><p class="small">Since 1914; claims to have invented the fried clam (1916). Cafeteria-style, big portions. <b>Lines.</b></p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>The Clam Box of Ipswich</h4><div class="where">📍 Ipswich</div><p class="small">Whole-belly clams in the iconic 1935 clam-box building. <b>Long lines, seasonal.</b></p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Kelly's Roast Beef</h4><div class="where">📍 Revere Beach (original)</div><p class="small">The original roast beef sandwich; also fried clams. Beachfront walk-up since 1951.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+    </div>
+    <h3>North Shore roast beef (a genuine regional icon)</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Nick's Famous Roast Beef</h4><div class="where">📍 Beverly</div><p class="small">The "three-way" super beef (BBQ, mayo, cheese) on an onion roll. <em>New owners Jan 2025, still beloved.</em></p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Kelly's Roast Beef</h4><div class="where">📍 Revere / Saugus / Danvers</div><p class="small">The benchmark. See above.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Londi's</h4><div class="where">📍 Peabody</div><p class="small">Three-way beef; old-guard shop.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- PIZZA -->
+  <section class="section" id="eat-pizza">
+    <p class="kicker">Multiple Boston styles</p>
+    <h2><span class="ic">🍕</span> Pizza &amp; South Shore bar pizza</h2>
+    <div class="grid cols-3">
+      <div class="card"><h4>Santarpio's</h4><div class="where">📍 East Boston</div><p class="small">Cheese-and-sausage pie, lamb skewers off the grill. Gritty, legendary. <b>No-frills, cash-friendly.</b></p><div class="meta"><span class="tag cheap">$&ndash;$$</span></div></div>
+      <div class="card"><h4>Galleria Umberto</h4><div class="where">📍 North End</div><p class="small">~$2 Sicilian squares, arancini, panzarotti. James Beard classic. <b>Cash-only, lunch-only 'til it sells out.</b></p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Regina Pizzeria (original)</h4><div class="where">📍 North End (Thacher St)</div><p class="small">Spicy-sauce cheese pie with romano. The <em>original</em> location, not the mall clones. <b>Lines.</b></p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Si Cara</h4><div class="where">📍 Central Sq, Cambridge</div><p class="small">Puffy-crust canotto margherita + natural wine. Cool date spot.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Florina Pizzeria</h4><div class="where">📍 Beacon Hill +</div><p class="small">Crisp thin-crust &amp; Sicilian square. Casual.</p><div class="meta"><span class="tag cheap">$&ndash;$$</span></div></div>
+    </div>
+    <div class="callout tip"><strong>South Shore bar pizza</strong> — the regional cult: laced, cheese-to-the-edge, cracker crust in a 10" pan. <b>Lynwood Cafe</b> (Randolph), <b>Town Spa Pizza</b> (Stoughton), <b>Cape Cod Cafe</b> (Brockton). All <span class="tag cheap">$</span>, all worth the drive.</div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- BRUNCH -->
+  <section class="section" id="eat-brunch">
+    <p class="kicker">Go weekday to skip the wait</p>
+    <h2><span class="ic">🥞</span> Breakfast, brunch &amp; diners</h2>
+    <div class="grid cols-3">
+      <div class="card"><h4>3 Little Figs</h4><div class="where">📍 Somerville</div><p class="small">Greek-inflected brunch, spinach pie, yogurt with honey. Named MA's best brunch by Yelp Elites 2025. <b>Small — weekend waits.</b></p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>S&amp;S Restaurant</h4><div class="where">📍 Inman Sq, Cambridge</div><p class="small">Classic diner since 1919 — omelets, blintzes, waffles.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Mike &amp; Patty's</h4><div class="where">📍 Bay Village + Bow Market</div><p class="small">"The Fancy" breakfast sandwich. Tiny takeout window. <b>Weekend lines.</b></p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Mass Ave Diner</h4><div class="where">📍 Cambridge</div><p class="small">Omelets, pancakes, French toast; opens 6:30am. No-frills.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>The Neighborhood Restaurant</h4><div class="where">📍 Union Sq, Somerville</div><p class="small">Best big-portion weekday breakfast (see Global). <b>Weekend waits.</b></p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Red's Sandwich Shop</h4><div class="where">📍 Salem</div><p class="small">Old-school breakfast/lunch counter near Salem Common.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SWEETS -->
+  <section class="section" id="eat-sweets">
+    <p class="kicker">Made on-site</p>
+    <h2><span class="ic">🍦</span> Bakeries, cafés &amp; ice cream</h2>
+    <div class="grid cols-3">
+      <div class="card"><h4>Bova's Bakery</h4><div class="where">📍 North End · 24/7</div><p class="small">Cannoli filled to order, lobster tails, sub rolls. Since 1926. The late-night savior.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Flour Bakery + Cafe</h4><div class="where">📍 Multiple</div><p class="small">Sticky buns, egg sandwich, BLT (Joanne Chang). Reliable, bright.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Yafa Bakery &amp; Café</h4><div class="where">📍 Somerville · Palestinian</div><p class="small">Knafeh, baklava, chai karak, free samples.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Iggy's Bread</h4><div class="where">📍 Huron Village, Cambridge</div><p class="small">Croissants, country loaves. Best New Bakery-Café 2025.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Toscanini's ★</h4><div class="where">📍 Central/Kendall, Cambridge</div><p class="small">Burnt caramel, B3, khulfee. Best-of-Boston perennial.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Christina's Homemade</h4><div class="where">📍 Inman Sq, Cambridge</div><p class="small">Fresh mint, adzuki, 50+ rotating flavors. Legendary.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Richardson's Ice Cream</h4><div class="where">📍 Middleton</div><p class="small">Farm-made flavors on a working dairy (since 1695) + mini-golf/batting cages. A day-trip.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- LATE NIGHT -->
+  <section class="section" id="eat-latenight">
+    <p class="kicker">When everything else is closed</p>
+    <h2><span class="ic">🌙</span> Late-night eats</h2>
+    <div class="grid cols-3">
+      <div class="card"><h4>South Street Diner</h4><div class="where">📍 Leather District · 24/7</div><p class="small">Burgers, breakfast anytime, milkshakes. Boston's classic all-nighter.</p><div class="meta"><span class="tag cheap">$&ndash;$$</span></div></div>
+      <div class="card"><h4>Peach Farm</h4><div class="where">📍 Chinatown · to ~midnight</div><p class="small">Salt-and-pepper squid, clams in black bean, live seafood.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Dumpling Kingdom</h4><div class="where">📍 Allston · to 2am</div><p class="small">Mini juicy buns, roasted-duck buns.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>El Jefe's Taqueria</h4><div class="where">📍 Allston/Cambridge · to 2am</div><p class="small">Al pastor tacos, free guac.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Bova's Bakery</h4><div class="where">📍 North End · 24 hrs</div><p class="small">Cannoli at 3am. (See Sweets.)</p><div class="meta"><span class="tag cheap">$</span></div></div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FOOD HALLS -->
+  <section class="section" id="eat-halls">
+    <p class="kicker">Many options, one roof</p>
+    <h2><span class="ic">🏛️</span> Food halls &amp; markets</h2>
+    <div class="grid cols-2">
+      <div class="card"><h4>Bow Market</h4><div class="where">📍 Union Sq, Somerville</div><p class="small">Indie maker courtyard — Mike &amp; Patty's, Hot Box (bar pizza + roast beef), Carolicious (Venezuelan), Saus, plus Remnant Brewing. Great for groups &amp; teens.</p><div class="meta"><span class="tag cheap">$&ndash;$$</span></div></div>
+      <div class="card"><h4>Boston Public Market</h4><div class="where">📍 Downtown (Haymarket)</div><p class="small">30+ New England farmers/makers, year-round indoor — Union Square Donuts, local oysters. <em>Nonprofit, but open.</em></p><div class="meta"><span class="tag cheap">$&ndash;$$</span></div></div>
+      <div class="card"><h4>Super 88 / H-Mart food courts</h4><div class="where">📍 Allston &amp; suburbs</div><p class="small">Asian grocery food courts — cheap pho, banh mi, Korean, bubble tea.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Day-trip town picks</h4><div class="where">📍 North Shore / MetroWest</div><p class="small"><b>Ledger</b> (Salem, farm-to-table in a bank), <b>Brown Sugar by the Sea</b> &amp; <b>The Black Cow</b> (Newburyport waterfront), Framingham's Brazilian scene.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- BY THE T -->
+  <section class="section" id="eat-bythet">
+    <p class="kicker">No car needed</p>
+    <h2><span class="ic">🚇</span> Best cheap eats reachable by the T</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Line / stop</th><th>Go for</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Red · Central/Inman</strong></td><td>Toscanini's, Christina's, S&amp;S, Dumpling House, Asmara</td></tr>
+          <tr><td><strong>Red · Fields Corner</strong></td><td>Pho Le, Ba Le</td></tr>
+          <tr><td><strong>Orange · Chinatown</strong></td><td>163 Sandwich, Winsor Dim Sum, Hei La Moon, Peach Farm</td></tr>
+          <tr><td><strong>Green B · Allston</strong></td><td>Mala, Coreanos, Bonchon, Dumpling Kingdom</td></tr>
+          <tr><td><strong>Green D · Fenway</strong></td><td>Saloniki, El Pelón</td></tr>
+          <tr><td><strong>Blue · East Boston</strong></td><td>Topacio, Taqueria Jalisco, Santarpio's, Angela's</td></tr>
+          <tr><td><strong>Red · Downtown Crossing</strong></td><td>Gene's Chinese Flatbread</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <strong>Verification notes:</strong> every spot here carried a 2025&ndash;2026 signal of operation (recent guide inclusion, active site, or recent reviews). Watch these: <b>Nick's Roast Beef</b> (new owners Jan 2025), <b>China Pearl</b> (use the Quincy location), and clam shacks/Sullivan's are <b>seasonal</b> (spring&ndash;fall). Sources: Boston Globe Magazine cheap-eats/pizza/dim-sum/tacos features, Boston Magazine best-of guides, Eater/Patch, Sacha Eats, The Food Lens, WBUR, plus venues' own sites.
+    </div>
+  </section>
+  <p class="backtop"><a href="#home">↑ All guides</a></p>
+</section>
+<section class="guidesec" id="evt" data-guide hidden>
+  <div class="guidehead">
+    <p class="kicker">🎪 &nbsp;Guide 05 · Fairs, festivals, farmers &amp; flea markets</p>
+    <h2 class="guidetitle">Everything that&rsquo;s on &mdash; all year.</h2>
+  </div>
+<div class="callout tip">
+    <strong>Almost every festival &amp; feast is a weekend event.</strong> The reliable <em>weekday</em> staples are the farmers markets (Copley Tue/Fri, Central Sq Mon, Charlestown Wed, Brookline Thu, Lexington Tue) and the daily indoor markets. The flea/vintage core is <b>Sunday</b> (Todd Farm, SoWa) plus <b>Fri&ndash;Sat</b> (Haymarket). Outdoor flea markets can cancel for weather &mdash; check the organizer the day before.
+  </div>
+
+  <div class="toc">
+    <a href="#evt-fairs"><span class="ic">🎡</span> State &amp; County Fairs</a>
+    <a href="#evt-farmers"><span class="ic">🥬</span> Farmers Markets</a>
+    <a href="#evt-festivals"><span class="ic">🎉</span> Festivals by Month</a>
+    <a href="#evt-flea"><span class="ic">🪑</span> Flea &amp; Craft Markets</a>
+    <a href="#evt-thrift"><span class="ic">👖</span> Thrift &amp; Vintage</a>
+    <a href="#evt-calendar"><span class="ic">🗓️</span> Year Calendar</a>
+  </div>
+
+  <!-- FAIRS -->
+  <section class="section" id="evt-fairs">
+    <p class="kicker">Late summer through fall</p>
+    <h2><span class="ic">🎡</span> Massachusetts state &amp; county fairs (2026)</h2>
+    <p class="lede">Agricultural exhibits, 4-H, livestock, midways, demolition derbies, fair food, and craft/vendor halls. Admission is cheaper bought in advance online, and usually free for young kids.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Fair</th><th>2026 Dates</th><th>Location</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>The Big E</strong> (Eastern States Expo)</td><td><span class="mo">Sep 18 &ndash; Oct 4</span></td><td>W. Springfield (~90 min)</td><td>New England's largest fair. Avenue of States, cream puffs, huge concert lineup. ~$8&ndash;25.</td></tr>
+          <tr><td><strong>Topsfield Fair</strong></td><td><span class="mo">Oct 2 &ndash; 12</span></td><td>Topsfield, Rte 1 (~40 min)</td><td>Oldest county fair in the US (1818). Giant-pumpkin weigh-off; best fall fair near Boston. ~$12 adv.</td></tr>
+          <tr><td><strong>Marshfield Fair</strong></td><td><span class="mo">Aug 21 &ndash; 30</span></td><td>Marshfield (South Shore)</td><td>Big crowds, agriculture, midway. ~$5&ndash;15.</td></tr>
+          <tr><td><strong>Middlesex County 4-H Fair</strong></td><td><span class="mo">Aug 28 &ndash; 30</span></td><td>Westford</td><td>Closest true county fair to Boston; kid/animal focused.</td></tr>
+          <tr><td><strong>Bolton Fair</strong></td><td><span class="mo">Aug 14 &ndash; 16</span></td><td>Lancaster Fairgrounds</td><td>Traditional ag fair — derby, baking contests, 4-H.</td></tr>
+          <tr><td><strong>Barnstable County Fair</strong></td><td><span class="mo">Jul 20 &ndash; 26</span></td><td>E. Falmouth (Cape)</td><td>Cape Cod's big fair; admission includes entertainment.</td></tr>
+          <tr><td><strong>Three County Fair</strong></td><td><span class="mo">Sep 4 &ndash; 7</span></td><td>Northampton</td><td>One of America's oldest continuous fairs (Labor Day wknd).</td></tr>
+          <tr><td><strong>Spencer Fair</strong></td><td><span class="mo">Sep 4 &ndash; 7</span></td><td>Spencer (central MA)</td><td>Classic Labor Day country fair.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small">Also: <b>MA Sheep &amp; Woolcraft Fair</b> (~May 23&ndash;24, Cummington) for crafts. <b>Brockton Fair is closed</b> — don't plan around it. Cross-checked: <a href="https://www.easternstatesexposition.com/">Big E</a>, <a href="https://www.topsfieldfair.org/">Topsfield</a>, <a href="https://marshfieldfair.org/fair/">Marshfield</a>, <a href="https://www.mass.gov/doc/2026-fairs-flyer-by-date/download">mass.gov 2026 fairs flyer</a>.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FARMERS -->
+  <section class="section" id="evt-farmers">
+    <p class="kicker">Mostly mid-May through late fall</p>
+    <h2><span class="ic">🥬</span> Farmers markets</h2>
+    <p class="lede">Nearly all Boston/GBFN markets accept <b>SNAP/EBT with HIP matching</b> plus WIC/Senior coupons. Winter (indoor) options exist year-round.</p>
+    <div class="grid cols-2">
+      <div class="card">
+        <h4>Boston &amp; neighborhoods</h4>
+        <ul class="clean small">
+          <li><b>Copley Square</b> — Tue &amp; Fri, 11&ndash;6, McKim Plaza (the biggest). ~May 15&ndash;Nov 24.</li>
+          <li><b>Boston Public Market</b> — <b>daily, indoor, year-round</b>, 100 Hanover St.</li>
+          <li><b>Charlestown</b> — Wed 2&ndash;6, Thompson Sq.</li>
+          <li><b>Jamaica Plain</b> — Sat 12&ndash;3 &amp; Tue 2&ndash;5, 677 Centre St.</li>
+          <li><b>Roslindale Village</b> — Sat 9&ndash;1:30, Adams Park (Jun&ndash;Oct).</li>
+          <li><b>Dorchester</b> (Ashmont, Codman Sq, Fields Corner) &amp; <b>Dudley/Nubian</b> — varies.</li>
+          <li><b>Haymarket</b> — Fri &amp; Sat year-round, cash produce bazaar (cheap).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Cambridge / Somerville / suburbs</h4>
+        <ul class="clean small">
+          <li><b>Central Square (Cambridge)</b> — Mon 12&ndash;6, Bishop Allen Dr.</li>
+          <li><b>Harvard/Charles Sq</b> — Thu 3&ndash;6.</li>
+          <li><b>Union Square (Somerville)</b> — Sat 9&ndash;1, prepared food + music, EBT/HIP.</li>
+          <li><b>Lexington</b> — Tue 2&ndash;6:30, Fletcher Park.</li>
+          <li><b>Brookline</b> — Thu 1:30&ndash;6:30, Centre St West lot.</li>
+          <li><b>Newton</b> — Sat 9:30&ndash;12:30, Newton North HS.</li>
+          <li><b>Arlington</b> — Russell Commons (Arlington EATS program).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout tip"><strong>Winter markets:</strong> <b>Somerville Winter Farmers Market</b> (Saturdays, Nov&ndash;Apr, 65+ vendors indoors) and the daily <b>Boston Public Market</b>. Mass Farmers Markets keeps a full <a href="https://www.massfarmersmarkets.org/winter-markets-new">winter markets map</a>.</p>
+    <p class="small">Sources: <a href="https://www.massfarmersmarkets.org/">Mass Farmers Markets</a> · <a href="https://www.boston.gov/departments/food-access/boston-farmers-markets">Boston.gov</a> · <a href="https://www.unionsquaremain.org/2026-season">Union Sq 2026</a></p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FESTIVALS -->
+  <section class="section" id="evt-festivals">
+    <p class="kicker">Cross-checked against organizer, town &amp; state sources</p>
+    <h2><span class="ic">🎉</span> Festivals &amp; annual events, by month (2026)</h2>
+    <p class="lede"><span class="tag free">Free</span> unless noted. Confirm the day-of on the organizer's site.</p>
+    <div class="calgrid">
+      <div class="mcard"><h4>Jan&ndash;Feb</h4><ul>
+        <li>Lunar New Year lion dances, <b>Chinatown</b></li>
+        <li>Southie St. Patrick's parade breakfast (Feb 28)</li>
+        <li>Winter markets, indoor farmers markets</li>
+      </ul></div>
+      <div class="mcard"><h4>March</h4><ul>
+        <li><b>South Boston St. Patrick's / Evacuation Day Parade</b> — Sun Mar 15 (~1M spectators)</li>
+        <li>Maple sugaring season (see <a href="#ind">Indoors</a>)</li>
+      </ul></div>
+      <div class="mcard"><h4>April</h4><ul>
+        <li><b>Patriots' Day</b> — Mon Apr 20 (Marathon + Lexington/Concord reenactments)</li>
+        <li>Todd Farm flea season opens (Sundays)</li>
+        <li>Cambridge Science Festival</li>
+      </ul></div>
+      <div class="mcard"><h4>May</h4><ul>
+        <li><b>Somerville Open Studios</b> — May 2&ndash;3</li>
+        <li><b>Somerville PorchFest</b> — Sat May 9</li>
+        <li><b>Brimfield #1</b> — May 12&ndash;17</li>
+        <li>SoWa Open Market opens (Sundays)</li>
+        <li>Arnold Arboretum Lilac Sunday — May 10</li>
+      </ul></div>
+      <div class="mcard"><h4>June</h4><ul>
+        <li><b>Boston Pride</b> — Sat Jun 6</li>
+        <li><b>Cambridge Arts River Festival</b> — ~Jun 21</li>
+        <li>North End feast season begins</li>
+        <li>BAMS Fest, Franklin Park</li>
+      </ul></div>
+      <div class="mcard"><h4>July</h4><ul>
+        <li><b>Boston Harborfest</b> — Jul 2&ndash;4</li>
+        <li>July 4 Pops / Esplanade fireworks</li>
+        <li><b>Revere Sand Sculpting</b> — Jul 17&ndash;19</li>
+        <li><b>Somerville ArtBeat</b> — Jul 18</li>
+        <li><b>Lowell Folk Festival</b> — Jul 24&ndash;26 (huge, free)</li>
+        <li><b>Brimfield #2</b> — Jul 14&ndash;19</li>
+      </ul></div>
+      <div class="mcard"><h4>August</h4><ul>
+        <li><b>North End saint feasts</b> — Fisherman's Aug 13&ndash;16, St. Anthony's Aug 27&ndash;30</li>
+        <li><b>Chinatown August Moon</b> — Aug 9</li>
+        <li><b>Caribbean Carnival</b> — Aug 28&ndash;29</li>
+        <li>Marshfield &amp; Bolton fairs</li>
+      </ul></div>
+      <div class="mcard"><h4>September</h4><ul>
+        <li>JP Music Festival (early Sep)</li>
+        <li><b>Cambridge Carnival</b> — Sep 13</li>
+        <li>The Big E opens Sep 18</li>
+        <li><b>Brimfield #3</b> — Sep 8&ndash;13</li>
+      </ul></div>
+      <div class="mcard"><h4>October</h4><ul>
+        <li><b>HONK! Festival</b> (Somerville) — ~Oct 9&ndash;11</li>
+        <li><b>Head of the Charles</b> — Oct 16&ndash;18</li>
+        <li>Topsfield Fair — Oct 2&ndash;12</li>
+        <li>Boston Book Festival (mid/late Oct)</li>
+      </ul></div>
+      <div class="mcard"><h4>November</h4><ul>
+        <li><b>Snowport Holiday Market</b> opens ~Nov 7</li>
+        <li><b>SoWa Winter Festival</b> — Nov 20&ndash;Dec 27</li>
+        <li>Somerville Winter Market resumes</li>
+        <li>Suburban holiday craft fairs ramp up</li>
+      </ul></div>
+      <div class="mcard"><h4>December</h4><ul>
+        <li><b>Boston Common Tree Lighting</b> — Dec 3&ndash;4</li>
+        <li>Faneuil Hall Blink! light show</li>
+        <li>Boston Women's Holiday Market</li>
+        <li><b>First Night Boston</b> — Dec 31 (50th)</li>
+      </ul></div>
+      <div class="mcard"><h4>Note for 2026</h4><ul>
+        <li><b>Boston Calling is on hiatus</b> for 2026 (returns June 2027)</li>
+        <li>Salem "Haunted Happenings" runs all October</li>
+      </ul></div>
+    </div>
+    <p class="small">Sources: <a href="https://www.meetboston.com/events/festivals-and-annual-events/">MeetBoston</a> · <a href="https://www.boston.gov/event-type/festivals-and-fairs">Boston.gov</a> · <a href="https://www.thebostoncalendar.com/">The Boston Calendar</a> · plus each organizer (southbostonparade.org, honkfest.org, hocr.org, stanthonysfeast.com, firstnightboston.org, etc.).</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FLEA -->
+  <section class="section" id="evt-flea">
+    <p class="kicker">Antiques, makers &amp; craft vendors</p>
+    <h2><span class="ic">🪑</span> Flea, open-air &amp; craft markets</h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="where">📍 Rowley · Sundays, Apr&ndash;Nov</div>
+        <h4>Todd Farm Antiques &amp; Flea Market</h4>
+        <p>Hundreds of dealers + year-round barn shops, 5am&ndash;2pm at 275 Main St. Parking $5 (free after 11am). <b>Weather-dependent</b> — check their page Fri/Sat.</p>
+        <div class="meta"><span class="tag free">Free to browse</span></div>
+        <p class="small"><a href="https://thetoddfarm.com/flea-market">thetoddfarm.com</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Brimfield · 3 weeks/yr</div>
+        <h4>Brimfield Antique Flea Market</h4>
+        <p>The big one — ~1 mile of dealers on Rte 20 (~75 min west). <b>2026: May 12&ndash;17 · Jul 14&ndash;19 · Sep 8&ndash;13.</b> Fields open on staggered days; bring cash.</p>
+        <div class="meta"><span class="tag cheap">Some fields $5</span></div>
+        <p class="small"><a href="https://www.brimfieldantiquefleamarket.com/">brimfieldantiquefleamarket.com</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 South End · Sundays, May&ndash;Nov</div>
+        <h4>SoWa Open Market</h4>
+        <p>Artists, makers, a farmers market, food trucks, and vintage &mdash; 11am&ndash;4/5pm at 500 Harrison Ave. The city's best maker/craft-vendor market.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+        <p class="small"><a href="https://www.sowaboston.com/sowa-open-market/">sowaboston.com</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 South End · Sundays, year-round</div>
+        <h4>SoWa Vintage Market</h4>
+        <p>Boston's only weekly vintage/antiques market, 11am&ndash;5pm at 450 Harrison Ave (basement), 25&ndash;30 curated vendors.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+        <p class="small"><a href="https://sowavintagemkt.com/">sowavintagemkt.com</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Union Sq, Somerville · daily</div>
+        <h4>Bow Market</h4>
+        <p>A permanent courtyard of ~30+ small independent makers &amp; food, with rotating weekend maker pop-ups.</p>
+        <div class="meta"><span class="tag free">Free</span></div>
+        <p class="small"><a href="https://www.bowmarketsomerville.com/">bowmarketsomerville.com</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Seaport &amp; South End · Nov&ndash;Dec</div>
+        <h4>Holiday maker &amp; craft markets</h4>
+        <p><b>Snowport</b> (Seaport, 125+ chalets), <b>SoWa Winter Festival</b> (100+ makers), <b>Boston Women's Holiday Market</b> (Faneuil Hall), plus church/school/library craft fairs across every suburb.</p>
+        <div class="meta"><span class="tag free">Free to browse</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- THRIFT -->
+  <section class="section" id="evt-thrift">
+    <p class="kicker">Deal-hunting for teens &amp; adults</p>
+    <h2><span class="ic">👖</span> Secondhand, thrift &amp; vintage</h2>
+    <div class="grid cols-3">
+      <div class="card">
+        <h4>The Garment District ★</h4>
+        <div class="where">📍 Cambridge (Kendall/MIT)</div>
+        <p class="small">12,000+ sq ft, sorted by decade upstairs, costume shop down, and the legendary <b>$2/lb "By the Pound"</b> dig floor. The single best vintage destination for teens/young adults.</p>
+        <div class="meta"><span class="tag cheap">$</span><span class="tag transit">🚆 Red Line</span></div>
+        <p class="small"><a href="https://garmentdistrict.com/">garmentdistrict.com</a></p>
+      </div>
+      <div class="card">
+        <h4>Boomerangs</h4>
+        <div class="where">📍 Cambridge / Central Sq / JP</div>
+        <p class="small">Nonprofit benefiting AIDS Action Committee — curated clothing, books, housewares, furniture.</p>
+        <div class="meta"><span class="tag cheap">$</span></div>
+      </div>
+      <div class="card">
+        <h4>Savers / Value Village</h4>
+        <div class="where">📍 Framingham, Medford, Norwood +</div>
+        <p class="small">Best for volume &amp; cheap — racks of clothing, housewares, books; frequent color-tag sales.</p>
+        <div class="meta"><span class="tag cheap">$</span></div>
+        <p class="small"><a href="https://stores.savers.com/ma/">store locator</a></p>
+      </div>
+      <div class="card">
+        <h4>SoWa Vintage Market</h4>
+        <div class="where">📍 South End · Sundays</div>
+        <p class="small">Curated weekly vintage (see Flea &amp; Craft above).</p>
+        <div class="meta"><span class="tag free">Free entry</span></div>
+      </div>
+      <div class="card">
+        <h4>Neighborhood consignment &amp; vintage</h4>
+        <div class="where">📍 JP, Davis/Union, Allston, Central Sq, South End</div>
+        <p class="small">Clusters of curated consignment and vintage shops across these neighborhoods.</p>
+        <div class="meta"><span class="tag cheap">$&ndash;$$</span></div>
+      </div>
+      <div class="card">
+        <h4>Estate &amp; church/rummage sales</h4>
+        <div class="where">📍 Everywhere · spring &amp; fall</div>
+        <p class="small">Posted on EstateSales.net and town bulletins — best deals of all, best in spring and fall.</p>
+        <div class="meta"><span class="tag cheap">$</span></div>
+      </div>
+    </div>
+    <p class="small">Sources: <a href="https://www.thebostoncalendar.com/events/the-26-best-thrift-stores-in-boston-for-vintage-and-designer-finds">The Boston Calendar — best thrift stores</a> · <a href="https://garmentdistrict.com/departments/by-the-pound/">Garment District By the Pound</a></p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CALENDAR -->
+  <section class="section" id="evt-calendar">
+    <p class="kicker">The whole year on one screen</p>
+    <h2><span class="ic">🗓️</span> Month-by-month planner (signature recurring items)</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Month</th><th>Signature events</th><th>Markets running</th></tr></thead>
+        <tbody>
+          <tr><td><span class="mo">Jan</span></td><td>First Day activities; deep-winter lull</td><td>Somerville Winter Market (Sat), Boston Public Market (daily), SoWa Vintage (Sun)</td></tr>
+          <tr><td><span class="mo">Feb</span></td><td>Lunar New Year (Chinatown); Southie parade breakfast</td><td>Winter markets</td></tr>
+          <tr><td><span class="mo">Mar</span></td><td><b>South Boston St. Patrick's Parade (Mar 15)</b></td><td>Winter markets</td></tr>
+          <tr><td><span class="mo">Apr</span></td><td>Patriots' Day (Apr 20); Cambridge Science Fest</td><td>Todd Farm opens (Sun); winter markets winding down</td></tr>
+          <tr><td><span class="mo">May</span></td><td><b>Somerville Open Studios; PorchFest; Brimfield #1</b></td><td>Outdoor farmers markets open; SoWa Open Market opens</td></tr>
+          <tr><td><span class="mo">Jun</span></td><td><b>Boston Pride; Cambridge River Festival</b>; feasts begin</td><td>All markets in full swing</td></tr>
+          <tr><td><span class="mo">Jul</span></td><td><b>Harborfest; Sand Sculpting; Lowell Folk; Brimfield #2</b></td><td>Full markets; Todd Farm/SoWa Sundays</td></tr>
+          <tr><td><span class="mo">Aug</span></td><td><b>North End feasts; Moon Fest; Caribbean Carnival</b>; fairs begin</td><td>Full markets</td></tr>
+          <tr><td><span class="mo">Sep</span></td><td><b>Cambridge Carnival; Big E; Brimfield #3</b>; Labor Day fairs</td><td>Full markets</td></tr>
+          <tr><td><span class="mo">Oct</span></td><td><b>HONK!; Head of the Charles; Topsfield Fair</b></td><td>Markets wind down; Todd Farm ends Nov</td></tr>
+          <tr><td><span class="mo">Nov</span></td><td><b>Snowport opens; SoWa Winter Fest</b>; tree-lighting prep</td><td>Somerville Winter Market resumes; holiday craft fairs</td></tr>
+          <tr><td><span class="mo">Dec</span></td><td><b>Common Tree Lighting; First Night</b>; Faneuil Hall holidays</td><td>Snowport/SoWa (daily); winter farmers markets</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <strong>Flagged / verify before you go:</strong> Boston Book Festival, Chowderfest (moved to fall 2026), JP Music Fest, and Cambridge Science Festival exact 2026 dates weren't fully pinned down &mdash; confirm on organizer sites. Some fair admission prices weren't published in searchable form (expect ~$5&ndash;15/day; buy advance to save). <b>Boston Calling is NOT happening in 2026.</b>
+    </div>
+  </section>
+  <p class="backtop"><a href="#home">↑ All guides</a></p>
+</section>
+<section class="guidesec" id="ind" data-guide hidden>
+  <div class="guidehead">
+    <p class="kicker">☔ &nbsp;Guide 06 · Rainy days &amp; the whole calendar</p>
+    <h2 class="guidetitle">When the weather turns &mdash; and every season in between.</h2>
+  </div>
+<div class="toc">
+    <a href="#ind-museums"><span class="ic">🏛️</span> Quirky &amp; Free Museums</a>
+    <a href="#ind-free"><span class="ic">🎟️</span> Free-Culture Hacks</a>
+    <a href="#ind-games"><span class="ic">🎳</span> Games &amp; Activities</a>
+    <a href="#ind-cinema"><span class="ic">🎬</span> Cinemas &amp; Live Music</a>
+    <a href="#ind-books"><span class="ic">📚</span> Libraries &amp; Bookstores</a>
+    <a href="#ind-seasonal"><span class="ic">🍂</span> Season by Season</a>
+  </div>
+
+  <!-- MUSEUMS -->
+  <section class="section" id="ind-museums">
+    <p class="kicker">Skip the big obvious ones</p>
+    <h2><span class="ic">🏛️</span> Quirky &amp; free museums</h2>
+    <p class="lede">The small, strange, and free-to-enter collections locals love. Two easy all-weather clusters: <b>Harvard Square</b> (Art Museums + Natural History + Ancient Near East) and <b>Kendall Square</b> (MIT Museum + List Center).</p>
+
+    <h3>Quirky &amp; small</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Warren Anatomical Museum</h4><div class="where">📍 Longwood · FREE</div><p class="small">Cabinet-of-curiosities medical museum — Phineas Gage's skull &amp; tamping iron. <b>Sat only, 10&ndash;4</b> (photo ID at desk).</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Museum of Bad Art (MOBA)</h4><div class="where">📍 Dorchester Brewing Co. · FREE</div><p class="small">"Art too bad to be ignored," hung in a taproom. Daily from 11:30. <b>21+ after 6pm Fri/Sat</b> — teens go earlier.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Metropolitan Waterworks Museum</h4><div class="where">📍 Chestnut Hill · FREE</div><p class="small">A cathedral-like pumping station of monumental steam engines. Wed&ndash;Sun 11&ndash;4, free parking.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>MIT Museum</h4><div class="where">📍 Kendall Sq · $18</div><p class="small">Robotics, AI, holography, kinetic sculpture. Next to the Red Line; a rainy weekday is ideal.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Larz Anderson Auto Museum</h4><div class="where">📍 Brookline · $15</div><p class="small">America's oldest car collection in a Gilded-Age carriage house. Tue&ndash;Sun 10&ndash;3, free park parking.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>The Mapparium</h4><div class="where">📍 Back Bay · $6</div><p class="small">Walk through a 3-story stained-glass globe with wild acoustics. <b>Free with a BPL museum pass.</b></p><div class="meta"><span class="tag cheap">$ / free w/ pass</span></div></div>
+    </div>
+
+    <h3>Free university museums</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Harvard Art Museums ★</h4><div class="where">📍 Harvard Sq</div><p class="small"><b>FREE to all, every open day</b> (permanent policy since 2023). Fogg/Busch-Reisinger/Sackler under one roof. Tue&ndash;Sun 10&ndash;5.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Harvard Museum of the Ancient Near East</h4><div class="where">📍 Harvard Sq</div><p class="small">Cuneiform tablets, a full Nuzi-house reconstruction. <b>Always free.</b> Sun&ndash;Fri 11&ndash;4, a small, often-empty gem.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>MIT List Visual Arts Center</h4><div class="where">📍 Kendall Sq</div><p class="small">MIT's contemporary kunsthalle. <b>Free</b>, Tue&ndash;Sun. Pair with the MIT Museum nearby.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Rose Art Museum (Brandeis)</h4><div class="where">📍 Waltham</div><p class="small">One of NE's best university modern/contemporary collections (Warhol, de Kooning). <b>Free</b>, Wed&ndash;Sun 11&ndash;5.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Tufts University Art Galleries</h4><div class="where">📍 Medford</div><p class="small"><b>Free</b>, Tue&ndash;Sun 11&ndash;5; Green Line to Medford/Tufts, free parking.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Harvard Natural History + Peabody</h4><div class="where">📍 Harvard Sq · $20</div><p class="small">The famous glass flowers, whales, minerals. <b>Free for MA residents Sun 9&ndash;12 &amp; Wed 3&ndash;5.</b></p><div class="meta"><span class="tag mod">$$ / free windows</span></div></div>
+    </div>
+    <div class="callout"><strong>Save it for fall:</strong> the excellent <b>Davis Museum at Wellesley</b> (free) is closed for the summer and reopens <b>Sept 25, 2026</b>. Note: Harvard's Peabody/Natural History admission rose July 1, 2026 — confirm at the desk.</div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FREE CULTURE -->
+  <section class="section" id="ind-free">
+    <p class="kicker">How locals see culture for near-free</p>
+    <h2><span class="ic">🎟️</span> Free-culture hacks</h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <h4>Library museum passes — the big one</h4>
+        <p class="small">Every public library lends discounted/free museum passes to cardholders. A <b>physical BPL card</b> (free to <em>anyone who lives, works, studies, or owns property in MA</em>) gets you <b>fully free admission for up to ~4 people</b> to the Museum of Science, ICA, New England Aquarium, and Harvard's museums, plus discounts at the MFA, Gardner, and Zoo New England.</p>
+        <p class="small"><b>Catch:</b> a BPL <em>eCard</em> can't borrow passes — upgrade to a physical card (free) at any branch. Reserve on <a href="https://bpl.libcal.com/passes">bpl.libcal.com/passes</a>. In a <b>Minuteman</b> town (Cambridge, Brookline, Newton + ~38 others)? One card works across every member library — shop around for the pass/date you want.</p>
+        <div class="meta"><span class="tag free">Free / discounted</span></div>
+      </div>
+      <div class="card">
+        <h4>Always-free &amp; free-day picks</h4>
+        <ul class="clean small">
+          <li><b>Isabella Stewart Gardner</b> — free <b>every Thursday 5&ndash;9pm</b> (expanded in 2026); also free if your name is Isabella.</li>
+          <li><b>Harvard Art Museums</b> — free to all, always.</li>
+          <li><b>Harvard Natural History</b> — free for MA residents Sun AM &amp; Wed 3&ndash;5.</li>
+          <li><b>The Clark</b> (Williamstown) — free for all <b>Jan&ndash;Mar 2026</b>.</li>
+          <li>Free galleries: MIT List, Tufts, BU (808/Stone), Rose.</li>
+          <li>Free outdoor art &amp; the whole <a href="#out">Emerald Necklace</a>.</li>
+        </ul>
+        <div class="meta"><span class="tag free">Free</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- GAMES -->
+  <section class="section" id="ind-games">
+    <p class="kicker">Rainy-afternoon energy</p>
+    <h2><span class="ic">🎳</span> Games &amp; hands-on activities</h2>
+
+    <h3>Board-game cafés &amp; barcades</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Knight Moves</h4><div class="where">📍 Coolidge Corner · all ages</div><p class="small">300+ games, <b>$10 all-day</b> (free if you just get coffee). The flagship. <em>The Somerville location is closed — Brookline only.</em></p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Tavern of Tales</h4><div class="where">📍 Mission Hill</div><p class="small">Free open shelf + bookable themed rooms; food &amp; cocktails, D&amp;D/Magic nights.</p><div class="meta"><span class="tag cheap">$&ndash;$$</span></div></div>
+      <div class="card"><h4>Pop's Pinball @ Bow Market</h4><div class="where">📍 Union Sq · all ages</div><p class="small">All-pinball room, <b>~$1/play</b>, curated vintage machines. Cheapest fun in town.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>A4cade / Roxy's</h4><div class="where">📍 Central Sq · 21+</div><p class="small">Speakeasy retro arcade bar behind Roxy's Grilled Cheese. $5 cover after 8pm.</p><div class="meta"><span class="tag mod">21+</span></div></div>
+      <div class="card"><h4>Boston Bowl</h4><div class="where">📍 Dorchester · all ages</div><p class="small">Candlepin + tenpin + 80-game arcade, open very late, <b>free parking</b> — the teen-friendly catch-all.</p><div class="meta"><span class="tag cheap">$&ndash;$$</span></div></div>
+      <div class="card"><h4>F1 Arcade</h4><div class="where">📍 Seaport · 7+ to race</div><p class="small">69 full-motion F1 sims + bar. Racing from $30; book ahead.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+    </div>
+
+    <h3>Candlepin bowling (a New England original)</h3>
+    <div class="grid cols-2">
+      <div class="card"><h4>Sacco's Bowl Haven @ Flatbread</h4><div class="where">📍 Davis Sq</div><p class="small">Historic 1939 candlepin lanes fused with a wood-fired pizzeria &amp; bar. The candlepin-plus-dinner date. ~$5/game weekday days.</p></div>
+      <div class="card"><h4>Central Park Lanes</h4><div class="where">📍 East Boston</div><p class="small">Old-school, <b>cash-only, BYOB</b> — one of the most authentic candlepin rooms in the city.</p></div>
+      <div class="card"><h4>Ron's Bowling &amp; Ice Cream</h4><div class="where">📍 Hyde Park</div><p class="small">10 candlepin lanes + homemade ice cream since 1976. Bowl a string, get a sundae. Budget-friendly.</p></div>
+      <div class="card"><h4>South Boston Candlepin</h4><div class="where">📍 South Boston</div><p class="small">Modern, well-kept, family by day / bar crowd at night. From ~$12/person; reserve weekend evenings.</p></div>
+    </div>
+
+    <h3>Climbing, escape rooms &amp; axe throwing</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Central Rock Gym</h4><div class="where">📍 Cambridge (Alewife) + Watertown</div><p class="small">Ropes + bouldering, ~$33 day pass. Cambridge is walkable from Alewife.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Bouldering Project</h4><div class="where">📍 Somerville (Union Sq)</div><p class="small">Big bouldering gym (formerly Brooklyn Boulders — rebranded, same spot). ~$35 intro two-week pass.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Boda Borg</h4><div class="where">📍 Malden · all ages</div><p class="small">24 physical/mental "Quests" — high-energy team play. $30/2hr. Malden Center on the Orange Line.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Boxaroo / Trapology / Escape the Room</h4><div class="where">📍 Downtown</div><p class="small">Well-reviewed escape rooms, ~$34&ndash;45/person. Reserve ahead. Trapology is 13+ (under-18 need an adult).</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Urban Axes</h4><div class="where">📍 Union Sq · <b>21+</b></div><p class="small">Boston's original axe-throwing bar; coached sessions ~$40. Strictly 21+.</p><div class="meta"><span class="tag mod">21+</span></div></div>
+      <div class="card"><h4>Axe Throwing Club</h4><div class="where">📍 North End</div><p class="small">More walk-in friendly, ~$30/hr with drinks/snacks. Wed&ndash;Sun.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+    </div>
+    <p class="small"><b>Don't get sent to the wrong place:</b> Lanes &amp; Games and Milky Way Lanes are closed; "Escape the Room Boston" is at 33 West St (Downtown Crossing); Bad Axe Throwing has <em>no</em> Boston location.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CINEMA -->
+  <section class="section" id="ind-cinema">
+    <p class="kicker">Big screens &amp; small stages on a budget</p>
+    <h2><span class="ic">🎬</span> Indie cinemas &amp; cheap live entertainment</h2>
+
+    <h3>Independent &amp; cheap cinemas</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Coolidge Corner Theatre</h4><div class="where">📍 Brookline</div><p class="small">Beloved art-house nonprofit; <b>$8.25 for EBT/WIC/ConnectorCare</b>, cheap Thursday senior mornings.</p></div>
+      <div class="card"><h4>Brattle Theatre</h4><div class="where">📍 Harvard Sq</div><p class="small">Nonprofit repertory — double features, classics, restorations.</p></div>
+      <div class="card"><h4>Somerville Theatre</h4><div class="where">📍 Davis Sq</div><p class="small">Independent (now employee-owned), first/second-run + 35/70mm; Crystal Ballroom upstairs.</p></div>
+      <div class="card"><h4>Capitol &amp; Regent</h4><div class="where">📍 Arlington</div><p class="small">Cheaper-than-chains indie/family films; the Regent adds live music &amp; comedy.</p></div>
+      <div class="card"><h4>West Newton Cinema</h4><div class="where">📍 West Newton</div><p class="small">Nonprofit-rescued, new 4K projectors; commuter rail accessible.</p></div>
+      <div class="card"><h4>Lexington Venue / Dedham Community</h4><div class="where">📍 suburbs</div><p class="small">Small historic art/first-run houses, cheaper than the multiplex.</p></div>
+    </div>
+    <p class="small"><em>Closed / not-yet-open:</em> Luna Theater (Lowell, closed), Great Scott (rebuilding). The Cabot (Beverly) and Landmark Kendall are open but reconfirm calendars.</p>
+
+    <h3>Small music venues (cheap cover)</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>The Middle East</h4><div class="where">📍 Central Sq</div><p class="small">Five rooms, cover from ~$10 — your best cheap local-band bet.</p></div>
+      <div class="card"><h4>McCarthy's &amp; Toad</h4><div class="where">📍 Porter Sq · FREE</div><p class="small"><b>Free live music 7 nights</b>, no cover; nightly Irish trad sessions.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>The Burren</h4><div class="where">📍 Davis Sq · FREE</div><p class="small"><b>Free music every night</b> in the front room; low-cost back-room shows.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Lizard Lounge</h4><div class="where">📍 nr Harvard Sq</div><p class="small">Intimate club; Monday open mic, Sunday poetry slam.</p></div>
+      <div class="card"><h4>Club Passim</h4><div class="where">📍 Harvard Sq</div><p class="small">Iconic nonprofit folk club since 1958, 400+ shows/year.</p></div>
+      <div class="card"><h4>The Jungle / Deep Cuts</h4><div class="where">📍 Somerville / Medford</div><p class="small">Community clubs with low cover and local-leaning bookings.</p></div>
+    </div>
+
+    <h3>Comedy, theater &amp; trivia</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>The Comedy Studio</h4><div class="where">📍 Harvard Sq</div><p class="small">Great budget stand-up: <b>$8 Wed/Thu/Sun, $12 Tue/Fri/Sat</b>.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Central Square Theater</h4><div class="where">📍 Central Sq</div><p class="small"><b>$5 tickets</b> via MA "Card to Culture" (EBT/WIC); half-price via BosTix.</p><div class="meta"><span class="tag cheap">$</span></div></div>
+      <div class="card"><h4>Footlight Club</h4><div class="where">📍 Jamaica Plain</div><p class="small">Oldest community theater in the US (since 1877); ~$25 tickets.</p></div>
+      <div class="card"><h4>Stump! &amp; Geeks Who Drink trivia</h4><div class="where">📍 80+ bars metro-wide</div><p class="small"><b>Free to play</b> weeknights across the metro; prizes in gift cards/tabs.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Mendon Twin Drive-In</h4><div class="where">📍 Mendon · ~45 min</div><p class="small">Twin-screen double features, ~$38/car (Apr&ndash;Sep). Bring a carful.</p></div>
+      <div class="card"><h4>Northfield Drive-In</h4><div class="where">📍 NH line · ~1.5 hrs</div><p class="small">77+ years, family-friendly double features.</p></div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- BOOKS -->
+  <section class="section" id="ind-books">
+    <p class="kicker">Settle in for hours</p>
+    <h2><span class="ic">📚</span> Libraries &amp; bookstores worth a trip</h2>
+    <div class="grid cols-3">
+      <div class="card"><h4>BPL Central (McKim)</h4><div class="where">📍 Copley · FREE</div><p class="small">A "palace for the people" — Bates Hall, Sargent murals, a covered courtyard. Free daily art/architecture tours.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Boston Athenaeum</h4><div class="where">📍 Beacon Hill · $40 day</div><p class="small">1807 membership library, five tiers of grand reading rooms. Not free — $40 day pass.</p><div class="meta"><span class="tag mod">$$</span></div></div>
+      <div class="card"><h4>Cambridge Public Library</h4><div class="where">📍 Mid-Cambridge · FREE</div><p class="small">1889 stone building fused to a luminous glass addition — great light on gray days.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Brattle Book Shop</h4><div class="where">📍 Downtown Crossing</div><p class="small">One of America's oldest antiquarian shops (1825), two floors + a $3 outdoor bargain lot.</p></div>
+      <div class="card"><h4>Harvard Book Store</h4><div class="where">📍 Harvard Sq</div><p class="small">Independent since 1932, basement bargains, a book-printing robot, top author series. Open to 10pm.</p></div>
+      <div class="card"><h4>Brookline Booksmith</h4><div class="where">📍 Coolidge Corner</div><p class="small">Beloved indie (1961) with a legendary 25,000-title Used Book Cellar. Open till 11 Fri/Sat.</p></div>
+      <div class="card"><h4>Beacon Hill Books &amp; Café</h4><div class="where">📍 Charles St</div><p class="small">A jewel-box three-story townhouse shop with themed floors and a café; reserve for tea.</p></div>
+      <div class="card"><h4>Grolier Poetry Book Shop</h4><div class="where">📍 Harvard Sq</div><p class="small">Oldest all-poetry bookshop in the US (1927). Tiny, atmospheric, Wed&ndash;Sat.</p></div>
+      <div class="card"><h4>Papercuts / Porter Square Books</h4><div class="where">📍 JP / Porter Sq</div><p class="small">Sharply curated neighborhood indies with cafés and strong event calendars.</p></div>
+    </div>
+    <p class="small"><em>Note:</em> Raven Used Books (Harvard Sq &amp; Newbury St) is closed — don't go looking for it.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SEASONAL -->
+  <section class="section" id="ind-seasonal">
+    <p class="kicker">The right move for the month you're in</p>
+    <h2><span class="ic">🍂</span> Season by season</h2>
+
+    <h3>❄️ Winter</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Ice skating — free &amp; cheap</h4><p class="small">Marquee: <b>Frog Pond</b> ($10, free under 58") &amp; <b>Skate @ Canal District Kendall</b> ($3&ndash;7). <b>FREE</b> DCR rinks: <b>Steriti</b> (North End) &amp; <b>Kelly</b> (JP, $5 rentals). Weekday middays are emptiest.</p><div class="meta"><span class="tag free">Free options</span></div></div>
+      <div class="card"><h4>Holiday lights &amp; markets</h4><p class="small">Free: <b>Common Tree Lighting</b>, <b>Blink!</b> at Faneuil Hall, <b>Snowport</b> (Seaport). Ticketed: Stone Zoo ZooLights, Mass Hort Festival of Trees (Elm Bank), Bright Nights (Springfield drive-through), Gardens Aglow (Sandwich).</p><div class="meta"><span class="tag free">Free &amp; $$</span></div></div>
+      <div class="card"><h4>Ski &amp; tube</h4><p class="small">Closest: <b>Blue Hills</b> (Canton, ~25 min, night skiing). Bigger: Wachusett, Nashoba Valley, Ski Ward (tubing $28&ndash;33). All drive-only. Tubing &amp; midweek/twilight tickets are the budget play.</p></div>
+      <div class="card"><h4>Warm indoor escapes</h4><p class="small"><b>Lyman Estate Greenhouses</b> (Waltham, free, camellias Feb&ndash;Mar), the <b>Gardner courtyard</b>, and the Tower Hill conservatories (orchid show early Feb&ndash;late Mar).</p><div class="meta"><span class="tag free">Free options</span></div></div>
+    </div>
+
+    <h3>🌱 Spring</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Maple sugaring (late Feb&ndash;mid Mar)</h4><p class="small"><b>FREE</b> DCR "Maple Sugarin' Days" at Brookwood Farm (Blue Hills, Canton). Also Natick Community Farm ($10), Mass Audubon Drumlin/Ipswich River/Moose Hill (~$15&ndash;20, register).</p><div class="meta"><span class="tag free">Free option</span></div></div>
+      <div class="card"><h4>Blooms &amp; birding</h4><p class="small">Peak spring migration at <b>Mount Auburn Cemetery</b> (free, 6am "quiet hours"). <b>Arnold Arboretum Lilac Sunday — May 10, 2026</b> (free). Tower Hill's 25,000 daffodils (~$18).</p><div class="meta"><span class="tag free">Mostly free</span></div></div>
+      <div class="card"><h4>Marathon Monday</h4><p class="small"><b>Apr 20, 2026</b> — free spectating at the Wellesley "Scream Tunnel," Heartbreak Hill (Newton), or Coolidge Corner. Take the T.</p><div class="meta"><span class="tag free">Free</span></div></div>
+    </div>
+    <p class="small"><em>Note:</em> the Boston Flower &amp; Garden Show is on hold (venue lost to redevelopment) — no 2026 show.</p>
+
+    <h3>☀️ Summer</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Free outdoor movies</h4><p class="small"><b>Free Friday Flicks</b> (Hatch Shell), <b>SomerMovie Fest</b> (Thu), and <b>Mayor Wu's Movie Nights</b> in city parks (August). All free; arrive by 6&ndash;7pm.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Free concerts</h4><p class="small"><b>Boston Landmarks Orchestra</b> (Hatch Shell, Wed 7pm, 25th season), "Pipes on the Plaza" organ concerts, plus the Lawn on D's free line dancing &amp; karaoke.</p><div class="meta"><span class="tag free">Free</span></div></div>
+      <div class="card"><h4>Cheap concert lawn</h4><p class="small"><b>Tanglewood</b> lawn tickets (~$25&ndash;40) with a picnic — the affordable way into the BSO (Lenox, ~2.5 hrs; see <a href="#day">Day Trips</a>).</p><div class="meta"><span class="tag mod">$$</span></div></div>
+    </div>
+
+    <h3>🍁 Fall</h3>
+    <div class="grid cols-3">
+      <div class="card"><h4>Apple &amp; pumpkin picking</h4><p class="small"><b>Go weekdays</b> — weekends mob these farms. Cheapest/free-admission: <b>Smolak</b> (N. Andover), <b>Brooksby</b> (Peabody). Closest: Lookout Farm (Natick). Best donuts: Tougas (Northborough).</p><div class="meta"><span class="tag weekday">Weekday!</span></div></div>
+      <div class="card"><h4>Corn mazes &amp; cider</h4><p class="small"><b>Davis Mega Maze</b> (Sterling), Marini Farm's Saturday-night <b>flashlight maze</b> (Ipswich). Hard cider + donuts at Cider Hill (Amesbury) &amp; Carlson (Harvard).</p></div>
+      <div class="card"><h4>Foliage &amp; Halloween</h4><p class="small">Free foliage: Arnold Arboretum, Mount Auburn, the Fells, Blue Hills. Halloween beyond Salem's crowds: <b>Jack-O-Lantern Spectacular</b> (Providence), Witch's Woods (Westford), Keene NH Pumpkin Fest (Oct 17).</p><div class="meta"><span class="tag free">Foliage free</span></div></div>
+    </div>
+    <div class="callout tip">
+      <strong>Weekday vs. weekend, the whole year:</strong> nearly every venue here is quieter on a weekday. The free university galleries are essentially crowd-free any weekday afternoon; skating rinks, apple farms, and popular cinemas are where weekends bite. When you can, go off-peak.
+    </div>
+  </section>
+  <p class="backtop"><a href="#home">↑ All guides</a></p>
+</section>
 </div>
 </main>
-
 <footer>
   <div class="wrap">
-    <div>
-      <strong>Boston Area Stuff to Do</strong><br>
-      <span class="updated">Compiled July 2026 · Verify dates &amp; hours with the linked official sources before you go.</span>
-    </div>
-    <div class="backlink">
-      <a href="outdoor.html">Outdoors</a> ·
-      <a href="beaches.html">Beaches</a> ·
-      <a href="daytrips.html">Day Trips</a> ·
-      <a href="restaurants.html">Eat</a> ·
-      <a href="events.html">Events</a> ·
-      <a href="indoor.html">Indoors</a>
-    </div>
+    <div><strong>Boston Area Stuff to Do</strong><br>
+    <span class="updated">Compiled July 2026 · Everything on one page · Verify hours, dates &amp; fees with the linked official sources before you go.</span></div>
+    <div class="backlink"><a href="#home">↑ Back to guides</a></div>
   </div>
 </footer>
+<script>
+(function(){
+  var guides=['home','out','bea','day','eat','evt','ind'];
+  var fmap={free:'free',cheap:'cheap',mod:'mod',weekday:'weekday',transit:'transit'};
+  var current='home', filter='all';
+  var fbar=document.getElementById('filterbar');
+  var fcount=document.getElementById('fcount');
+
+  function applyFilter(){
+    if(current==='home'){fbar.hidden=true;return;}
+    fbar.hidden=false;
+    var sec=document.getElementById(current);
+    var cards=sec.querySelectorAll('.card');
+    var shown=0,total=cards.length;
+    cards.forEach(function(c){
+      var ok = filter==='all' || c.querySelector('.tag.'+fmap[filter]);
+      c.style.display = ok?'':'none';
+      if(ok) shown++;
+    });
+    sec.querySelectorAll('.section').forEach(function(s){
+      var cs=s.querySelectorAll('.card');
+      if(cs.length){
+        var any=Array.prototype.some.call(cs,function(c){return c.style.display!=='none';});
+        s.style.display=any?'':'none';
+      }
+    });
+    fcount.textContent = (filter==='all') ? (total+' places listed') : (shown+' of '+total+' places');
+  }
+  function setFilter(f){
+    filter=f;
+    document.querySelectorAll('.chip').forEach(function(b){b.classList.toggle('on',b.dataset.f===f);});
+    applyFilter();
+  }
+  function show(id){
+    var g = guides.indexOf(id)>=0 ? id : (guides.indexOf(id.split('-')[0])>=0 ? id.split('-')[0] : 'home');
+    current=g;
+    document.querySelectorAll('[data-guide]').forEach(function(s){ s.hidden = (s.id!==g); });
+    document.querySelectorAll('.navlinks a').forEach(function(a){ a.classList.toggle('active', a.getAttribute('href')==='#'+g); });
+    setFilter('all');
+    window.scrollTo(0,0);
+    if(id!==g){ var t=document.getElementById(id); if(t){ setTimeout(function(){t.scrollIntoView({behavior:'smooth',block:'start'});},30); } }
+  }
+  document.querySelectorAll('.chip').forEach(function(b){ b.addEventListener('click',function(){ setFilter(b.dataset.f); }); });
+  window.addEventListener('hashchange',function(){ show(location.hash.slice(1)||'home'); });
+  show(location.hash.slice(1)||'home');
+})();
+</script>
 </body>
 </html>
