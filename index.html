@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Boston Area Stuff to Do</title>
-<meta name="description" content="Boston Area Stuff to Do — a personalized interactive guide: outdoors & pickleball, beaches, day trips, vegetarian-first dining, affordable date ideas, dog-friendly spots, crafting, events & music, and rainy-day plans, filterable by price, dog, and date-worthiness.">
+<meta name="description" content="Boston Area Stuff to Do — a personalized interactive guide: outdoors & pickleball, beaches, day trips, vegetarian-first dining, date ideas, dog-friendly spots, crafting, events & music, indie shops, and a month-by-month calendar.">
 <style>
 /* ===========================================================
    Greater Boston Local's Guide — shared design system
@@ -342,7 +342,7 @@ html{scroll-padding-top:118px;}
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="#home">🧭 Boston Area <span class="dot">·</span> Stuff to Do</a>
-    <nav class="navlinks"><a href="#home">Home</a><a href="#out">Outdoors</a><a href="#bea">Beaches</a><a href="#day">Day Trips</a><a href="#eat">Eats</a><a href="#dat">Date Ideas</a><a href="#dog">Dog Days</a><a href="#evt">Events</a><a href="#ind">Indoors</a><a href="#cra">Crafting</a><a href="#mon">Calendar</a></nav>
+    <nav class="navlinks"><a href="#home">Home</a><a href="#out">Outdoors</a><a href="#bea">Beaches</a><a href="#day">Day Trips</a><a href="#eat">Eats</a><a href="#dat">Date Ideas</a><a href="#dog">Dog Days</a><a href="#evt">Events</a><a href="#ind">Indoors</a><a href="#cra">Crafting</a><a href="#shop">Shops</a><a href="#mon">Calendar</a></nav>
   </div>
 </header>
 <div class="filterbar" id="filterbar" hidden>
@@ -367,7 +367,7 @@ html{scroll-padding-top:118px;}
   <p class="kicker">Start here</p>
   <h2 class="guidetitle" style="font-size:1.7rem;margin:2px 0 4px;">Choose a guide</h2>
   <p class="homeintro">Tap any guide to open it. Inside, the filter bar up top narrows to what&rsquo;s <b>free</b>, <b>cheap</b>, <b>weekday-friendly</b>, <b>car-free</b>, <b>🐕 dog-OK</b>, or <b>💕 date-worthy</b>.</p>
-  <div class="pickgrid"><a class="pick" href="#out"><span class="pic">🌲</span><span class="plabel">Outdoors</span><span class="parrow">Open →</span></a><a class="pick" href="#bea"><span class="pic">🏖️</span><span class="plabel">Beaches</span><span class="parrow">Open →</span></a><a class="pick" href="#day"><span class="pic">🚗</span><span class="plabel">Day Trips</span><span class="parrow">Open →</span></a><a class="pick" href="#eat"><span class="pic">🥕</span><span class="plabel">Eats</span><span class="parrow">Open →</span></a><a class="pick" href="#dat"><span class="pic">💕</span><span class="plabel">Date Ideas</span><span class="parrow">Open →</span></a><a class="pick" href="#dog"><span class="pic">🐕</span><span class="plabel">Dog Days</span><span class="parrow">Open →</span></a><a class="pick" href="#evt"><span class="pic">🎪</span><span class="plabel">Events</span><span class="parrow">Open →</span></a><a class="pick" href="#ind"><span class="pic">☔</span><span class="plabel">Indoors</span><span class="parrow">Open →</span></a><a class="pick" href="#cra"><span class="pic">🎨</span><span class="plabel">Crafting</span><span class="parrow">Open →</span></a><a class="pick" href="#mon"><span class="pic">📅</span><span class="plabel">Calendar</span><span class="parrow">Open →</span></a></div>
+  <div class="pickgrid"><a class="pick" href="#out"><span class="pic">🌲</span><span class="plabel">Outdoors</span><span class="parrow">Open →</span></a><a class="pick" href="#bea"><span class="pic">🏖️</span><span class="plabel">Beaches</span><span class="parrow">Open →</span></a><a class="pick" href="#day"><span class="pic">🚗</span><span class="plabel">Day Trips</span><span class="parrow">Open →</span></a><a class="pick" href="#eat"><span class="pic">🥕</span><span class="plabel">Eats</span><span class="parrow">Open →</span></a><a class="pick" href="#dat"><span class="pic">💕</span><span class="plabel">Date Ideas</span><span class="parrow">Open →</span></a><a class="pick" href="#dog"><span class="pic">🐕</span><span class="plabel">Dog Days</span><span class="parrow">Open →</span></a><a class="pick" href="#evt"><span class="pic">🎪</span><span class="plabel">Events</span><span class="parrow">Open →</span></a><a class="pick" href="#ind"><span class="pic">☔</span><span class="plabel">Indoors</span><span class="parrow">Open →</span></a><a class="pick" href="#cra"><span class="pic">🎨</span><span class="plabel">Crafting</span><span class="parrow">Open →</span></a><a class="pick" href="#shop"><span class="pic">🛍️</span><span class="plabel">Shops</span><span class="parrow">Open →</span></a><a class="pick" href="#mon"><span class="pic">📅</span><span class="plabel">Calendar</span><span class="parrow">Open →</span></a></div>
   <section class="section" id="home-us">
     <p class="kicker">Who this is built for</p>
     <h2>Your crew, your shortcuts</h2>
@@ -3238,6 +3238,9 @@ html{scroll-padding-top:118px;}
   <section class="section" id="evt-thrift">
     <p class="kicker">Deal-hunting</p>
     <h2><span class="ic">👖</span> Secondhand, thrift &amp; vintage</h2>
+    <div class="callout tip">
+      <strong>New:</strong> boutiques, curated vintage, consignment and gift shops now have their own tab &mdash; <a href="#shop">🛍️ Shops</a>. Below is the market-and-sale side of secondhand.
+    </div>
     <div class="grid cols-3">
       <div class="card">
         <h4>The Garment District ★</h4>
@@ -3787,6 +3790,189 @@ html{scroll-padding-top:118px;}
   </section>
   <p class="backtop"><a href="#home">↑ All guides</a></p>
 </section>
+<section class="guidesec" id="shop" data-guide hidden>
+  <div class="guidehead">
+    <p class="kicker">🛍️ &nbsp;Boutiques, gifts &amp; the secondhand hunt</p>
+    <h2 class="guidetitle">Shops worth leaving the house for.</h2>
+  </div>
+  <div class="toc">
+    <a href="#shop-boutiques"><span class="ic">👗</span> Boutiques &amp; Indie Clothing</a>
+    <a href="#shop-gifts"><span class="ic">🎁</span> Gifts &amp; Makers</a>
+    <a href="#shop-vintage"><span class="ic">🕰️</span> Curated Vintage</a>
+    <a href="#shop-thrift"><span class="ic">♻️</span> Thrift &amp; Secondhand</a>
+  </div>
+
+  <div class="callout tip">
+    <strong>All independent and local &mdash; no chains.</strong> Small shops keep odd hours and sometimes move, so check before a special trip. Two neighbours that live in their own guides: <b>indie bookstores</b> (including Trident&rsquo;s bookstore-café) are in <a href="#ind-books">Indoors → Bookstores</a>, and the weekly <b>flea &amp; craft markets</b> are in <a href="#evt-flea">Events → Flea &amp; Craft Markets</a>. Craft supplies live in <a href="#cra-supplies">Crafting</a>.
+  </div>
+
+  <!-- BOUTIQUES -->
+  <section class="section" id="shop-boutiques">
+    <p class="kicker">Well-curated, independently owned</p>
+    <h2><span class="ic">👗</span> Boutiques &amp; indie clothing</h2>
+    <p class="lede">The clusters worth a wander: <b>Charles St</b> (Beacon Hill), <b>Newbury St</b> and the <b>South End</b>, and <b>Harvard Square</b>.</p>
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="where">📍 Harvard Sq + Coolidge Corner</div>
+        <h4>⭐ Mint Julep</h4>
+        <p>Women-owned since 2004: a tightly edited mix of feminine dresses, premium denim, jewelry and accessories from American and European labels &mdash; the friendly kind of boutique where they actually help you.</p>
+        <div class="meta"><span class="tag mod">$$</span><span class="tag transit">Red ✓</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Beacon Hill (Charles St) + Newbury St</div>
+        <h4>Crush Boutique</h4>
+        <p>Locally owned and women-run, with a loyal following for its edited contemporary clothing and genuinely helpful styling &mdash; two small, well-chosen storefronts.</p>
+        <div class="meta"><span class="tag mod">$$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Beacon Hill — Charles St</div>
+        <h4>December Thieves</h4>
+        <p>A design-forward concept boutique of emerging global makers &mdash; apparel, jewelry, leather and home objects, a lot of it from small Italian and German studios. A splurge, and a beautiful browse.</p>
+        <div class="meta"><span class="tag mod">$$$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Newbury St + Newton Centre</div>
+        <h4>Betsy Jenney</h4>
+        <p>A longtime Newbury St independent for contemporary European women&rsquo;s fashion and real personal service &mdash; the anti-fast-fashion.</p>
+        <div class="meta"><span class="tag mod">$$–$$$</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- GIFTS -->
+  <section class="section" id="shop-gifts">
+    <p class="kicker">Local makers, real objects</p>
+    <h2><span class="ic">🎁</span> Gifts &amp; makers</h2>
+    <p class="lede">For presents and &ldquo;just because&rdquo; &mdash; shops that stock independent artists and small studios, several ~10 minutes from home. <b>Bookstores</b> make great gift stops too: see <a href="#ind-books">Indoors → Bookstores</a>.</p>
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="where">📍 Davis Sq, Somerville — 416 Highland Ave</div>
+        <h4>⭐ Magpie</h4>
+        <p>The Davis Square staple: handmade jewelry, art, cards, stationery and housewares from local and New England makers. First stop for a good gift near home.</p>
+        <div class="meta"><span class="tag cheap">$–$$</span><span class="tag transit">Red ✓</span></div>
+        <p class="small"><a href="https://magpie-store.com/">magpie-store.com</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Bow Market, Union Sq, Somerville</div>
+        <h4>Tiny Turns Paperie</h4>
+        <p>Letterpress-owner-curated cards, journals, washi tape and pens, tucked in Bow Market (donuts and pinball steps away). Also listed in <a href="#cra-supplies">Crafting</a>.</p>
+        <div class="meta"><span class="tag cheap">$</span><span class="tag transit">GLX ✓</span></div>
+        <p class="small"><a href="https://www.tinyturnspaperie.com/">tinyturnspaperie.com</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 South End</div>
+        <h4>Olives &amp; Grace</h4>
+        <p>A tiny South End shop stocked almost entirely with goods from small, mostly-local makers &mdash; the reliable spot for a thoughtful, hand-picked present.</p>
+        <div class="meta"><span class="tag mod">$$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Porter Sq, Cambridge</div>
+        <h4>Nomad</h4>
+        <p>A decades-old trove of global folk art, handmade jewelry, textiles and Day-of-the-Dead pieces &mdash; gifts you won&rsquo;t find anywhere else nearby.</p>
+        <div class="meta"><span class="tag cheap">$–$$</span><span class="tag transit">Red ✓</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Harvard Sq + Beacon Hill</div>
+        <h4>Black Ink</h4>
+        <p>&ldquo;Unexpected necessities&rdquo;: a magpie&rsquo;s nest of quirky paper goods, rubber stamps, kitchen odds and clever little objects. The fun browse.</p>
+        <div class="meta"><span class="tag cheap">$–$$</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- VINTAGE -->
+  <section class="section" id="shop-vintage">
+    <p class="kicker">Hand-picked, not dug-through</p>
+    <h2><span class="ic">🕰️</span> Curated vintage &amp; consignment</h2>
+    <p class="lede">When you want the edit done for you. For the dig-it-yourself end, jump to <a href="#shop-thrift">Thrift &amp; Secondhand</a> below.</p>
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="where">📍 Harvard Sq, Cambridge</div>
+        <h4>⭐ Oona&rsquo;s</h4>
+        <p>Boston&rsquo;s oldest vintage shop (since 1972): a dense, well-loved room of decades-spanning clothing and accessories at fair prices.</p>
+        <div class="meta"><span class="tag cheap">$–$$</span><span class="tag transit">Red ✓</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Union Sq, Somerville</div>
+        <h4>⭐ High Energy Vintage</h4>
+        <p>A joyful, tightly curated shop of &rsquo;40s&ndash;&rsquo;90s clothing ~10 minutes from home, with frequent sales and a big color-sorted floor.</p>
+        <div class="meta"><span class="tag cheap">$–$$</span><span class="tag transit">GLX ✓</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Bow Market, Union Sq, Somerville</div>
+        <h4>Blue Bandana Relics</h4>
+        <p>Curated menswear, workwear, industrial antiques and Americana in a Bow Market stall &mdash; pair it with High Energy for a Union Sq vintage afternoon.</p>
+        <div class="meta"><span class="tag mod">$$</span><span class="tag transit">GLX ✓</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Harvard Sq, Cambridge</div>
+        <h4>The Attic · Found · Friends &amp; Family</h4>
+        <p>Three small, well-decorated Harvard Square shops mixing hand-picked vintage with newer up-and-coming designers.</p>
+        <div class="meta"><span class="tag mod">$$</span><span class="tag transit">Red ✓</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 East Cambridge (near Lechmere)</div>
+        <h4>Cambridge Antique Market</h4>
+        <p>Five floors and 150+ dealers: furniture, jewelry, kitchenware, ceramics, memorabilia. For homes and collectors more than clothes &mdash; go with time.</p>
+        <div class="meta"><span class="tag cheap">$–$$$</span><span class="tag transit">GLX ✓</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 JP · Back Bay · online</div>
+        <h4>Consignment picks</h4>
+        <p><b>Diversity Consignment</b> (JP) for curated men&rsquo;s/women&rsquo;s; <b>Covet</b> (women-founded) and <b>Vintage Taste</b> (Back Bay) for designer and luxury resale.</p>
+        <div class="meta"><span class="tag mod">$$–$$$</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- THRIFT -->
+  <section class="section" id="shop-thrift">
+    <p class="kicker">Dig-it-yourself &amp; charity racks</p>
+    <h2><span class="ic">♻️</span> Thrift &amp; secondhand</h2>
+    <p class="lede">The cheaper, treasure-hunt end. The weekly <b>flea markets</b> (SoWa, Somerville Flea, Todd Farm) and estate &amp; rummage sales are over in <a href="#evt-flea">Events</a>.</p>
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="where">📍 Kendall/MIT, Cambridge — 200 Broadway</div>
+        <h4>⭐ The Garment District</h4>
+        <p>The area&rsquo;s best: 12,000+ sq ft sorted by decade upstairs, a costume floor, and the legendary <b>$2/lb &ldquo;By the Pound&rdquo;</b> dig floor. Come with time and patience.</p>
+        <div class="meta"><span class="tag cheap">$</span><span class="tag transit">Red ✓</span></div>
+        <p class="small"><a href="https://garmentdistrict.com/">garmentdistrict.com</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 JP + Central Sq</div>
+        <h4>Boomerangs</h4>
+        <p>Nonprofit benefiting AIDS Action Committee &mdash; a curated-for-thrift mix of clothing, books, housewares and furniture at good prices.</p>
+        <div class="meta"><span class="tag cheap">$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Beacon Hill</div>
+        <h4>The Thrift Shop of Boston</h4>
+        <p>A charmingly old-school nonprofit shop (est. 1926) benefiting the Home for Little Wanderers &mdash; deep discounts on donated Beacon Hill finds.</p>
+        <div class="meta"><span class="tag cheap">$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 South End — 242 E Berkeley St (+ Waltham)</div>
+        <h4>More Than Words</h4>
+        <p>The youth-run nonprofit used-book warehouse &mdash; cheap secondhand books for a good cause. Also in <a href="#ind-books">Indoors → Bookstores</a>.</p>
+        <div class="meta"><span class="tag cheap">$</span></div>
+      </div>
+      <div class="card">
+        <div class="where">📍 Medford, Framingham, Norwood +</div>
+        <h4>Savers / Goodwill</h4>
+        <p>Not indie, but the <em>volume</em> play: acres of racks and frequent color-tag sales for when you want to hunt cheap. Best hit with low expectations and an open Saturday.</p>
+        <div class="meta"><span class="tag cheap">$</span></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="backtop"><a href="#home">↑ All guides</a></p>
+</section>
 <section class="guidesec" id="mon" data-guide hidden>
   <div class="guidehead">
     <p class="kicker">📅 &nbsp;The day-by-day layer · July 2026 → June 2027</p>
@@ -4086,7 +4272,7 @@ html{scroll-padding-top:118px;}
 </footer>
 <script>
 (function(){
-  var guides=['home','out','bea','day','eat','dat','dog','evt','ind','cra','mon'];
+  var guides=['home','out','bea','day','eat','dat','dog','evt','ind','cra','shop','mon'];
   var fmap={free:'free',cheap:'cheap',mod:'mod',weekday:'weekday',transit:'transit',dog:'dog',date:'date'};
   var current='home', filter='all';
   var fbar=document.getElementById('filterbar');

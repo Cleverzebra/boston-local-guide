@@ -13,7 +13,7 @@ canonical copy.
 
 ## How it works
 
-One page, eleven tabs across the top, with filters (price, dog-friendly,
+One page, twelve tabs across the top, with filters (price, dog-friendly,
 date-worthy) that work across every guide. Pick a tab or filter and the cards
 below update in place.
 
@@ -29,6 +29,7 @@ below update in place.
 | **Events** | Fairs, farmers markets, festivals, flea & craft markets, thrifting |
 | **Indoors** | Rainy-day: quirky/free museums, candlepin & barcades, indie cinemas, first-run multiplexes, Level 99, cheap live music |
 | **Crafting** | Craft-supply stores, one-night workshops, and studios |
+| **Shops** | Independent, locally-owned stores: boutiques & indie clothing, gifts & makers, curated vintage, and thrift/secondhand |
 | **Calendar** | Month-by-month, July 2026 – June 2027: weekly recurring markets & free nights, plus dated fairs, feasts and festivals — home month cards click straight through |
 
 ## Notes on the research
