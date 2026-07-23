@@ -289,6 +289,9 @@ ul.clean li { padding: 8px 0; border-bottom: 1px dashed var(--line); }
 
 /* ---------- "This month" highlight on the year calendar ---------- */
 .mcard.now { border-color: var(--coral); box-shadow: 0 0 0 2px color-mix(in srgb, var(--coral) 35%, transparent), var(--shadow); }
+.card.now-day { border-color: var(--coral); box-shadow: 0 0 0 2px color-mix(in srgb, var(--coral) 35%, transparent), var(--shadow); }
+.card.now-day h4::after { content:" · today"; color:var(--coral); font-weight:700; font-size:.82rem; }
+.nowtag { display:inline-block; background:var(--coral); color:#fff; border-radius:999px; padding:1px 9px; font-size:.68rem; font-weight:700; vertical-align:middle; margin-left:4px; }
 .mcard.now h4::after { content:"← this month"; font-family:var(--sans); font-size:.64rem;
   font-weight:700; color:var(--coral); margin-left:8px; letter-spacing:.06em; }
 
@@ -350,7 +353,7 @@ html{scroll-padding-top:118px;}
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="#home">🧭 Boston Area <span class="dot">·</span> Stuff to Do</a>
-    <nav class="navlinks"><a href="#home">Home</a><a href="#out">Outdoors</a><a href="#bea">Beaches</a><a href="#day">Day Trips</a><a href="#eat">Eats</a><a href="#dat">Date Ideas</a><a href="#dog">Dog Days</a><a href="#evt">Events</a><a href="#ind">Indoors</a><a href="#cra">Crafting</a><a href="#shop">Shops</a><a href="#mon">Calendar</a></nav>
+    <nav class="navlinks"><a href="#home">Home</a><a href="#now">This Week</a><a href="#out">Outdoors</a><a href="#bea">Beaches</a><a href="#day">Day Trips</a><a href="#eat">Eats</a><a href="#dat">Date Ideas</a><a href="#dog">Dog Days</a><a href="#evt">Events</a><a href="#ind">Indoors</a><a href="#cra">Crafting</a><a href="#shop">Shops</a><a href="#mon">Calendar</a></nav>
   </div>
 </header>
 <div class="filterbar" id="filterbar" hidden>
@@ -375,7 +378,7 @@ html{scroll-padding-top:118px;}
   <p class="kicker">Start here</p>
   <h2 class="guidetitle" style="font-size:1.7rem;margin:2px 0 4px;">Choose a guide</h2>
   <p class="homeintro">Tap any guide to open it. Inside, the filter bar up top narrows to what&rsquo;s <b>free</b>, <b>cheap</b>, <b>weekday-friendly</b>, <b>car-free</b>, <b>🐕 dog-OK</b>, or <b>💕 date-worthy</b>.</p>
-  <div class="pickgrid"><a class="pick" href="#out"><span class="pic">🌲</span><span class="plabel">Outdoors</span><span class="parrow">Open →</span></a><a class="pick" href="#bea"><span class="pic">🏖️</span><span class="plabel">Beaches</span><span class="parrow">Open →</span></a><a class="pick" href="#day"><span class="pic">🚗</span><span class="plabel">Day Trips</span><span class="parrow">Open →</span></a><a class="pick" href="#eat"><span class="pic">🥕</span><span class="plabel">Eats</span><span class="parrow">Open →</span></a><a class="pick" href="#dat"><span class="pic">💕</span><span class="plabel">Date Ideas</span><span class="parrow">Open →</span></a><a class="pick" href="#dog"><span class="pic">🐕</span><span class="plabel">Dog Days</span><span class="parrow">Open →</span></a><a class="pick" href="#evt"><span class="pic">🎪</span><span class="plabel">Events</span><span class="parrow">Open →</span></a><a class="pick" href="#ind"><span class="pic">☔</span><span class="plabel">Indoors</span><span class="parrow">Open →</span></a><a class="pick" href="#cra"><span class="pic">🎨</span><span class="plabel">Crafting</span><span class="parrow">Open →</span></a><a class="pick" href="#shop"><span class="pic">🛍️</span><span class="plabel">Shops</span><span class="parrow">Open →</span></a><a class="pick" href="#mon"><span class="pic">📅</span><span class="plabel">Calendar</span><span class="parrow">Open →</span></a></div>
+  <div class="pickgrid"><a class="pick" href="#now"><span class="pic">🗓️</span><span class="plabel">This Week</span><span class="parrow">Open →</span></a><a class="pick" href="#out"><span class="pic">🌲</span><span class="plabel">Outdoors</span><span class="parrow">Open →</span></a><a class="pick" href="#bea"><span class="pic">🏖️</span><span class="plabel">Beaches</span><span class="parrow">Open →</span></a><a class="pick" href="#day"><span class="pic">🚗</span><span class="plabel">Day Trips</span><span class="parrow">Open →</span></a><a class="pick" href="#eat"><span class="pic">🥕</span><span class="plabel">Eats</span><span class="parrow">Open →</span></a><a class="pick" href="#dat"><span class="pic">💕</span><span class="plabel">Date Ideas</span><span class="parrow">Open →</span></a><a class="pick" href="#dog"><span class="pic">🐕</span><span class="plabel">Dog Days</span><span class="parrow">Open →</span></a><a class="pick" href="#evt"><span class="pic">🎪</span><span class="plabel">Events</span><span class="parrow">Open →</span></a><a class="pick" href="#ind"><span class="pic">☔</span><span class="plabel">Indoors</span><span class="parrow">Open →</span></a><a class="pick" href="#cra"><span class="pic">🎨</span><span class="plabel">Crafting</span><span class="parrow">Open →</span></a><a class="pick" href="#shop"><span class="pic">🛍️</span><span class="plabel">Shops</span><span class="parrow">Open →</span></a><a class="pick" href="#mon"><span class="pic">📅</span><span class="plabel">Calendar</span><span class="parrow">Open →</span></a></div>
   <section class="section" id="home-us">
     <p class="kicker">Who this is built for</p>
     <h2>Your crew, your shortcuts</h2>
@@ -517,6 +520,41 @@ html{scroll-padding-top:118px;}
       <div class="mcard"><h4><a href="#mon-m-dec">December</a></h4><ul><li>Common Tree Lighting; Snowport</li><li>Holiday markets &amp; light displays</li><li>First Night (Dec 31)</li></ul><p class="small" style="margin:8px 0 0;"><a href="#mon-m-dec"><b>Day-by-day →</b></a></p></div>
     </div>
   </section>
+</section>
+<section class="guidesec" id="now" data-guide hidden>
+  <div class="guidehead">
+    <p class="kicker">🗓️ &nbsp;Reads your device&rsquo;s date &mdash; refresh anytime for the current week</p>
+    <h2 class="guidetitle">This week</h2>
+    <p class="lede" id="now-sub">Loading today&rsquo;s date&hellip;</p>
+  </div>
+
+  <section class="section" id="now-events">
+    <p class="kicker">Dated &amp; time-limited &mdash; soonest first</p>
+    <h2><span class="ic">📌</span> On this week &amp; this weekend</h2>
+    <div id="now-list" class="grid cols-2"></div>
+    <p class="small">Pulled from the guide&rsquo;s verified 2026&ndash;27 calendar; tap <b>details &rarr;</b> for the full entry. For the whole month, open the <a href="#mon">Calendar</a>.</p>
+  </section>
+
+  <hr class="divider">
+
+  <section class="section" id="now-weekly">
+    <p class="kicker">The dependable backbone</p>
+    <h2><span class="ic">🔁</span> Every week, by day</h2>
+    <p class="lede">Today is highlighted. Outdoor farmers &amp; flea markets run roughly mid-May through late November; the free museum nights are year-round.</p>
+    <div class="grid cols-3">
+      <div class="card" data-dow="0"><h4>Sunday</h4><p><b>SoWa Open Market</b> 11&ndash;5 🐕 (South End) &middot; <b>Todd Farm flea</b> 5am&ndash;2 (Rowley, no dogs) &middot; <b>Greenway Artisan</b> 11&ndash;6 &middot; Somerville Flea. The big flea day.</p></div>
+      <div class="card" data-dow="1"><h4>Monday</h4><p><b>Central Sq farmers market</b> 12&ndash;6. The quiet day &mdash; many museums are closed, so it&rsquo;s a good errands-and-café day.</p></div>
+      <div class="card" data-dow="2"><h4>Tuesday</h4><p><b>Copley farmers market</b> 11&ndash;6 &middot; <b>Lexington</b> 2&ndash;6:30. Cheap-movie midweek (Somerville Theatre $12 matinees).</p></div>
+      <div class="card" data-dow="3"><h4>Wednesday</h4><p><b>Davis Sq</b> 12&ndash;6 &amp; <b>Charlestown</b> 3&ndash;6 markets &middot; <b>MFA</b> pay-what-you-wish evening &middot; summer: <b>Landmarks Orchestra</b> free at the Hatch Shell.</p></div>
+      <div class="card" data-dow="4"><h4>Thursday</h4><p><b>ICA free 5&ndash;9</b> 💕 &middot; <b>Gardner free Thursday nights 5&ndash;9</b> 💕 (new for 2026) &middot; <b>Brookline market</b> 1:30&ndash;6:30. The date-night sweet spot.</p></div>
+      <div class="card" data-dow="5"><h4>Friday</h4><p><b>Haymarket</b> produce &middot; <b>Copley market</b> 11&ndash;6 &middot; summer: <b>Free Fun Fridays</b> venues + <b>Friday Flicks</b> at the Hatch Shell 🆓🐕 + free Commuter Rail.</p></div>
+      <div class="card" data-dow="6"><h4>Saturday</h4><p><b>Union Sq farmers market</b> 9&ndash;1 &middot; <b>Haymarket</b> &middot; most town markets. The full-slate day for markets and day trips.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>Always on:</strong> <b>ICA</b> &amp; <b>Gardner</b> free Thursday nights, <b>MFA</b> Wednesday-evening pay-what-you-wish, <b>Haymarket</b> Fri&ndash;Sat, <b>Boston Public Market</b> daily, and free museum passes from your <b>library</b>. Under-18s get into the ICA, Gardner &amp; MFA free anytime.
+    </div>
+  </section>
+  <p class="backtop"><a href="#home">↑ All guides</a></p>
 </section>
 <section class="guidesec" id="out" data-guide hidden>
   <div class="guidehead">
@@ -3890,32 +3928,53 @@ html{scroll-padding-top:118px;}
   <section class="section" id="shop-boutiques">
     <p class="kicker">Well-curated, independently owned</p>
     <h2><span class="ic">👗</span> Boutiques &amp; indie clothing</h2>
-    <p class="lede">The clusters worth a wander: <b>Charles St</b> (Beacon Hill), <b>Newbury St</b> and the <b>South End</b>, and <b>Harvard Square</b>.</p>
+    <p class="lede">Small, independent and women&rsquo;s-leaning &mdash; the <b>Anthropologie-ish</b> end of things (feminine, a little boho, well-curated). The clusters worth a wander: <b>Charles St</b> (Beacon Hill), <b>Newbury St</b> and the <b>South End</b>, and <b>Harvard Square</b>.</p>
     <div class="grid cols-3">
       <div class="card">
         <div class="where">📍 Harvard Sq + Coolidge Corner</div>
         <h4>⭐ Mint Julep</h4>
-        <p>Women-owned since 2004: a tightly edited mix of feminine dresses, premium denim, jewelry and accessories from American and European labels &mdash; the friendly kind of boutique where they actually help you.</p>
+        <p>The closest thing to your lane: a tightly edited mix of feminine dresses, printed tops, premium denim and jewelry, women-owned since 2004 and genuinely helpful. Start here.</p>
         <div class="meta"><span class="tag mod">$$</span><span class="tag transit">Red ✓</span></div>
+        <p class="small"><a href="https://www.google.com/maps/search/?api=1&amp;query=Mint+Julep+boutique+Harvard+Square+Cambridge">map &amp; hours</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 South End, Boston</div>
+        <h4>⭐ Flock</h4>
+        <p>Boho-chic done right: easy dresses, soft blouses and graphic tees next to a whimsical wall of jewelry and gifts (Kendra Scott and friends). The most Anthropologie-adjacent shop in town.</p>
+        <div class="meta"><span class="tag mod">$$</span></div>
+        <p class="small"><a href="https://www.google.com/maps/search/?api=1&amp;query=Flock+boutique+South+End+Boston">map &amp; hours</a></p>
       </div>
       <div class="card">
         <div class="where">📍 Beacon Hill (Charles St) + Newbury St</div>
         <h4>Crush Boutique</h4>
-        <p>Locally owned and women-run, with a loyal following for its edited contemporary clothing and genuinely helpful styling &mdash; two small, well-chosen storefronts.</p>
+        <p>Locally owned and women-run, with a devoted following for its on-trend contemporary clothing and real styling help &mdash; two small, well-chosen storefronts.</p>
         <div class="meta"><span class="tag mod">$$</span></div>
+        <p class="small"><a href="https://www.google.com/maps/search/?api=1&amp;query=Crush+Boutique+Charles+Street+Boston">map &amp; hours</a></p>
       </div>
       <div class="card">
-        <div class="where">📍 Beacon Hill — Charles St</div>
-        <h4>December Thieves</h4>
-        <p>A design-forward concept boutique of emerging global makers &mdash; apparel, jewelry, leather and home objects, a lot of it from small Italian and German studios. A splurge, and a beautiful browse.</p>
-        <div class="meta"><span class="tag mod">$$$</span></div>
+        <div class="where">📍 Cambridge</div>
+        <h4>Queenia</h4>
+        <p>Built around one local woman designer&rsquo;s own label &mdash; original, in-house pieces and accessories you won&rsquo;t find anywhere else. Small, personal, genuinely indie.</p>
+        <div class="meta"><span class="tag mod">$$</span></div>
+        <p class="small"><a href="https://www.google.com/maps/search/?api=1&amp;query=Queenia+boutique+Cambridge">map &amp; hours</a></p>
       </div>
       <div class="card">
         <div class="where">📍 Newbury St + Newton Centre</div>
         <h4>Betsy Jenney</h4>
-        <p>A longtime Newbury St independent for contemporary European women&rsquo;s fashion and real personal service &mdash; the anti-fast-fashion.</p>
+        <p>A longtime Newbury St independent for contemporary European women&rsquo;s fashion and real personal service &mdash; a little dressier than boho, and the anti-fast-fashion.</p>
         <div class="meta"><span class="tag mod">$$–$$$</span></div>
+        <p class="small"><a href="https://www.google.com/maps/search/?api=1&amp;query=Betsy+Jenney+Newbury+Street+Boston">map &amp; hours</a></p>
       </div>
+      <div class="card">
+        <div class="where">📍 South End (SoWa), Boston</div>
+        <h4>December Thieves</h4>
+        <p>The splurge/concept end: globally sourced indie designers, boho and beautiful &mdash; apparel, jewelry, leather and home objects, a lot of it from small Italian and German studios.</p>
+        <div class="meta"><span class="tag mod">$$$</span></div>
+        <p class="small"><a href="https://www.google.com/maps/search/?api=1&amp;query=December+Thieves+SoWa+Boston">map &amp; hours</a></p>
+      </div>
+    </div>
+    <div class="callout tip">
+      <strong>Worth the drive:</strong> <b>Smitten</b> (Newburyport &mdash; boho women&rsquo;s, and owner Melissa does one-of-a-kind denim appliqué), plus the boutique-dense downtowns of <b>Newburyport</b> and <b>Concord</b> for a shopping-day road trip. For the secondhand version of this exact look, <b>Oona&rsquo;s</b> and <b>High Energy Vintage</b> are in <a href="#shop-vintage">Curated Vintage</a> below.
     </div>
   </section>
 
@@ -3971,40 +4030,46 @@ html{scroll-padding-top:118px;}
     <p class="lede">When you want the edit done for you. For the dig-it-yourself end, jump to <a href="#shop-thrift">Thrift &amp; Secondhand</a> below.</p>
     <div class="grid cols-3">
       <div class="card">
-        <div class="where">📍 Harvard Sq, Cambridge</div>
+        <div class="where">📍 Harvard Sq — 1210 Mass Ave, Cambridge</div>
         <h4>⭐ Oona&rsquo;s</h4>
         <p>Boston&rsquo;s oldest vintage shop (since 1972): a dense, well-loved room of decades-spanning clothing and accessories at fair prices.</p>
         <div class="meta"><span class="tag cheap">$–$$</span><span class="tag transit">Red ✓</span></div>
+        <p class="small"><a href="https://www.oonasboston.com/">oonasboston.com</a></p>
       </div>
       <div class="card">
-        <div class="where">📍 Union Sq, Somerville</div>
+        <div class="where">📍 Union Sq — 429 Somerville Ave, Somerville</div>
         <h4>⭐ High Energy Vintage</h4>
         <p>A joyful, tightly curated shop of &rsquo;40s&ndash;&rsquo;90s clothing ~10 minutes from home, with frequent sales and a big color-sorted floor.</p>
         <div class="meta"><span class="tag cheap">$–$$</span><span class="tag transit">GLX ✓</span></div>
+        <p class="small"><a href="https://highenergyvintage.com/">highenergyvintage.com</a></p>
       </div>
       <div class="card">
         <div class="where">📍 Bow Market, Union Sq, Somerville</div>
         <h4>Blue Bandana Relics</h4>
         <p>Curated menswear, workwear, industrial antiques and Americana in a Bow Market stall &mdash; pair it with High Energy for a Union Sq vintage afternoon.</p>
         <div class="meta"><span class="tag mod">$$</span><span class="tag transit">GLX ✓</span></div>
+        <p class="small"><a href="https://www.google.com/maps/search/?api=1&amp;query=Blue+Bandana+Relics+Bow+Market+Somerville">map &amp; hours</a></p>
       </div>
       <div class="card">
         <div class="where">📍 Harvard Sq, Cambridge</div>
         <h4>The Attic · Found · Friends &amp; Family</h4>
-        <p>Three small, well-decorated Harvard Square shops mixing hand-picked vintage with newer up-and-coming designers.</p>
+        <p>Three small, well-decorated Harvard Square shops mixing hand-picked vintage with newer up-and-coming designers &mdash; a tidy vintage crawl in a few blocks.</p>
         <div class="meta"><span class="tag mod">$$</span><span class="tag transit">Red ✓</span></div>
+        <p class="small"><a href="https://www.google.com/maps/search/?api=1&amp;query=The+Attic+vintage+Harvard+Square+Cambridge">map &amp; hours</a></p>
       </div>
       <div class="card">
-        <div class="where">📍 East Cambridge (near Lechmere)</div>
+        <div class="where">📍 East Cambridge — 201 Monsignor O&rsquo;Brien Hwy</div>
         <h4>Cambridge Antique Market</h4>
         <p>Five floors and 150+ dealers: furniture, jewelry, kitchenware, ceramics, memorabilia. For homes and collectors more than clothes &mdash; go with time.</p>
         <div class="meta"><span class="tag cheap">$–$$$</span><span class="tag transit">GLX ✓</span></div>
+        <p class="small"><a href="https://www.google.com/maps/search/?api=1&amp;query=Cambridge+Antique+Market+East+Cambridge">map &amp; hours</a></p>
       </div>
       <div class="card">
         <div class="where">📍 JP · Back Bay · online</div>
         <h4>Consignment picks</h4>
         <p><b>Diversity Consignment</b> (JP) for curated men&rsquo;s/women&rsquo;s; <b>Covet</b> (women-founded) and <b>Vintage Taste</b> (Back Bay) for designer and luxury resale.</p>
         <div class="meta"><span class="tag mod">$$–$$$</span></div>
+        <p class="small"><a href="https://www.google.com/maps/search/?api=1&amp;query=Diversity+Consignment+Jamaica+Plain">map &amp; hours</a></p>
       </div>
     </div>
   </section>
@@ -4029,18 +4094,28 @@ html{scroll-padding-top:118px;}
         <h4>Boomerangs</h4>
         <p>Nonprofit benefiting AIDS Action Committee &mdash; a curated-for-thrift mix of clothing, books, housewares and furniture at good prices.</p>
         <div class="meta"><span class="tag cheap">$</span></div>
+        <p class="small"><a href="https://www.google.com/maps/search/?api=1&amp;query=Boomerangs+thrift+Jamaica+Plain+Boston">map &amp; hours</a></p>
       </div>
       <div class="card">
-        <div class="where">📍 Beacon Hill</div>
-        <h4>The Thrift Shop of Boston</h4>
-        <p>A charmingly old-school nonprofit shop (est. 1926) benefiting the Home for Little Wanderers &mdash; deep discounts on donated Beacon Hill finds.</p>
+        <div class="where">📍 Roslindale — 33 Corinth St</div>
+        <h4>⭐ The Thrift Shop of Boston</h4>
+        <p>The great <b>Roslindale</b> one: a charming, well-run nonprofit (est. 1926) benefiting the Home for Little Wanderers &mdash; genuinely good finds, deep discounts, and it&rsquo;s right in Roslindale Village.</p>
         <div class="meta"><span class="tag cheap">$</span></div>
+        <p class="small"><a href="https://www.google.com/maps/search/?api=1&amp;query=Thrift+Shop+of+Boston+33+Corinth+St+Roslindale">map &amp; hours</a></p>
+      </div>
+      <div class="card">
+        <div class="where">📍 Needham — 570 Hillside Ave</div>
+        <h4>Needham Community Council Thrift Shop</h4>
+        <p>A proper community charity shop: big, ever-changing racks of &ldquo;new-to-you&rdquo; clothing, accessories and household goods at nominal prices, with proceeds funding local programs. The Needham workhorse.</p>
+        <div class="meta"><span class="tag cheap">$</span></div>
+        <p class="small"><a href="https://www.google.com/maps/search/?api=1&amp;query=Needham+Community+Council+Thrift+Shop+570+Hillside+Ave+Needham">map &amp; hours</a> · <a href="https://needhamcouncil.org/">needhamcouncil.org</a></p>
       </div>
       <div class="card">
         <div class="where">📍 South End — 242 E Berkeley St (+ Waltham)</div>
         <h4>More Than Words</h4>
         <p>The youth-run nonprofit used-book warehouse &mdash; cheap secondhand books for a good cause. Also in <a href="#ind-books">Indoors → Bookstores</a>.</p>
         <div class="meta"><span class="tag cheap">$</span></div>
+        <p class="small"><a href="https://shop.mtwyouth.org/">mtwyouth.org</a></p>
       </div>
       <div class="card">
         <div class="where">📍 Medford, Framingham, Norwood +</div>
@@ -4048,6 +4123,9 @@ html{scroll-padding-top:118px;}
         <p>Not indie, but the <em>volume</em> play: acres of racks and frequent color-tag sales for when you want to hunt cheap. Best hit with low expectations and an open Saturday.</p>
         <div class="meta"><span class="tag cheap">$</span></div>
       </div>
+    </div>
+    <div class="callout tip">
+      <strong>Community &amp; charity thrift</strong> is where the big, cheap, ever-changing inventory lives: the <b>Needham Community Council</b> shop above, church &amp; parish <b>rummage sales</b> (posted on EstateSales.net and in <a href="#evt-flea">Events</a>, best spring and fall), and Savers/Goodwill for sheer volume. <b>Heads-up:</b> Allston&rsquo;s beloved bins-and-chaos <b>Urban Renewals has closed</b> &mdash; don&rsquo;t make the trip.
     </div>
   </section>
 
@@ -4352,7 +4430,7 @@ html{scroll-padding-top:118px;}
 </footer>
 <script>
 (function(){
-  var guides=['home','out','bea','day','eat','dat','dog','evt','ind','cra','shop','mon'];
+  var guides=['home','now','out','bea','day','eat','dat','dog','evt','ind','cra','shop','mon'];
   var fmap={free:'free',cheap:'cheap',mod:'mod',weekday:'weekday',transit:'transit',dog:'dog',date:'date'};
   var current='home', filter='all';
   var fbar=document.getElementById('filterbar');
@@ -4381,8 +4459,78 @@ html{scroll-padding-top:118px;}
     if(mc[m]) mc[m].classList.add('now');
   }catch(e){}
 
+  // ===== This Week (auto-updates to the device's date on open) =====
+  var EVENTS=[
+    ['2026-07-11','2026-07-12','🎵','Cambridge PorchFest','Porch bands across Cambridge &mdash; free.','#evt-music'],
+    ['2026-07-14','2026-07-19','🛍️','Brimfield Antique Flea #2','Rte 20, ~75 min west; 🐕 leashed; bring cash.','#evt-flea'],
+    ['2026-07-17','2026-07-19','🏖️','Revere Beach Sand Sculpting','Blue Line; master sculptors + Saturday fireworks. Free.','#evt'],
+    ['2026-07-18','2026-07-19','🎵','Levitate Music &amp; Arts, Marshfield','~30 min south; Alanis Morissette, Caamp, Ziggy Marley (tix).','#evt-music'],
+    ['2026-07-22','2026-08-09','🎭','Free Shakespeare on the Common','Midsummer, Tue&ndash;Sun 8pm; picnic by 6:30. Free.','#dat-free'],
+    ['2026-07-24','2026-07-26','🎵','Lowell Folk Festival','The country&rsquo;s longest-running free folk fest.','#evt-music'],
+    ['2026-07-24','2026-07-26','🎵','Newport Folk Festival','Fort Adams, RI (~90 min) &mdash; a whole day trip.','#evt-music'],
+    ['2026-07-25','2026-07-26','🎵','Cambridge Jazz Festival','Free at Danehy Park, 12&ndash;6.','#evt-music'],
+    ['2026-07-31','2026-08-02','🎵','Newport Jazz Festival','Fort Adams, RI &mdash; the weekend after Folk.','#evt-music'],
+    ['2026-08-09','2026-08-09','🥮','Chinatown August Moon Festival','Lion dances + food stalls, ~10&ndash;5. Free.','#evt'],
+    ['2026-08-13','2026-08-16','🎆','Fisherman&rsquo;s Feast, North End','Boston&rsquo;s oldest feast; Sunday Flight of the Angel.','#evt'],
+    ['2026-08-21','2026-08-30','🎡','Marshfield Fair','10 days of livestock + midway.','#evt-fairs'],
+    ['2026-08-27','2026-08-30','🎆','St. Anthony&rsquo;s Feast, North End','The biggest feast of the season.','#evt'],
+    ['2026-08-28','2026-08-29','🎉','Boston Caribbean Carnival','J&rsquo;ouvert + masquerade parade, Franklin Park. Free.','#evt'],
+    ['2026-09-08','2026-09-13','🛍️','Brimfield #3 &mdash; last of 2026','The classic September antiques show.','#evt-flea'],
+    ['2026-09-12','2026-09-12','🎵','JP Music Festival','Free, all-local, Pinebank Field by Jamaica Pond.','#evt-music'],
+    ['2026-09-18','2026-10-04','🎡','The Big E, West Springfield','Avenue of States + free concerts.','#evt-fairs'],
+    ['2026-09-19','2026-09-19','🍬','What the Fluff? Festival','Union Sq marshmallow chaos, 1&ndash;5. Free.','#evt'],
+    ['2026-09-20','2026-09-20','🥗','Boston Local Food Festival','Greenway, ~85 vendors, very veg-friendly. Free.','#evt'],
+    ['2026-10-02','2026-10-12','🎡','Topsfield Fair','America&rsquo;s oldest county fair.','#evt-fairs'],
+    ['2026-10-09','2026-10-11','🎵','HONK! Festival','Activist street bands + Sunday parade to Harvard Sq. Free.','#evt-music'],
+    ['2026-10-16','2026-10-18','🚣','Head of the Charles','The world&rsquo;s largest regatta. Free to watch.','#evt'],
+    ['2026-11-07','2026-12-28','🎄','Snowport Holiday Market opens','Seaport; 100+ shops + light installations.','#evt'],
+    ['2026-11-21','2026-11-21','🦃','Plymouth Thanksgiving Parade','America&rsquo;s hometown Thanksgiving.','#evt'],
+    ['2026-12-31','2026-12-31','🎆','First Night Boston','Free citywide New Year&rsquo;s Eve.','#evt'],
+    ['2027-02-06','2027-02-06','🐉','Lunar New Year, Chinatown','Lion dances + firecrackers (date approximate).','#evt'],
+    ['2027-03-14','2027-03-14','☘️','South Boston St. Patrick&rsquo;s Parade','~1M spectators.','#evt'],
+    ['2027-04-19','2027-04-19','🏃','Boston Marathon / Patriots&rsquo; Day','Plus Lexington &amp; Concord reenactments.','#evt'],
+    ['2027-05-09','2027-05-09','🌸','Lilac Sunday, Arnold Arboretum','The one picnic day of the year &mdash; dogs welcome. Free.','#evt'],
+    ['2027-05-11','2027-05-16','🛍️','Brimfield #1 (2027)','Season opener for the big antiques fair.','#evt-flea']
+  ];
+  function nowD(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
+  var NMON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var NDOW=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  function nowRange(a,b){
+    if(a.getTime()===b.getTime()) return NMON[a.getMonth()]+' '+a.getDate();
+    if(a.getMonth()===b.getMonth()) return NMON[a.getMonth()]+' '+a.getDate()+'–'+b.getDate();
+    return NMON[a.getMonth()]+' '+a.getDate()+'–'+NMON[b.getMonth()]+' '+b.getDate();
+  }
+  function renderNow(){
+    var today=new Date(); today.setHours(0,0,0,0);
+    var sat=new Date(today); sat.setDate(today.getDate()+((6-today.getDay()+7)%7));
+    var sun=new Date(sat); sun.setDate(sat.getDate()+1);
+    var sub=document.getElementById('now-sub');
+    if(sub) sub.innerHTML='Auto-updated for <b>'+NDOW[today.getDay()]+', '+NMON[today.getMonth()]+' '+today.getDate()+'</b>. This weekend: <b>'+nowRange(sat,sun)+'</b>.';
+    function win(days){
+      var end=new Date(today); end.setDate(today.getDate()+days);
+      return EVENTS.filter(function(e){return nowD(e[1])>=today && nowD(e[0])<=end;})
+                   .sort(function(a,b){return nowD(a[0])-nowD(b[0]);});
+    }
+    var list=win(9); if(list.length<3) list=win(24);
+    var box=document.getElementById('now-list');
+    if(box){
+      if(!list.length){
+        box.innerHTML='<div class="card"><p>Nothing dated in the built-in list for the next few weeks &mdash; open the <a href="#mon">month-by-month Calendar</a> or <a href="#evt">Events &amp; Markets</a> for the latest.</p></div>';
+      } else {
+        box.innerHTML=list.map(function(e){
+          var a=nowD(e[0]),b=nowD(e[1]);
+          var onNow=(a<=today && b>=today);
+          return '<div class="card"><div class="where">📅 '+nowRange(a,b)+(onNow?'<span class="nowtag">on now</span>':'')+'</div><h4>'+e[2]+' '+e[3]+'</h4><p>'+e[4]+' <a href="'+e[5]+'">details &rarr;</a></p></div>';
+        }).join('');
+      }
+    }
+    var dow=today.getDay();
+    document.querySelectorAll('#now-weekly [data-dow]').forEach(function(c){ c.classList.toggle('now-day', (+c.getAttribute('data-dow'))===dow); });
+  }
+  try{ renderNow(); }catch(e){}
+
   function applyFilter(){
-    if(current==='home'){fbar.hidden=true;return;}
+    if(current==='home'||current==='now'){fbar.hidden=true;return;}
     fbar.hidden=false;
     var sec=document.getElementById(current);
     var cards=sec.querySelectorAll('.card');
@@ -4409,6 +4557,7 @@ html{scroll-padding-top:118px;}
   function show(id){
     var g = guides.indexOf(id)>=0 ? id : (guides.indexOf(id.split('-')[0])>=0 ? id.split('-')[0] : 'home');
     current=g;
+    if(g==='now'){ try{ renderNow(); }catch(e){} }
     document.querySelectorAll('[data-guide]').forEach(function(s){ s.hidden = (s.id!==g); });
     document.querySelectorAll('.navlinks a').forEach(function(a){ a.classList.toggle('active', a.getAttribute('href')==='#'+g); });
     setFilter('all');
