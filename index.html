@@ -3811,6 +3811,10 @@ html{scroll-padding-top:118px;}
     <h2><span class="ic">🏛️</span> Quirky &amp; free museums</h2>
     <p class="lede">The small, strange, and free-to-enter collections locals love. Two easy all-weather clusters: <b>Harvard Square</b> (Art Museums + Natural History + Ancient Near East) and <b>Kendall Square</b> (MIT Museum + List Center).</p>
 
+    <div class="callout tip">
+      <strong>🌙 Museums after dark &mdash; the evening option.</strong> Most museums shut at 5, but several run <b>after-hours parties</b> with DJs, bars, performances and hands-on activities, and they are a completely different night out to a daytime visit. <b>MFA Late Nites</b> (several a year, often tied to a big exhibition) &middot; <b>Museum of Science Adult Night</b>, themed from Space Odyssey to the Science of Beer &middot; <b>Boston Grown-Ups Museum</b> &mdash; the Children&rsquo;s Museum reopened for adults, with cocktails and nostalgia &middot; <b>ICA First Fridays</b> with live music. <b>⚠️ Age limits matter here:</b> MOS Adult Night is <b>18+</b> and the Grown-Ups Museum is <b>21+</b>, so those two are not teen outings &mdash; MFA Late Nites and ICA evenings are the ones that work for the whole household. Dates are announced a few weeks ahead; check each museum&rsquo;s events page.
+    </div>
+
     <h3>Quirky &amp; small</h3>
     <div class="grid cols-3">
       <div class="card"><h4>Warren Anatomical Museum</h4><div class="where">📍 Longwood · FREE</div><p class="small">Cabinet-of-curiosities medical museum — Phineas Gage's skull &amp; tamping iron. <b>Sat only, 10&ndash;4</b> (photo ID at desk).</p><div class="meta"><span class="tag free">Free</span></div></div>
@@ -4980,70 +4984,72 @@ html{scroll-padding-top:118px;}
   var SEASON={all:[1,2,3,4,5,6,7,8,9,10,11,12],warm:[4,5,6,7,8,9,10],summer:[6,7,8,9],
     fall:[9,10,11],augoct:[8,9,10],winter:[12,1,2,3],spring:[3,4,5],market:[5,6,7,8,9,10,11]};
   var ACTS=[
-    ['\ud83e\udd52','Play pickleball on a free court','Somerville, Cambridge or the Ink Block','Two dozen free public courts around here. Bring your own net where noted.','#out','out','quick','ma','free','','warm','high',''],
-    ['\ud83c\udf32','Walk the Sheepfold at the Middlesex Fells','Stoneham \u2014 15 min','The big off-leash meadow. In summer get there by 7:30am; glorious in autumn.','#dog-offleash','out','quick','ma','free','d','all','med',''],
-    ['\ud83c\udf33','Arnold Arboretum ramble','Jamaica Plain','281 acres, free, dogs on leash, and the best tree collection in the country.','#dog-hikes','out','half','ma','free','dv','all','med',''],
-    ['\ud83c\udf0a','World\u2019s End, Hingham','South Shore \u2014 40 min','Olmsted-designed drumlins over the harbour. The prettiest short hike near Boston.','#dog-hikes','out','half','ma','cheap','dv','warm','high',''],
-    ['\ud83c\udfd6\ufe0f','Beach day at Crane or Singing Beach','North Shore','Go early for parking. Check the dog-season table before bringing the dog.','#bea','out','full','ma','cheap','dv','summer','low',''],
-    ['\ud83c\udf05','Kendall Square roof garden at golden hour','Cambridge','A free hidden rooftop with the skyline in front of you. Pairs with ice cream.','#out','out','quick','ae','free','v','warm','low',''],
-    ['\ud83d\udea3','Kayak or paddleboard the Charles','Allston / Cambridge','Paddle Boston rents by the hour. Sunset paddles are the move.','#out','out','half','ae','mod','v','summer','high',''],
-    ['\ud83d\udeb2','Ride the Minuteman Bikeway','Arlington \u2192 Bedford','Flat, paved, 10 miles of rail-trail with ice cream at the end.','#out','out','half','ma','free','d','warm','high',''],
-    ['\ud83d\udc15','Off-leash morning at Callahan State Park','Framingham \u2014 30 min','Big, quiet, properly off-leash. The dog sleeps all afternoon afterwards.','#dog-offleash','out','half','m','free','d','all','high',''],
-    ['\ud83e\udd7e','Blue Hills \u2014 Skyline Trail','Milton \u2014 25 min','Real elevation, real views, 20 minutes from the city. Leashed dogs fine.','#out','out','half','ma','free','d','all','high',''],
-    ['\ud83c\udfdd\ufe0f','Ferry to Spectacle Island','From Long Wharf','Harbour islands day: swimming beach, hilltop views, ~$25 round trip. No dogs.','#bea','out','full','ma','mod','v','summer','med',''],
-    ['\ud83c\udfaa','Wander a farmers market','Union Sq Sat \u00b7 Copley Tue/Fri \u00b7 Davis Wed','Cheap, seasonal, always something to eat. Check This Week for today\u2019s.','#now','out','quick','ma','free','df','market','low','123456'],
-    ['\ud83d\udecd\ufe0f','SoWa Open Market','South End \u00b7 Sundays','Vintage, makers, food trucks, dogs welcome. The Sunday default.','#evt-flea','out','half','ma','cheap','df','market','low','0'],
-    ['\ud83d\udd70\ufe0f','The Somerville Flea, Davis Sq','Walkable \u00b7 Sundays 10\u20134','Vintage and makers in the middle of Davis Square, August through October.','#evt-flea','out','quick','ma','cheap','df','augoct','low','0'],
-    ['\ud83d\udd70\ufe0f','Todd Farm flea, Rowley','North Shore \u00b7 Sundays','Get there by 7:30am for the good stuff. Cash. No dogs.','#evt-flea','out','half','m','cheap','','market','low','0'],
-    ['\ud83d\ude97','Day trip to Rockport or Gloucester','Cape Ann \u2014 50 min','Harbour, rocks, fried food and a long walk. Lovely off-season too.','#day','out','full','ma','mod','dv','all','med',''],
-    ['\ud83d\ude97','Day trip to Portsmouth NH','60 min','Walkable old town, great shops, and Green Elephant for entirely veg Thai.','#day','out','full','ma','mod','fv','all','low',''],
-    ['\ud83d\ude97','Day trip to Concord','25 min','Battle Road, bookshops, Verrill Farm. Historic without the crowds.','#day','out','full','ma','cheap','dv','all','med',''],
-    ['\ud83c\udf83','Salem on a weekday','North Shore \u2014 35 min','Go any month but October, or on a weekday. The museums are genuinely good.','#day','out','full','ma','mod','v','all','low',''],
-    ['\ud83c\udf4e','Apple picking or a corn maze','Ipswich / Stow / Littleton','Weekday mornings beat weekend queues. Honey Pot bag feeds three.','#evt','out','half','ma','cheap','df','fall','med',''],
-    ['\ud83c\udfac','Free Friday Flicks at the Hatch Shell','Esplanade \u00b7 summer Fridays','Bring a blanket and a picnic. Free, and the dog can come.','#dat-free','out','quick','e','free','dv','summer','low','5'],
-    ['\ud83c\udfac','Movie Nights at Hood Park','Charlestown \u00b7 late summer\u2013early fall','Free outdoor film on the lawn, free popcorn, dog-friendly, free parking.','#dat-free','out','quick','e','free','dv','summer','low',''],
-    ['\ud83c\udfac','Thursdays on the Lawn, Assembly Row','Walkable \u00b7 Jun\u2013Aug','Free movies, live music or comedy on The Lawn. Zero planning required.','#dat-free','out','quick','e','free','v','summer','low','4'],
-    ['\ud83c\udfbb','Landmarks Orchestra at the Hatch Shell','Esplanade \u00b7 summer Wednesdays','A full orchestra, free, on the grass by the river.','#evt-music','out','quick','e','free','dv','summer','low','3'],
-    ['\ud83c\udfad','Free Shakespeare on the Common','Boston Common \u00b7 Jul\u2013Aug','Picnic by 6:30 for a decent patch of grass. Free.','#dat-free','out','half','e','free','v','summer','low','023456'],
-    ['\ud83c\udf66','Ice cream crawl','Toscanini\u2019s \u2192 Christina\u2019s \u2192 Gracie\u2019s','Pick two, walk between them. This is a legitimate plan.','#eat-icecream','out','quick','ae','cheap','dvf','warm','low',''],
-    ['\ud83e\uddca','Tart froyo run','iYO in Davis, or drive to Orange Leaf','Build-your-own, pay by weight. The good tart kind.','#eat-icecream','out','quick','ae','cheap','vf','warm','low',''],
-    ['\ud83d\uddbc\ufe0f','ICA free Thursday night','Seaport \u00b7 Thu 5\u20139','Free after 5, harbour views from the steps, under-18s always free.','#ind-free','in','quick','e','free','v','all','low','4'],
-    ['\ud83c\udf3a','Gardner Museum','Fenway','The courtyard is the most romantic room in the city. Free Thursdays 5\u20139.','#ind-museums','in','half','mae','mod','v','all','low','013456'],
-    ['\ud83c\udfdb\ufe0f','MFA on a pay-what-you-wish Wednesday','Fenway \u00b7 Wed evening','Enormous. Pick two wings and stop there.','#ind-free','in','half','ae','free','v','all','low','3'],
-    ['\ud83d\udd2c','MIT Museum','Kendall','Small, weird, brilliant. Perfect two-hour rainy plan.','#ind-museums','in','quick','ma','cheap','','all','low',''],
-    ['\ud83e\udd95','Harvard Museum of Natural History','Harvard Sq','The glass flowers alone. Free for MA residents Sun 9\u201312 and Wed 3\u20135.','#ind-museums','in','half','ma','cheap','','all','low',''],
-    ['\ud83d\udcda','Boston Public Library, Bates Hall','Copley','Free, beautiful, quiet. Take a book and stay two hours.','#ind-books','in','quick','mae','free','v','all','low','123456'],
-    ['\ud83d\udcd6','Bookshop afternoon at Trident','Newbury St','Browse, then eat at the same table. All-day breakfast, big veg menu.','#ind-books','in','quick','mae','cheap','vf','all','low',''],
-    ['\ud83d\udcda','Indie bookstore crawl','Harvard Sq or Brookline','Harvard Book Store \u2192 Grolier, or Brookline Booksmith\u2019s used cellar.','#ind-books','in','quick','mae','cheap','v','all','low',''],
-    ['\ud83c\udfb3','Candlepin bowling','Sacco\u2019s in Davis, or Ron\u2019s in Hyde Park','Small balls, no thumb holes, very New England. Ron\u2019s has ice cream.','#ind-games','in','quick','ae','cheap','vf','all','med',''],
-    ['\ud83d\udc7e','Barcade night at Versus or Bit Bar','Cambridge / Salem','Versus is all-ages before 6pm. Bit Bar is 21+ after dark.','#ind-games','in','quick','ae','mod','v','all','med',''],
-    ['\ud83e\udde9','Boda Borg quest rooms','Malden \u2014 10 min','Physical puzzle rooms, no host, unlimited retries. Teams of 3\u20135.','#dat-under60','in','half','ae','mod','v','all','high',''],
-    ['\ud83c\udfaf','Level 99','Natick Mall','Huge puzzle-and-challenge arena. Under-18s need a 25+ adult.','#ind-games','in','half','ae','mod','v','all','high',''],
-    ['\ud83c\udfac','Repertory film at the Brattle or Coolidge','Harvard Sq / Brookline','Brattle double features are $19 for two. Somerville matinees are $12.','#ind-cinema','in','quick','ae','cheap','v','all','low',''],
-    ['\ud83c\udf7f','First-run film at AMC Assembly Row','Assembly Row \u2014 walkable','The home theatre. Walk there, eat after.','#ind-cinema','in','quick','ae','mod','vf','all','low',''],
-    ['\ud83c\udfb6','Live music at Club Passim','Harvard Sq','All-ages folk room, tiny, superb. Book ahead.','#ind-cinema','in','quick','e','mod','v','all','low',''],
-    ['\ud83c\udffa','Paint pottery at Made By Me or The Clayroom','Cambridge / Coolidge Corner','Drop in, glaze a thing, collect it later. Paint-and-sip evenings too.','#cra-onenight','in','quick','ae','mod','v','all','low',''],
-    ['\ud83d\udd6f\ufe0f','Candle-making night','Bow Market or Newbury St','Pour a custom scent in about 90 minutes. Very good date.','#cra-onenight','in','quick','e','mod','v','all','low',''],
-    ['\ud83d\udd25','Glassblowing taster at NOCA','North Cambridge','One-day beginner workshops. Make an ornament or a cup.','#cra-studios','in','half','ma','mod','v','all','med',''],
-    ['\ud83c\udfa8','Craft Loft drop-in at CambridgeSide','Cambridge','Rug tufting, candles, knitting \u2014 walk in, open till 9 Thu\u2013Sat.','#cra-onenight','in','quick','ae','mod','v','all','low',''],
-    ['\ud83c\udfed','A class at The Foundry','Kendall Sq','Community maker building \u2014 rotating hands-on classes, some free.','#cra-studios','in','half','mae','cheap','','all','med',''],
-    ['\ud83e\uddf6','Craft at home with new supplies','Make &amp; Mend, Michaels or gather here','Second-hand supplies from Make &amp; Mend in Union Sq, then stay in and make something.','#cra-supplies','in','quick','mae','cheap','','all','low',''],
-    ['\ud83c\udf73','Free third-Thursday pottery at Feet of Clay','Brookline Village \u00b7 6:30pm','A free all-ages handbuilding session. Zero commitment.','#cra-onenight','in','quick','e','free','v','all','low','4'],
-    ['\ud83c\udf36\ufe0f','Thai night out','Dakzen in Davis, or Crying Thaiger in Malden','The house favourite. Dakzen for khao soi, Sugar &amp; Spice for a fully veg table.','#eat-thai','in','quick','ae','cheap','vf','all','low',''],
-    ['\ud83e\udd6c','Dinner at Veggie Galaxy or Clover','Central Sq / everywhere','All-vegetarian diner, or the reliable fast one. Pie at Galaxy.','#eat-allveg','in','quick','mae','cheap','f','all','low',''],
-    ['\ud83d\udd6f\ufe0f','Splurge dinner at Oleana or Sarma','Cambridge / Somerville','The best vegetarian-friendly tables in the metro. Book well ahead.','#eat-datenight','in','half','e','mod','vf','all','low',''],
-    ['\ud83e\udd50','Bakery morning','Forge, Vinal, Sofra or Tatte','Cardamom bun at Vinal, or the whole pastry case at Sofra.','#eat-bakery','in','quick','m','cheap','f','all','low',''],
-    ['\ud83c\udf73','Long brunch','See the brunch list','18 tested spots. Go at 9am to skip the queue.','#eat-brunch','in','quick','m','cheap','vf','all','low','06'],
-    ['\ud83d\udecd\ufe0f','Vintage shopping in Union Sq','High Energy + Blue Bandana','Ten minutes away, and a good hour of rummaging.','#shop-vintage','in','quick','ma','cheap','v','all','low',''],
-    ['\u267b\ufe0f','Thrift run','Garment District, or the Roslindale Thrift Shop','The $2/lb floor at the Garment District if you have patience.','#shop-thrift','in','half','ma','cheap','','all','low',''],
-    ['\ud83c\udf81','Gift shopping at Magpie','Davis Sq','Local makers, cards, jewellery. Ten minutes from home.','#shop-gifts','in','quick','ma','cheap','','all','low',''],
-    ['\ud83d\udc57','Boutique wander','Charles St or Harvard Sq','Mint Julep, Crush, December Thieves. Small and well-curated.','#shop-boutiques','in','quick','ma','mod','v','all','low',''],
-    ['\ud83c\udf75','Boba and a wander in Chinatown','Chinatown','My Thai Vegan upstairs on Beach St, then something sweet.','#eat-thai','in','quick','ae','cheap','vf','all','low',''],
-    ['\ud83c\udfdb\ufe0f','Museum-pass day on the library','Beacon Hill / anywhere','Borrow a free museum pass from the library first \u2014 it covers most of the city.','#ind-free','in','half','ma','free','','all','low','123456'],
-    ['\u2744\ufe0f','Skate at the Frog Pond or a free DCR rink','Boston Common \u00b7 winter','Free at DCR rinks; Frog Pond is cheap and worth it once a winter.','#ind-seasonal','out','quick','ae','cheap','v','winter','high',''],
-    ['\ud83c\udf84','Snowport or a holiday market','Seaport \u00b7 Nov\u2013Dec','100+ shops, lights, and food. Very easy evening.','#evt','out','quick','ae','cheap','vf','winter','low',''],
-    ['\ud83c\udf3f','Greenhouse escape in deep winter','Lyman Estate or Tower Hill','Warm, humid, green, and almost empty in February.','#ind-seasonal','in','half','ma','cheap','v','winter','low',''],
-    ['\ud83c\udf41','Leaf-peeping drive','Berkshires or Rte 2 west','Peak colour is usually mid-October. Pack lunch, take the slow road.','#day','out','full','ma','cheap','dv','fall','low',''],
+    ['\ud83e\udd52','Play pickleball on a free court','Somerville, Cambridge or the Ink Block','Two dozen free public courts around here. Bring your own net where noted.','#out','out','quick','ma','free','','warm','high','',20,'active'],
+    ['\ud83c\udf32','Walk the Sheepfold at the Middlesex Fells','Stoneham \u2014 15 min','The big off-leash meadow. In summer get there by 7:30am; glorious in autumn.','#dog-offleash','out','quick','ma','free','d','all','med','',20,'outdoors'],
+    ['\ud83c\udf33','Arnold Arboretum ramble','Jamaica Plain','281 acres, free, dogs on leash, and the best tree collection in the country.','#dog-hikes','out','half','ma','free','dv','all','med','',20,'outdoors'],
+    ['\ud83c\udf0a','World\u2019s End, Hingham','South Shore \u2014 40 min','Olmsted-designed drumlins over the harbour. The prettiest short hike near Boston.','#dog-hikes','out','half','ma','cheap','dv','warm','high','',19,'outdoors'],
+    ['\ud83c\udfd6\ufe0f','Beach day at Crane or Singing Beach','North Shore','Go early for parking. Check the dog-season table before bringing the dog.','#bea','out','full','ma','cheap','dv','summer','low','',19,'outdoors'],
+    ['\ud83c\udf05','Kendall Square roof garden at golden hour','Cambridge','A free hidden rooftop with the skyline in front of you. Pairs with ice cream.','#out','out','quick','ae','free','v','warm','low','',21,'outdoors'],
+    ['\ud83d\udea3','Kayak or paddleboard the Charles','Allston / Cambridge','Paddle Boston rents by the hour. Sunset paddles are the move.','#out','out','half','ae','mod','v','summer','high','',19,'active'],
+    ['\ud83d\udeb2','Ride the Minuteman Bikeway','Arlington \u2192 Bedford','Flat, paved, 10 miles of rail-trail with ice cream at the end.','#out','out','half','ma','free','d','warm','high','',20,'active'],
+    ['\ud83d\udc15','Off-leash morning at Callahan State Park','Framingham \u2014 30 min','Big, quiet, properly off-leash. The dog sleeps all afternoon afterwards.','#dog-offleash','out','half','m','free','d','all','high','',19,'outdoors'],
+    ['\ud83e\udd7e','Blue Hills \u2014 Skyline Trail','Milton \u2014 25 min','Real elevation, real views, 20 minutes from the city. Leashed dogs fine.','#out','out','half','ma','free','d','all','high','',19,'outdoors'],
+    ['\ud83c\udfdd\ufe0f','Ferry to Spectacle Island','From Long Wharf','Harbour islands day: swimming beach, hilltop views, ~$25 round trip. No dogs.','#bea','out','full','ma','mod','v','summer','med','',18,'outdoors'],
+    ['\ud83c\udfaa','Wander a farmers market','Union Sq Sat \u00b7 Copley Tue/Fri \u00b7 Davis Wed','Cheap, seasonal, always something to eat. Check This Week for today\u2019s.','#now','out','quick','ma','free','df','market','low','123456',18,'market'],
+    ['\ud83d\udecd\ufe0f','SoWa Open Market','South End \u00b7 Sundays','Vintage, makers, food trucks, dogs welcome. The Sunday default.','#evt-flea','out','half','ma','cheap','df','market','low','0',17,'market'],
+    ['\ud83d\udd70\ufe0f','The Somerville Flea, Davis Sq','Walkable \u00b7 Sundays 10\u20134','Vintage and makers in the middle of Davis Square, August through October.','#evt-flea','out','quick','ma','cheap','df','augoct','low','0',16,'market'],
+    ['\ud83d\udd70\ufe0f','Todd Farm flea, Rowley','North Shore \u00b7 Sundays','Get there by 7:30am for the good stuff. Cash. No dogs.','#evt-flea','out','half','m','cheap','','market','low','0',14,'market'],
+    ['\ud83d\ude97','Day trip to Rockport or Gloucester','Cape Ann \u2014 50 min','Harbour, rocks, fried food and a long walk. Lovely off-season too.','#day','out','full','ma','mod','dv','all','med','',18,'daytrip'],
+    ['\ud83d\ude97','Day trip to Portsmouth NH','60 min','Walkable old town, great shops, and Green Elephant for entirely veg Thai.','#day','out','full','ma','mod','fv','all','low','',20,'daytrip'],
+    ['\ud83d\ude97','Day trip to Concord','25 min','Battle Road, bookshops, Verrill Farm. Historic without the crowds.','#day','out','full','ma','cheap','dv','all','med','',18,'daytrip'],
+    ['\ud83c\udf83','Salem on a weekday','North Shore \u2014 35 min','Go any month but October, or on a weekday. The museums are genuinely good.','#day','out','full','ma','mod','v','all','low','',18,'daytrip'],
+    ['\ud83c\udf4e','Apple picking or a corn maze','Ipswich / Stow / Littleton','Weekday mornings beat weekend queues. Honey Pot bag feeds three.','#evt','out','half','ma','cheap','df','fall','med','',17,'outdoors'],
+    ['\ud83c\udfac','Free Friday Flicks at the Hatch Shell','Esplanade \u00b7 summer Fridays','Bring a blanket and a picnic. Free, and the dog can come.','#dat-free','out','quick','e','free','dv','summer','low','5',23,'film'],
+    ['\ud83c\udfac','Movie Nights at Hood Park','Charlestown \u00b7 late summer\u2013early fall','Free outdoor film on the lawn, free popcorn, dog-friendly, free parking.','#dat-free','out','quick','e','free','dv','summer','low','',23,'film'],
+    ['\ud83c\udfac','Thursdays on the Lawn, Assembly Row','Walkable \u00b7 Jun\u2013Aug','Free movies, live music or comedy on The Lawn. Zero planning required.','#dat-free','out','quick','e','free','v','summer','low','4',22,'film'],
+    ['\ud83c\udfbb','Landmarks Orchestra at the Hatch Shell','Esplanade \u00b7 summer Wednesdays','A full orchestra, free, on the grass by the river.','#evt-music','out','quick','e','free','dv','summer','low','3',22,'music'],
+    ['\ud83c\udfad','Free Shakespeare on the Common','Boston Common \u00b7 Jul\u2013Aug','Picnic by 6:30 for a decent patch of grass. Free.','#dat-free','out','half','e','free','v','summer','low','023456',23,'music'],
+    ['\ud83c\udf66','Ice cream crawl','Toscanini\u2019s \u2192 Christina\u2019s \u2192 Gracie\u2019s','Pick two, walk between them. This is a legitimate plan.','#eat-icecream','out','quick','ae','cheap','dvf','warm','low','',22,'food'],
+    ['\ud83e\uddca','Tart froyo run','iYO in Davis, or drive to Orange Leaf','Build-your-own, pay by weight. The good tart kind.','#eat-icecream','out','quick','ae','cheap','vf','warm','low','',22,'food'],
+    ['\ud83c\udf19','After-hours museum night','MFA Late Nites \u00b7 MOS Adult Night \u00b7 ICA First Fridays','Museums reopened after dark with DJs, bars and performances \u2014 a completely different night out. Check ages: MOS is 18+, the Children\u2019s Museum grown-ups night is 21+.','#ind-museums','in','quick','e','mod','v','all','low','',23,'museum'],
+    ['\ud83c\udfaf','Axe throwing or an escape room','Somerville \u00b7 Cambridge \u00b7 Boston','The reliable evening group plan when nobody wants to sit still. Book a slot; most run till late.','#ind-games','in','quick','e','mod','v','all','med','',22,'games'],
+    ['\ud83d\uddbc\ufe0f','ICA free Thursday night','Seaport \u00b7 Thu 5\u20139','Free after 5, harbour views from the steps, under-18s always free.','#ind-free','in','quick','e','free','v','all','low','4',21,'museum'],
+    ['\ud83c\udf3a','Gardner Museum','Fenway','The courtyard is the most romantic room in the city. Free Thursdays 5\u20139.','#ind-museums','in','half','mae','mod','v','all','low','013456',17,'museum'],
+    ['\ud83c\udfdb\ufe0f','MFA on a pay-what-you-wish Wednesday','Fenway \u00b7 Wed evening','Enormous. Pick two wings and stop there.','#ind-free','in','half','ae','free','v','all','low','3',22,'museum'],
+    ['\ud83d\udd2c','MIT Museum','Kendall','Small, weird, brilliant. Perfect two-hour rainy plan.','#ind-museums','in','quick','ma','cheap','','all','low','',17,'museum'],
+    ['\ud83e\udd95','Harvard Museum of Natural History','Harvard Sq','The glass flowers alone. Free for MA residents Sun 9\u201312 and Wed 3\u20135.','#ind-museums','in','half','ma','cheap','','all','low','',17,'museum'],
+    ['\ud83d\udcda','Boston Public Library, Bates Hall','Copley','Free, beautiful, quiet. Take a book and stay two hours.','#ind-books','in','quick','mae','free','v','all','low','123456',17,'books'],
+    ['\ud83d\udcd6','Bookshop afternoon at Trident','Newbury St','Browse, then eat at the same table. All-day breakfast, big veg menu.','#ind-books','in','quick','mae','cheap','vf','all','low','',23,'books'],
+    ['\ud83d\udcda','Indie bookstore crawl','Harvard Sq or Brookline','Harvard Book Store \u2192 Grolier, or Brookline Booksmith\u2019s used cellar.','#ind-books','in','quick','mae','cheap','v','all','low','',21,'books'],
+    ['\ud83c\udfb3','Candlepin bowling','Sacco\u2019s in Davis, or Ron\u2019s in Hyde Park','Small balls, no thumb holes, very New England. Ron\u2019s has ice cream.','#ind-games','in','quick','ae','cheap','vf','all','med','',23,'games'],
+    ['\ud83d\udc7e','Barcade night at Versus or Bit Bar','Cambridge / Salem','Versus is all-ages before 6pm. Bit Bar is 21+ after dark.','#ind-games','in','quick','ae','mod','v','all','med','',24,'games'],
+    ['\ud83e\udde9','Boda Borg quest rooms','Malden \u2014 10 min','Physical puzzle rooms, no host, unlimited retries. Teams of 3\u20135.','#dat-under60','in','half','ae','mod','v','all','high','',21,'games'],
+    ['\ud83c\udfaf','Level 99','Natick Mall','Huge puzzle-and-challenge arena. Under-18s need a 25+ adult.','#ind-games','in','half','ae','mod','v','all','high','',22,'games'],
+    ['\ud83c\udfac','Repertory film at the Brattle or Coolidge','Harvard Sq / Brookline','Brattle double features are $19 for two. Somerville matinees are $12.','#ind-cinema','in','quick','ae','cheap','v','all','low','',23,'film'],
+    ['\ud83c\udf7f','First-run film at AMC Assembly Row','Assembly Row \u2014 walkable','The home theatre. Walk there, eat after.','#ind-cinema','in','quick','ae','mod','vf','all','low','',24,'film'],
+    ['\ud83c\udfb6','Live music at Club Passim','Harvard Sq','All-ages folk room, tiny, superb. Book ahead.','#ind-cinema','in','quick','e','mod','v','all','low','',23,'music'],
+    ['\ud83c\udffa','Paint pottery at Made By Me or The Clayroom','Cambridge / Coolidge Corner','Drop in, glaze a thing, collect it later. Paint-and-sip evenings too.','#cra-onenight','in','quick','ae','mod','v','all','low','',21,'craft'],
+    ['\ud83d\udd6f\ufe0f','Candle-making night','Bow Market or Newbury St','Pour a custom scent in about 90 minutes. Very good date.','#cra-onenight','in','quick','e','mod','v','all','low','',21,'craft'],
+    ['\ud83d\udd25','Glassblowing taster at NOCA','North Cambridge','One-day beginner workshops. Make an ornament or a cup.','#cra-studios','in','half','ma','mod','v','all','med','',18,'craft'],
+    ['\ud83c\udfa8','Craft Loft drop-in at CambridgeSide','Cambridge','Rug tufting, candles, knitting \u2014 walk in, open till 9 Thu\u2013Sat.','#cra-onenight','in','quick','ae','mod','v','all','low','',21,'craft'],
+    ['\ud83c\udfed','A class at The Foundry','Kendall Sq','Community maker building \u2014 rotating hands-on classes, some free.','#cra-studios','in','half','mae','cheap','','all','med','',20,'craft'],
+    ['\ud83e\uddf6','Craft at home with new supplies','Make &amp; Mend, Michaels or gather here','Second-hand supplies from Make &amp; Mend in Union Sq, then stay in and make something.','#cra-supplies','in','quick','mae','cheap','','all','low','',24,'craft'],
+    ['\ud83c\udf73','Free third-Thursday pottery at Feet of Clay','Brookline Village \u00b7 6:30pm','A free all-ages handbuilding session. Zero commitment.','#cra-onenight','in','quick','e','free','v','all','low','4',21,'craft'],
+    ['\ud83c\udf36\ufe0f','Thai night out','Dakzen in Davis, or Crying Thaiger in Malden','The house favourite. Dakzen for khao soi, Sugar &amp; Spice for a fully veg table.','#eat-thai','in','quick','ae','cheap','vf','all','low','',22,'food'],
+    ['\ud83e\udd6c','Dinner at Veggie Galaxy or Clover','Central Sq / everywhere','All-vegetarian diner, or the reliable fast one. Pie at Galaxy.','#eat-allveg','in','quick','mae','cheap','f','all','low','',22,'food'],
+    ['\ud83d\udd6f\ufe0f','Splurge dinner at Oleana or Sarma','Cambridge / Somerville','The best vegetarian-friendly tables in the metro. Book well ahead.','#eat-datenight','in','half','e','mod','vf','all','low','',22,'food'],
+    ['\ud83e\udd50','Bakery morning','Forge, Vinal, Sofra or Tatte','Cardamom bun at Vinal, or the whole pastry case at Sofra.','#eat-bakery','in','quick','m','cheap','f','all','low','',15,'food'],
+    ['\ud83c\udf73','Long brunch','See the brunch list','18 tested spots. Go at 9am to skip the queue.','#eat-brunch','in','quick','m','cheap','vf','all','low','06',14,'food'],
+    ['\ud83d\udecd\ufe0f','Vintage shopping in Union Sq','High Energy + Blue Bandana','Ten minutes away, and a good hour of rummaging.','#shop-vintage','in','quick','ma','cheap','v','all','low','',19,'shop'],
+    ['\u267b\ufe0f','Thrift run','Garment District, or the Roslindale Thrift Shop','The $2/lb floor at the Garment District if you have patience.','#shop-thrift','in','half','ma','cheap','','all','low','',19,'shop'],
+    ['\ud83c\udf81','Gift shopping at Magpie','Davis Sq','Local makers, cards, jewellery. Ten minutes from home.','#shop-gifts','in','quick','ma','cheap','','all','low','',19,'shop'],
+    ['\ud83d\udc57','Boutique wander','Charles St or Harvard Sq','Mint Julep, Crush, December Thieves. Small and well-curated.','#shop-boutiques','in','quick','ma','mod','v','all','low','',19,'shop'],
+    ['\ud83c\udf75','Boba and a wander in Chinatown','Chinatown','My Thai Vegan upstairs on Beach St, then something sweet.','#eat-thai','in','quick','ae','cheap','vf','all','low','',22,'food'],
+    ['\ud83c\udfdb\ufe0f','Museum-pass day on the library','Beacon Hill / anywhere','Borrow a free museum pass from the library first \u2014 it covers most of the city.','#ind-free','in','half','ma','free','','all','low','123456',17,'museum'],
+    ['\u2744\ufe0f','Skate at the Frog Pond or a free DCR rink','Boston Common \u00b7 winter','Free at DCR rinks; Frog Pond is cheap and worth it once a winter.','#ind-seasonal','out','quick','ae','cheap','v','winter','high','',21,'seasonal'],
+    ['\ud83c\udf84','Snowport or a holiday market','Seaport \u00b7 Nov\u2013Dec','100+ shops, lights, and food. Very easy evening.','#evt','out','quick','ae','cheap','vf','winter','low','',21,'seasonal'],
+    ['\ud83c\udf3f','Greenhouse escape in deep winter','Lyman Estate or Tower Hill','Warm, humid, green, and almost empty in February.','#ind-seasonal','in','half','ma','cheap','v','winter','low','',16,'seasonal'],
+    ['\ud83c\udf41','Leaf-peeping drive','Berkshires or Rte 2 west','Peak colour is usually mid-October. Pack lunch, take the slow road.','#day','out','full','ma','cheap','dv','fall','low','',18,'daytrip'],
     ['\ud83c\udf41','Maple sugaring day','Central MA \u00b7 Feb\u2013Mar','Free DCR sugarin\u2019 demos and pancake breakfasts at working sugar houses.','#ind-seasonal','out','half','m','cheap','df','spring','med']
   ];
 
@@ -5076,6 +5082,7 @@ html{scroll-padding-top:118px;}
       (isToday? ' &mdash; only things open today.' : ' &mdash; only things open that day.');
   }
   var pickSeen=[];
+  var pickLastCat='';
   var COSTRANK={free:0,cheap:1,mod:2};
   var LEVELRANK={low:0,med:1,high:2};
 
@@ -5091,7 +5098,7 @@ html{scroll-padding-top:118px;}
       var a=nowD(e[0]),b=nowD(e[1]);
       var free=/free/i.test(e[4]);
       return [e[2],e[3],'On that day · '+nowRange(a,b),e[4],e[5],
-              'out','half','mae',free?'free':'cheap','vf','all','low','',true];
+              'out','half','mae',free?'free':'cheap','vf','all','low','',21,'event',true];
     });
   }
 
@@ -5131,6 +5138,8 @@ html{scroll-padding-top:118px;}
       if(!relax && pickState.env!=='any' && a[5]!==pickState.env) return false;
       if(!relax && pickState.dur!=='any' && a[6]!==pickState.dur) return false;
       if(pickState.tod!=='any' && a[7].indexOf(pickState.tod)<0) return false;
+      // evening means after 6pm — it has to still be open at 8
+      if(pickState.tod==='e' && a[13] < 20) return false;
       if(pickState.cost!=='any' && COSTRANK[a[8]]>COSTRANK[pickState.cost]) return false;
       if(pickState.who!=='any' && a[9].indexOf(pickState.who)<0) return false;
       if(!relax && pickState.level!=='any' && a[11]!==pickState.level) return false;
@@ -5162,22 +5171,30 @@ html{scroll-padding-top:118px;}
     }
     var fresh=pool.filter(function(a){return pickSeen.indexOf(a[1])<0;});
     if(!fresh.length){ pickSeen=[]; fresh=pool; }
+    // on a re-spin, steer away from the kind of thing we just suggested
+    if(pickLastCat){
+      var diff=fresh.filter(function(a){return a[14]!==pickLastCat;});
+      if(diff.length) fresh=diff;
+    }
     // if events are in the pool, prefer one on the first draw
     var a=null;
-    if(evs.length && pool[0]&&pool[0][13]){
+    if(evs.length && pool[0]&&pool[0][15]){
       var freshEv=evs.filter(function(e){return pickSeen.indexOf(e[1])<0;});
       if(freshEv.length) a=freshEv[Math.floor(Math.random()*freshEv.length)];
     }
     if(!a) a=fresh[Math.floor(Math.random()*fresh.length)];
     pickSeen.push(a[1]);
-    var others=pool.filter(function(x){return x[1]!==a[1];}).slice(0,3);
+    pickLastCat=a[14]||'';
+    // offer alternatives from other categories, so the "Or:" list isn't three more hikes
+    var others=pool.filter(function(x){return x[1]!==a[1] && x[14]!==a[14];}).slice(0,3);
+    if(others.length<2) others=pool.filter(function(x){return x[1]!==a[1];}).slice(0,3);
     // name the market that actually runs on the chosen day
     var where=a[2], why=a[3];
     if(a[1].indexOf('farmers market')>=0){
       var dm=DAYMARKET[tgt.getDay()];
       if(dm){ where=dm[0]; why=dm[1]; }
     }
-    var isEvent=a[13];
+    var isEvent=a[15];
     var dayLabel=NDOW[tgt.getDay()]+', '+NMON[tgt.getMonth()]+' '+tgt.getDate();
     box.innerHTML=
       '<div class="card">'+
@@ -5195,7 +5212,7 @@ html{scroll-padding-top:118px;}
       '</div>';
     var ag=document.getElementById('pick-again'); if(ag) ag.addEventListener('click',pickRender);
     var rs=document.getElementById('pick-reset'); if(rs) rs.addEventListener('click',function(){
-      pickState={day:'today',env:'any',dur:'any',tod:'any',cost:'any',who:'any',level:'any'}; pickSeen=[];
+      pickState={day:'today',env:'any',dur:'any',tod:'any',cost:'any',who:'any',level:'any'}; pickSeen=[]; pickLastCat='';
       document.querySelectorAll('.pickq').forEach(function(q){
         var dflt=(q.getAttribute('data-q')==='day')?'today':'any';
         q.querySelectorAll('.opt').forEach(function(o){ o.classList.toggle('on', o.getAttribute('data-v')===dflt); });
@@ -5220,7 +5237,7 @@ html{scroll-padding-top:118px;}
   });
   try{ pickDayNote(); }catch(e){}
   var gob=document.getElementById('pick-go');
-  if(gob) gob.addEventListener('click',function(){ pickSeen=[]; pickRender(); });
+  if(gob) gob.addEventListener('click',function(){ pickSeen=[]; pickLastCat=''; pickRender(); });
   try{ pickWeather(); }catch(e){}
 
   function applyFilter(){
